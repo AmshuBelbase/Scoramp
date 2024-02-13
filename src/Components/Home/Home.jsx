@@ -3,10 +3,14 @@ import picture from "../Assets/1.png";
 import avatar from "../Assets/icon.png";
 import { BiSolidDashboard } from "react-icons/bi";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
+import { BsListTask } from "react-icons/bs";
+import { TbProgress } from "react-icons/tb";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import {
   IoMdAddCircle,
   IoIosNotifications,
   IoMdSettings,
+  IoMdDocument,
 } from "react-icons/io";
 import { RiTeamFill } from "react-icons/ri";
 import { FaSearch } from "react-icons/fa";
@@ -61,9 +65,30 @@ const Home = () => {
         <div className="container">
           <div className="left-container">
             <div className="taskstatus-container">
-              <div className="task-status">New</div>
-              <div className="task-status">In Progress</div>
-              <div className="task-status">Completed</div>
+              <div className="task-status">
+                <div className="first">
+                  <label>New</label>
+                  <IoMdDocument className="icon" />
+                </div>
+                <div className="second">5</div>
+                <div className="third">+5 from yesterday</div>
+              </div>
+              <div className="task-status">
+                <div className="first">
+                  <label>In progress</label>
+                  <TbProgress className="icon" />
+                </div>
+                <div className="second">5</div>
+                <div className="third">+5 from yesterday</div>
+              </div>
+              <div className="task-status">
+                <div className="first">
+                  <label>Completed</label>
+                  <IoCheckmarkDoneCircle className="icon" />
+                </div>
+                <div className="second">5</div>
+                <div className="third">+5 from yesterday</div>
+              </div>
             </div>
           </div>
           <div className="right-container"></div>
