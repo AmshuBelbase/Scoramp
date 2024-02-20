@@ -1,5 +1,4 @@
-![Database Structure][(https://github.com/AmshuBelbase/Scoramp/blob/master/src/Components/Assets/DataBase_SCORAMP_3.png)]
-![Alt text](url)
+![alt text](https://github.com/AmshuBelbase/Scoramp/blob/master/src/Components/Assets/DataBase_SCORAMP_3.png?raw=true)
 
 # Getting Started with Create React App
 
