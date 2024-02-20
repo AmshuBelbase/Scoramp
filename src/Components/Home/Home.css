@@ -93,7 +93,7 @@
     margin: 0 1px;  
     padding: 2vw;
     display: flex;
-    flex-flow: column nowrap;    
+    flex-flow: row nowrap;    
     border-radius: 0.5vw; 
 }
 .right-wrap .container .left-container{ 
@@ -142,20 +142,20 @@
 .left-container .taskstatus-container > div:nth-child(1) .second
 {
     font-weight: bold;
-    font-size: 3vw; 
+    font-size: 2.5vw; 
     color: #369ae6;    
 }
 .left-container .taskstatus-container > div:nth-child(2) .first .icon,
 .left-container .taskstatus-container > div:nth-child(2) .second{
     font-weight: bold;
     color: #ff57a5;
-    font-size: 3vw;
+    font-size: 2.5vw; 
 }
 .left-container .taskstatus-container > div:nth-child(3) .first .icon,
 .left-container .taskstatus-container > div:nth-child(3) .second{
     font-weight: bold;
     color: #f76340;
-    font-size: 3vw;
+    font-size: 2.5vw; 
 }
 .left-container .taskstatus-container .third{
     color: gray;
@@ -209,11 +209,12 @@
     background-color: white; 
     padding: 1vw 1.2vw;
     font-size: 1vw; 
-    border-radius: 2vw;
+    border-radius: 0.3vw;
 }
 .container .left-container .table-top .taskstat-container .task-stat:hover{
-    color: white; 
-    background-color: #6d30ed;
+    color: #6d30ed; 
+    /* background-color: #6d30ed; */
+    border-bottom: 2px solid #6d30ed;
 }
 .container .left-container .table-top .head{
     font-weight: bold;
@@ -256,3 +257,43 @@
 .container .left-container .table-top .dropdown .icon{ 
     margin-left: 1vw;
 } 
+.right-wrap .container .right-container{
+    width: 100%;
+    padding: 0 2vw;
+    display: flex;
+    flex-flow: column nowrap;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+.right-wrap .container .right-container .top-right{
+    width: 100%; 
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.right-wrap .container .right-container .top-right-up{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.right-wrap .container .right-container .top-right-down{
+    margin-top: 1vw;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.right-wrap .container .right-container .top-right-up div:nth-child(1){
+    font-weight: bold;
+}
+.right-wrap .container .right-container .top-right-up div:nth-child(2){
+    color: #6d30ed;
+} 
+.right-wrap .container .right-container .top-right-down .menu-icon img{
+    height: 4vw;  
+    border-radius: 50%;
+}

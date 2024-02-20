@@ -1,7 +1,7 @@
 import "./Home.css";
 import picture from "../Assets/1.png";
 import avatar from "../Assets/icon.png";
-import { BiSolidDashboard } from "react-icons/bi";
+import { BiSolidDashboard, BiSolidNotification } from "react-icons/bi";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { TbProgress } from "react-icons/tb";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
@@ -10,7 +10,6 @@ import {
   IoMdAddCircle,
   IoIosNotifications,
   IoMdSettings,
-  IoMdDocument,
 } from "react-icons/io";
 import { RiTeamFill } from "react-icons/ri";
 import { FaSearch } from "react-icons/fa";
@@ -68,7 +67,7 @@ const Home = () => {
               <div className="task-status">
                 <div className="first">
                   <label>New</label>
-                  <IoMdDocument className="icon" />
+                  <BiSolidNotification className="icon" />
                 </div>
                 <div className="second">5</div>
                 <div className="third">+5 from yesterday</div>
@@ -145,7 +144,23 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="right-container"></div>
+          <div className="right-container">
+            <div className="top-right">
+              <div className="top-right-up">
+                <div>Members</div>
+                <div>View all</div>
+              </div>
+              <div className="top-right-down">
+                <div className="menu-icon">
+                  <img src={avatar} alt="avatar" className="avatar" />
+                </div>
+                <div className="menu-icon">
+                  <img src={avatar} alt="avatar" className="avatar" />
+                </div>
+              </div>
+            </div>
+            <div className="bottom-right"></div>
+          </div>
         </div>
       </div>
     </div>
