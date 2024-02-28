@@ -129,7 +129,7 @@ const Home = () => {
             <div className="top-right-down">
               <div className="menu-icon">
                 <img src={avatar} alt="avatar" className="avatar" />
-                <div className="member-name">MemberMember</div>
+                <div className="member-name">MemberMemberMember</div>
               </div>
               <div className="menu-icon">
                 <img src={avatar} alt="avatar" className="avatar" />
@@ -169,6 +169,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <div className="popup-container"></div>
     </div>
   );
 };
