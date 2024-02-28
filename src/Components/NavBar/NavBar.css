@@ -1,10 +1,9 @@
 .left-nav{ 
-    display: flex;
-    /* height: 98vh;   */
-    max-width: 18vw;
-    overflow: auto;
-    max-height: 98vh; 
-    flex-flow: column wrap;  
+    display: flex; 
+    width: 100%; 
+    overflow: auto;  
+    justify-content: space-between;
+    flex-flow: row nowrap;  
     border: 2px solid rgba(255, 255, 255, .2);
     flex: 1; 
     border-radius: 0.5vw; 
@@ -13,24 +12,43 @@
     display: flex;
     align-items: center;
 }
+.left-nav .menu-items{
+    display: flex;
+    flex-flow: row nowrap;
+}
+.left-nav .menu-items-small{ 
+    right: 0;
+    margin-right: 30px;
+    z-index: 999;
+    top: 6vh;
+    position: absolute; 
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: #26a65b;
+    border-radius: 10px;
+    padding: 1vw 2vw;
+} 
+
 .left-nav .menu{
     display: flex;
     align-items: center; 
     text-align: center;
     font-size: 0.9vw;  
     margin: 1vw;
-    padding: 1vw;
-    /* color: rgb(113, 110, 110); */
+    padding: 1vw; 
     color: #316346;
     background-color: white;
     border-radius: 1vw;
     transition-duration: 0.3s;
 }
 .left-nav .menu:hover{
-    color: white;
-    /* background-color: #6d30ed; */
+    color: white; 
     background-color: #26a65b;
     cursor: pointer;
+}
+.left-nav .menu-items-small .menu{
+    color: white; 
+    background-color: transparent;
 }
 .left-nav .menu .icon{
     font-size: 2vw;
@@ -42,3 +60,17 @@
     border-radius: 15%;
     margin: 1.5vw 1.5vw;
 } 
+@media (max-width: 768px) {
+    .left-nav .menu{ 
+        font-size: 3vw;    
+    }
+    .left-nav .menu .icon{
+        font-size: 8vw; 
+    } 
+    .left-nav .project-details img{
+        width: 30vw;
+    }
+    .left-nav .lastmenu{
+        margin-right: 30px;
+    }
+}
