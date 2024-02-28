@@ -6,6 +6,7 @@ import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { TbProgress } from "react-icons/tb";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import {
   IoMdAddCircle,
   IoIosNotifications,
@@ -14,6 +15,7 @@ import {
 import { RiTeamFill } from "react-icons/ri";
 import { FaSearch } from "react-icons/fa";
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="home-wrap">
       <div className="left-nav">
@@ -47,9 +49,9 @@ const Home = () => {
             <AiOutlineFundProjectionScreen className="icon" />
             <h2>Tracking</h2>
           </div>
-          <div className="menu">
+          <div className="menu" onClick={() => navigate("/newtask")}>
             <IoMdAddCircle className="icon" />
-            <h2>New Project</h2>
+            <h2>New Task</h2>
           </div>
           <div className="menu-icon">
             <FaSearch className="icon" />
@@ -96,11 +98,11 @@ const Home = () => {
                 <div className="task-stat">In progress</div>
                 <div className="task-stat">Completed</div>
               </div>
-              <div class="dropdown">
-                <button class="dropbtn">
+              <div className="dropdown">
+                <button className="dropbtn">
                   Sort By <IoIosArrowDown className="icon" />
                 </button>
-                <div class="dropdown-content">
+                <div className="dropdown-content">
                   <label>Date</label>
                   <label>Alphabet</label>
                 </div>
@@ -147,19 +149,50 @@ const Home = () => {
           <div className="right-container">
             <div className="top-right">
               <div className="top-right-up">
-                <div>Members</div>
-                <div>View all</div>
+                <div>Online</div>
+                <div>See All</div>
               </div>
               <div className="top-right-down">
                 <div className="menu-icon">
                   <img src={avatar} alt="avatar" className="avatar" />
+                  <div className="member-name">MemberMember</div>
                 </div>
                 <div className="menu-icon">
                   <img src={avatar} alt="avatar" className="avatar" />
+                  <div className="member-name">Member 2</div>
+                </div>
+                <div className="menu-icon">
+                  <img src={avatar} alt="avatar" className="avatar" />
+                  <div className="member-name">Member 3</div>
+                </div>
+                <div className="menu-icon">
+                  <img src={avatar} alt="avatar" className="avatar" />
+                  <div className="member-name">Member 4</div>
+                </div>
+                <div className="menu-icon">
+                  <img src={avatar} alt="avatar" className="avatar" />
+                  <div className="member-name">Member 5</div>
+                </div>
+                <div className="menu-icon">
+                  <img src={avatar} alt="avatar" className="avatar" />
+                  <div className="member-name">Member 6</div>
+                </div>
+                <div className="menu-icon">
+                  <img src={avatar} alt="avatar" className="avatar" />
+                  <div className="member-name">Member 7</div>
+                </div>
+                <div className="menu-icon">
+                  <img src={avatar} alt="avatar" className="avatar" />
+                  <div className="member-name">Member 8</div>
                 </div>
               </div>
             </div>
-            <div className="bottom-right"></div>
+            <div className="bottom-right">
+              <div className="bottom-right-up">
+                <div>Recent activities</div>
+                <div>See All</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
