@@ -13,33 +13,8 @@ import axios from "axios";
 const SignUpForm = () => {
   const navigate = useNavigate();
   return (
-    <div className="home-wrap">
-      <div className="left-nav">
-        <div className="project-details">
-          <img src={picture} alt="Scoramp" />
-        </div>
-        <div className="menu">
-          <BiSolidDashboard className="icon" />
-          <h2>Dashboard</h2>
-        </div>
-        <div className="menu">
-          <AiOutlineFundProjectionScreen className="icon" />
-          <h2>Tracking</h2>
-        </div>
-        <div className="menu">
-          <RiTeamFill className="icon" />
-          <h2>Teams</h2>
-        </div>
-        <div className="menu">
-          <IoMdSettings className="icon" />
-          <h2>Settings</h2>
-        </div>
-        <div className="menu">
-          <RiTeamFill className="icon" />
-          <h2>Extra - 2</h2>
-        </div>
-      </div>
-      <div className="right-wrap"></div>
+    <div className="right-wrap">
+      <div></div>
     </div>
   );
 };
