@@ -1,13 +1,13 @@
 .left-nav{ 
     display: flex;
-    height: 98vh;
+    /* height: 98vh;   */
+    max-width: 18vw;
+    overflow: auto;
+    max-height: 98vh; 
     flex-flow: column wrap;  
-    border: 2px solid rgba(255, 255, 255, .2); 
-    /* -webkit-backdrop-filter: blur(25px);
-    backdrop-filter: blur(25px);  */
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, .1); */
+    border: 2px solid rgba(255, 255, 255, .2);
     flex: 1; 
-    border-radius: 0.5vw;
+    border-radius: 0.5vw; 
 } 
 .left-nav .project-details{
     display: flex;
@@ -29,7 +29,8 @@
 .left-nav .menu:hover{
     color: white;
     /* background-color: #6d30ed; */
-    background-color: #296a45;
+    background-color: #26a65b;
+    cursor: pointer;
 }
 .left-nav .menu .icon{
     font-size: 2vw;

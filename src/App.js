@@ -1,6 +1,5 @@
 import "./App.css";
 import Home from "./Components/Home/Home";
-import NewTask from "./Components/NewTask/NewTask";
 import NavBar from "./Components/NavBar/NavBar";
 
 // import { useState } from "react";
@@ -12,7 +11,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/newtask" element={<NewTask />} />
+          {/* <Route path="/newtask" element={<NewTask />} /> */}
         </Routes>
       </div>
     </Router>

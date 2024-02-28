@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import "./NavBar.css";
-
 import picture from "../Assets/1.png";
 import { BiSolidDashboard } from "react-icons/bi";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import { IoMdSettings } from "react-icons/io";
 import { RiTeamFill } from "react-icons/ri";
 const SignUpForm = () => {
-  const navigate = useNavigate();
   return (
     <div className="left-nav">
       <div className="project-details">

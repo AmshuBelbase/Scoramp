@@ -1,7 +1,6 @@
 import "./Home.css";
-import picture from "../Assets/1.png";
 import avatar from "../Assets/icon.png";
-import { BiSolidDashboard, BiSolidNotification } from "react-icons/bi";
+import { BiSolidNotification } from "react-icons/bi";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { TbProgress } from "react-icons/tb";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
@@ -10,20 +9,24 @@ import { useNavigate } from "react-router-dom";
 import {
   IoMdAddCircle,
   IoIosNotifications,
-  IoMdSettings,
+  IoIosCloseCircle,
 } from "react-icons/io";
-import { RiTeamFill } from "react-icons/ri";
 import { FaSearch } from "react-icons/fa";
+import React, { useState } from "react";
 const Home = () => {
+  const [isActive, setIsActive] = useState(false);
+  const toggleClass = () => {
+    setIsActive(!isActive);
+  };
   const navigate = useNavigate();
   return (
     <div className="right-wrap">
-      <div className="top-nav">
+      <div className={isActive ? "top-nav passive" : "top-nav"}>
         <div className="menu menu1">
           <AiOutlineFundProjectionScreen className="icon" />
           <h2>Tracking</h2>
         </div>
-        <div className="menu" onClick={() => navigate("/newtask")}>
+        <div className="menu" onClick={toggleClass}>
           <IoMdAddCircle className="icon" />
           <h2>New Task</h2>
         </div>
@@ -37,7 +40,7 @@ const Home = () => {
           <img src={avatar} alt="avatar" className="avatar" />
         </div>
       </div>
-      <div className="container">
+      <div className={isActive ? "container passive" : "container"}>
         <div className="left-container">
           <div className="taskstatus-container">
             <div className="task-status">
@@ -169,7 +172,58 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="popup-container"></div>
+      {isActive && (
+        <div className="popup-container">
+          <div className="head-wrap">
+            <div className="head-title">New Task</div>
+            <div className="head-close" onClick={toggleClass}>
+              <IoIosCloseCircle />
+            </div>
+          </div>
+          <div className="popup-body">
+            <div className="form_container">
+              <form name="form">
+                <div className="form_item">
+                  <input type="text" placeholder="Objective Title" />
+                </div>
+                <div className="form_item">
+                  <textarea
+                    className="adjustable-textbox"
+                    placeholder="Description"
+                  ></textarea>
+                  <div className="error" id="phone"></div>
+                </div>
+                <div className="form_wrap form_grp">
+                  <div className="form_item">
+                    <select name="country">
+                      <option> -- Objective For --</option>
+                      <option>Option 1</option>
+                      <option>Option 2</option>
+                      <option>Option 3</option>
+                    </select>
+                  </div>
+                  <div className="form_item">
+                    <input type="number" placeholder="Full Marks" />
+                  </div>
+                </div>
+                <div className="form_wrap form_grp">
+                  <div className="form_item"> DEADLINE</div>
+                  <div className="form_item">
+                    <input type="date" placeholder="Deadline" />
+                  </div>
+                </div>
+                <div className="form_item">
+                  <input type="file" />
+                  <div className="error" id="phone"></div>
+                </div>
+                <div className="btn">
+                  <input type="submit" value="Assign" />
+                </div>
+              </form>
+            </div>{" "}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
