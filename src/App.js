@@ -15,10 +15,22 @@ function App() {
       <Routes>
         <Route exact path="/signup" element={<SignUpForm />} />
       </Routes>
+      <Routes>
+        <Route
+          exact
+          path="/tracking"
+          element={
+            <>
+              <NavBar />
+              <Home />
+            </>
+          }
+        />
+      </Routes>
       {/* <div className="home-wrap">
         <NavBar />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/tracking" element={<Home />} />
         </Routes>
       </div> */}
     </Router>

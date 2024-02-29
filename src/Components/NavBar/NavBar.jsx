@@ -8,7 +8,10 @@ import { MdLeaderboard } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { RiTeamFill } from "react-icons/ri";
 import { HiBarsArrowDown, HiMiniBarsArrowUp } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const NavBar = () => {
+  const navigate = useNavigate();
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -55,7 +58,7 @@ const NavBar = () => {
             <IoMdSettings className="icon" />
             <h2>Settings</h2>
           </div>
-          <div className="menu">
+          <div className="menu" onClick={() => navigate("/")}>
             <IoLogOut className="icon" />
             <h2>Logout</h2>
           </div>

@@ -11,27 +11,31 @@ import axios from "axios";
 const LoginForm = ({ setLoginUser }) => {
   const navigate = useNavigate();
   return (
-    <div className="login-wrapper">
-      <div className="logo">
-        <img src={picture} alt="" />
+    <div className="login-logo-wrapper">
+      <div className="login-logo">
+        <div className="logo">
+          <img src={picture} alt="" />
+        </div>
       </div>
-      <div className="title">LOG IN</div>
-      <div className="email">
-        <input type="email" name="" id="" placeholder="Enter Email" />
-      </div>
-      <div className="password">
-        <input type="password" name="" id="" placeholder="Enter Password" />
-      </div>
-      <div className="login-label">
-        <label>Forgot Password ?</label>
-      </div>
-      <div className="submit-button">
-        <button>Log In</button>
-      </div>
-      <div className="login-label login-label-align">
-        <label onClick={() => navigate("/signup")}>
-          Don't have an account? <u>Sign Up</u>
-        </label>
+      <div className="login-wrapper">
+        <div className="title">LOG IN</div>
+        <div className="email">
+          <input type="email" name="" id="" placeholder="Enter Email" />
+        </div>
+        <div className="password">
+          <input type="password" name="" id="" placeholder="Enter Password" />
+        </div>
+        <div className="login-label">
+          <label onClick={() => navigate("/tracking")}>Forgot Password ?</label>
+        </div>
+        <div className="submit-button">
+          <button>Log In</button>
+        </div>
+        <div className="login-label login-label-align">
+          <label onClick={() => navigate("/signup")}>
+            Don't have an account? <u>Sign Up</u>
+          </label>
+        </div>
       </div>
     </div>
   );
