@@ -21,7 +21,7 @@
     margin: 1vw;
     padding: 1vw;
     color: white;
-    background-color: #6d30ed;
+    background-color: #714d69;
     border-radius: 1vw;
 }
 .right-wrap .top-nav .icon{
@@ -329,7 +329,7 @@
 }
 .right-wrap .container .right-container .top-right-up div:nth-child(2),
 .right-wrap .container .right-container .bottom-right-up div:nth-child(2){
-    color: #6d30ed;
+    color: #714d69;
 }
 .right-wrap .container .right-container .top-right-down .menu-icon{
     min-width: 6vw;
@@ -452,8 +452,8 @@ color: #714d69;
 } 
 .form_container .btn input[type="submit"]{
 font-size: 1.5vw;
-background: #6271f0;
-border: 1px solid #6271f0;
+background: #714d69;
+border: 1px solid #714d69;
 padding: 1vw;
 width: 100%;
 border-radius: 1vw;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./NavBar.css";
 import picture from "../Assets/1.png";
 // import { BiSolidDashboard } from "react-icons/bi";
+import { IoLogOut } from "react-icons/io5";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { MdLeaderboard } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
@@ -55,8 +56,8 @@ const SignUpForm = () => {
             <h2>Settings</h2>
           </div>
           <div className="menu">
-            <RiTeamFill className="icon" />
-            <h2>Extra</h2>
+            <IoLogOut className="icon" />
+            <h2>Logout</h2>
           </div>
         </div>
       )}

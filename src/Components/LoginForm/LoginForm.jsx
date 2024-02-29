@@ -8,58 +8,26 @@ import axios from "axios";
 
 const LoginForm = ({ setLoginUser }) => {
   const navigate = useNavigate();
-
-  const [userLog, setLog] = useState({
-    email: "",
-    password: "",
-  });
-  const handleLogChange = (e) => {
-    const { name, value } = e.target;
-    setLog({
-      ...userLog,
-      [name]: value,
-    });
-  };
   return (
-    <div className="wrapper">
-      <h1>Log In</h1>
-      <div className="input-box">
-        <input
-          type="email"
-          name="email"
-          value={userLog.email}
-          onChange={handleLogChange}
-          placeholder="Email"
-          required
-        />
-        <MdOutgoingMail className="icon" />
+    <div className="login-wrapper">
+      <div className="logo"></div>
+      <div className="title">LOG IN</div>
+      <div className="email">
+        <input type="email" name="" id="" placeholder="Enter Email" />
       </div>
-      <div className="input-box">
-        <input
-          type="password"
-          name="password"
-          value={userLog.password}
-          onChange={handleLogChange}
-          placeholder="Password"
-          required
-        />
-        <FaLock className="icon" />
+      <div className="password">
+        <input type="password" name="" id="" placeholder="Enter Password" />
       </div>
-      <div className="remember-forgot">
+      <div className="login-label">
+        <label>Forgot Password ?</label>
+      </div>
+      <div className="submit-button">
+        <button>Submit</button>
+      </div>
+      <div className="login-label login-label-align">
         <label>
-          <input type="checkbox" />
-          Remember Me
+          Don't have an account? <u>Sign Up</u>
         </label>
-        <label className="myLabel">Lost Password ?</label>
-      </div>
-      <button type="submit" onClick={login}>
-        Log In <IoLogIn className="icon" />
-      </button>
-      <div className="register-link">
-        <p>
-          Don't have an account ?{" "}
-          <label onClick={() => navigate("/create")}>Sign Up</label>
-        </p>
       </div>
     </div>
   );

@@ -1,102 +1,82 @@
-.wrapper{ 
-    width: 420px; 
-    background: white;
-    border: 2px solid rgba(255, 255, 255, .2); 
-    -webkit-backdrop-filter: blur(25px);
-    backdrop-filter: blur(25px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    color: #714d69;
-    border-radius: 10px;
-    padding: 30px 40px;
-}
-.wrapper h1{
-    font-size: 36px;
-    text-align: center;
-}
-.wrapper .input-box{
-    position: relative;
-    width: 100%;
-    height: 50px; 
-    margin: 30px 0;
-}
-.input-box input{
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    border: 2px solid #714d69;
-    border-radius: 40px;
-    padding: 20px 45px 20px 20px;
-    color: #714d69;
-}
-.input-box input::placeholder{
-    color: #714d69;
-}
-.input-box .icon{
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-} 
-.wrapper .remember-forgot{
+.login-wrapper{
     display: flex;
-    justify-content: space-between;
-    font-size: 14.5px;
-    margin: -15px 0 15px;
+    flex-flow: column nowrap;
+    width: 34vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 0 3vw 0 3vw;
+    margin-top: 10vh;
+    margin-left: 30vw; 
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
 }
-.remember-forgot label input{
-    accent-color: #714d69;
-    margin-right: 5px;
-}
-.remember-forgot .myLabel{
-    color: #714d69;
-    text-decoration: none;
-}
-.remember-forgot .myLabel:hover{
-    text-decoration: underline;
-    cursor: pointer;
-}
-.wrapper button{
-    width: 100%;
-    height: 40px;
-    background: #714d69;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-    cursor: pointer;
-    font-size: 16px;
-    color: #fff;
-    font-weight: 700;
-    transition-duration: 0.4s;
-}
-.wrapper button:hover{  
-    cursor: pointer;     
-    background: #604159;
-    color: white; 
-}
-.wrapper button:hover .icon{
-    transform: translateX(5px);
-}
-.wrapper .register-link{
-    font-size: 14.5px;
+.login-wrapper .title{
     text-align: center;
-    margin: 20px 0 15px; 
-}  
-.register-link p label{
+    margin: 4vw;
+    font-size: 2.5vw;
+    font-weight: 600;
     color: #714d69;
-    text-decoration: none;
-    font-weight: 700;
 }
-.register-link p label:hover{ 
-    text-decoration: underline;
+.login-wrapper .email,
+.login-wrapper .password, 
+.login-wrapper .login-label,
+.login-wrapper .submit-button{   
+    width: 100%;
+    align-items: center;
+    margin-bottom: 2vw; 
+} 
+.login-wrapper .login-label{
+    text-align: right;
+    margin-top: -1vw;
+    margin-bottom: 2vw;
+    color: #714d69;
+}
+.login-wrapper .login-label label{
     cursor: pointer;
 }
-@media (max-width: 600px) {
-    .wrapper{
-        width: 95vw;
-        background-color: #fff; 
-    } 
+.login-wrapper .email input,
+.login-wrapper .password input,
+.login-wrapper .submit-button button{
+    font-size: 1.2vw;  
+    padding: 15px;
+    width: calc(100% - 30px); 
+    border: 1px solid black;
+    border-radius: 40px;
+    outline: none;
+} 
+.login-wrapper .submit-button button{
+    padding: 10px;
+    width: 100%;
+    color: white;
+    background-color: #714d69;
+    cursor: pointer;
+}
+.login-wrapper .login-label-align{
+    text-align: center;
+    margin-top: 0.5vw;
+    font-weight: 500;
+}
+@media (max-width: 700px) {
+    .login-wrapper{
+        width: 80vw; 
+        margin-left: 7vw;
+        padding: 3vw;
+    }
+    .login-wrapper .email input,
+    .login-wrapper .password input,
+    .login-wrapper .login-label,
+    .login-wrapper .submit-button button{
+        font-size: 4vw;  
+        margin-bottom: 5vw;
+    }    
+    .login-wrapper .login-label{
+        margin-top: -4vw; 
+    }
+    .login-wrapper .title{ 
+        font-size: 6vw;
+        margin: 10vw;
+    }
+    .login-wrapper .login-label-align{
+        margin-top: 1vw;
+    }
 }
