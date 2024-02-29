@@ -10,9 +10,13 @@
     justify-content: center;
     align-items: center;
 }
+.login-wrapper .logo img{
+    width: 20vw;
+    margin: 2vw;
+}
 .login-wrapper .title{
     text-align: center;
-    margin: 4vw;
+    margin: 0 4vw 4vw;
     font-size: 2.5vw;
     font-weight: 600;
     color: #714d69;
@@ -78,5 +82,8 @@
     }
     .login-wrapper .login-label-align{
         margin-top: 1vw;
+    }
+    .login-wrapper .logo img{
+        width: 50vw;  
     }
 }

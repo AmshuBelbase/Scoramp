@@ -1,149 +1,62 @@
 import React, { useState } from "react";
 import "./SignUpForm.css";
-import { IoIosSend } from "react-icons/io";
-import {
-  MdCreate,
-  MdOutgoingMail,
-  MdOutlineAppRegistration,
-} from "react-icons/md";
-import {
-  FaLock,
-  FaUser,
-  FaAddressCard,
-  FaPhoneSquareAlt,
-} from "react-icons/fa";
-import { SiGnuprivacyguard } from "react-icons/si";
-import axios from "axios";
+import picture from "../Assets/5.png";
+import { IoLogIn } from "react-icons/io5";
+import { MdOutgoingMail } from "react-icons/md";
+import { FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-const SignUpForm = () => {
+import axios from "axios";
+
+const SignUpForm = ({ setLoginUser }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
-    username: "",
-    register: "",
-    phone: "",
-    address: "",
-    email: "",
-    password: "",
-    cpassword: "",
-  });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
-  const register = () => {
-    const { username, register, phone, address, email, password, cpassword } =
-      user;
-    if (
-      username &&
-      register &&
-      phone &&
-      address &&
-      email &&
-      password &&
-      password === cpassword
-    ) {
-      axios.post("http://10.3.116.24:9002/register", user).then((res) => {
-        alert(res.data.message);
-        navigate("/login");
-      });
-    } else {
-      alert("You Entered Something Wrong ❌");
-    }
-  };
   return (
-    <div className="wrap">
-      <h1>
-        Register <MdCreate />
-      </h1>
-      <div className="container">
-        <div className="input-field">
-          <input
-            type="text"
-            name="username"
-            value={user.username}
-            placeholder="Username"
-            onChange={handleChange}
-            required
-          />
-          <FaUser className="icon" />
-        </div>
-        <div className="input-field">
-          <input
-            type="text"
-            name="register"
-            value={user.register}
-            placeholder="Registration Number"
-            onChange={handleChange}
-            required
-          />
-          <MdOutlineAppRegistration className="icon" />
-        </div>
-        <div className="input-field">
-          <input
-            type="number"
-            name="phone"
-            value={user.phone}
-            placeholder="Phone With Country Code eg. 91**********"
-            onChange={handleChange}
-            required
-          />
-          <FaPhoneSquareAlt className="icon" />
-        </div>
-        <div className="input-field">
-          <input
-            type="text"
-            name="address"
-            value={user.address}
-            placeholder="Address"
-            onChange={handleChange}
-            required
-          />
-          <FaAddressCard className="icon" />
-        </div>
-        <div className="input-field">
-          <input
-            type="email"
-            name="email"
-            value={user.email}
-            placeholder="Email"
-            onChange={handleChange}
-            required
-          />
-          <MdOutgoingMail className="icon" />
-        </div>
-        <div className="input-field">
-          <input
-            type="password"
-            name="password"
-            value={user.password}
-            placeholder="Password"
-            onChange={handleChange}
-            required
-          />
-          <FaLock className="icon" />
-        </div>
-        <div className="input-field">
-          <input
-            type="password"
-            name="cpassword"
-            value={user.cpassword}
-            placeholder="Confirm Password"
-            onChange={handleChange}
-            required
-          />
-          <SiGnuprivacyguard className="icon" />
-        </div>
+    <div className="login-wrapper">
+      <div className="logo">
+        <img src={picture} alt="" />
       </div>
-      <button type="submit" onClick={register}>
-        Create <IoIosSend className="icon" />
-      </button>
-      <p>
-        Already have an Account ?
-        <label onClick={() => navigate("/login")}> Login Here</label>
-      </p>
+      <div className="title">SIGN UP</div>
+      <div className="email">
+        <input type="text" name="" id="" placeholder="Full Name" />
+      </div>
+      <div className="email">
+        <input
+          type="text"
+          name=""
+          id=""
+          placeholder="Enter Registration / Workplace ID"
+        />
+      </div>
+      <div className="email">
+        <input
+          type="text"
+          name=""
+          id=""
+          placeholder="Enter Field / Department / Domain"
+        />
+      </div>
+      <div className="email">
+        <input type="text" name="" id="" placeholder="Address" />
+      </div>
+      <div className="email">
+        <input type="email" name="" id="" placeholder="Email" />
+      </div>
+      <div className="password">
+        <input type="password" name="" id="" placeholder="Create Password" />
+      </div>
+      <div className="password">
+        <input type="password" name="" id="" placeholder="Confirm Password" />
+      </div>
+      {/* <div className="login-label">
+        <label>Forgot Password ?</label>
+      </div> */}
+      <div className="submit-button">
+        <button>Sign Up</button>
+      </div>
+      <div className="login-label login-label-align">
+        <label onClick={() => navigate("/")}>
+          ALready have an account? <u>Log In</u>
+        </label>
+      </div>
     </div>
   );
 };

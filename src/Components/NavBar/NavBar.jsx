@@ -8,7 +8,7 @@ import { MdLeaderboard } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { RiTeamFill } from "react-icons/ri";
 import { HiBarsArrowDown, HiMiniBarsArrowUp } from "react-icons/hi2";
-const SignUpForm = () => {
+const NavBar = () => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -70,4 +70,4 @@ const SignUpForm = () => {
     </div>
   );
 };
-export default SignUpForm;
+export default NavBar;
