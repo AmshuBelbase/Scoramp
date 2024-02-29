@@ -60,17 +60,21 @@
     border-radius: 15%;
     margin: 1.5vw 1.5vw;
 } 
-@media (max-width: 768px) {
+@media (max-width: 630px) {
     .left-nav .menu{ 
         font-size: 3vw;    
     }
     .left-nav .menu .icon{
-        font-size: 8vw; 
+        font-size: 5vw; 
+        margin-right: 12px;
     } 
     .left-nav .project-details img{
         width: 30vw;
     }
     .left-nav .lastmenu{
-        margin-right: 30px;
+        margin-right: 30px; 
+    }
+    .left-nav .lastmenu .icon{ 
+        font-size: 7vw;
     }
 }
