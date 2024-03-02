@@ -26,7 +26,7 @@ const LoginForm = ({ setLoginUser }) => {
           <input type="password" name="" id="" placeholder="🔑 Password" />
         </div>
         <div className="login-label">
-          <label onClick={() => navigate("/tracking")}>Forgot Password ?</label>
+          <label onClick={() => navigate("/tracking")}>Forgot Password?</label>
         </div>
         <div className="submit-button">
           <button>
@@ -36,7 +36,7 @@ const LoginForm = ({ setLoginUser }) => {
         </div>
         <div className="login-label login-label-align">
           <label onClick={() => navigate("/signup")}>
-            Don't have an account? <u>Sign Up</u>
+            Don't have an account? <u>Create Account</u>
           </label>
         </div>
       </div>

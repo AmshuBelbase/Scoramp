@@ -13,7 +13,7 @@ const SignUpForm = ({ setLoginUser }) => {
     full_name: "",
     reg_id: "",
     phone: "",
-    field: "",
+    // field: "",
     address: "",
     email: "",
     password: "",
@@ -29,20 +29,20 @@ const SignUpForm = ({ setLoginUser }) => {
   const register = () => {
     const {
       full_name,
-      reg_id,
+      // reg_id,
       phone,
-      field,
-      address,
+      // field,
+      // address,
       email,
       password,
       cpassword,
     } = user;
     if (
       full_name &&
-      reg_id &&
+      // reg_id &&
       phone &&
-      field &&
-      address &&
+      // field &&
+      // address &&
       email &&
       password &&
       password === cpassword
@@ -65,7 +65,7 @@ const SignUpForm = ({ setLoginUser }) => {
       </div>
       <div className="login-wrapper">
         <div className="title">
-          SIGN UP
+          Create Account
           {/* <br />
           <p style={{ fontSize: "1vw" }}>It's easy and quick.</p> */}
         </div>
@@ -79,7 +79,7 @@ const SignUpForm = ({ setLoginUser }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="email">
+        {/* <div className="email">
           <input
             type="text"
             name="reg_id"
@@ -88,8 +88,8 @@ const SignUpForm = ({ setLoginUser }) => {
             value={user.reg_id}
             onChange={handleChange}
           />
-        </div>
-        <div className="email">
+        </div> */}
+        {/* <div className="email">
           <input
             type="text"
             name="field"
@@ -98,8 +98,8 @@ const SignUpForm = ({ setLoginUser }) => {
             value={user.field}
             onChange={handleChange}
           />
-        </div>
-        <div className="email">
+        </div> */}
+        {/* <div className="email">
           <input
             type="text"
             name="address"
@@ -108,7 +108,7 @@ const SignUpForm = ({ setLoginUser }) => {
             value={user.address}
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <div className="email">
           <input
             type="number"
@@ -124,7 +124,7 @@ const SignUpForm = ({ setLoginUser }) => {
             type="email"
             name="email"
             id="email"
-            placeholder="Email"
+            placeholder="Email ( OTP will be sent to verify )"
             value={user.email}
             onChange={handleChange}
           />
