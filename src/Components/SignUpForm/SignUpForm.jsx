@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./SignUpForm.css";
 import picture from "../Assets/5.png";
 import { IoLogIn } from "react-icons/io5";
-import { MdOutgoingMail } from "react-icons/md";
-import { FaLock } from "react-icons/fa";
+// import { MdOutgoingMail } from "react-icons/md";
+// import { FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -11,10 +11,10 @@ const SignUpForm = ({ setLoginUser }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     full_name: "",
-    reg_id: "",
+    // reg_id: "",
     phone: "",
     // field: "",
-    address: "",
+    // address: "",
     email: "",
     password: "",
     cpassword: "",
@@ -47,9 +47,9 @@ const SignUpForm = ({ setLoginUser }) => {
       password &&
       password === cpassword
     ) {
-      axios.post("http://10.3.116.24:9002/register", user).then((res) => {
+      axios.post("http://localhost:9002/register", user).then((res) => {
         alert(res.data.message);
-        navigate("/login");
+        navigate("/");
       });
     } else {
       alert("You Entered Something Wrong ❌");
