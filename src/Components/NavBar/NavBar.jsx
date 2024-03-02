@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./NavBar.css";
-import picture from "../Assets/1.png";
+import picture from "../Assets/5.png";
 // import { BiSolidDashboard } from "react-icons/bi";
 import { IoLogOut } from "react-icons/io5";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";

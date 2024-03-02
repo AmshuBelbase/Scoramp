@@ -63,6 +63,13 @@
     background-color: #714d69;
     cursor: pointer;
 }
+.signup-logo-wrapper .login-wrapper .submit-button button .icon{
+    margin-left: 1vw;
+    font-size: 1.4vw; 
+ } 
+ .signup-logo-wrapper .login-wrapper .submit-button:hover button .icon{
+     transform: translateX(20%); 
+  } 
 .signup-logo-wrapper .login-wrapper .login-label-align{
     text-align: center;
     margin-top: 0.5vw;
@@ -100,4 +107,7 @@
     .signup-logo-wrapper .login-logo{
         padding: 8vw;
     }
+    .signup-logo-wrapper .login-wrapper .submit-button button .icon{ 
+        font-size: 4.5vw; 
+     }
 }

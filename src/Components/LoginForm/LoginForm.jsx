@@ -20,16 +20,19 @@ const LoginForm = ({ setLoginUser }) => {
       <div className="login-wrapper">
         <div className="title">LOG IN</div>
         <div className="email">
-          <input type="email" name="" id="" placeholder="Enter Email" />
+          <input type="email" name="" id="" placeholder="📧 Email" />
         </div>
         <div className="password">
-          <input type="password" name="" id="" placeholder="Enter Password" />
+          <input type="password" name="" id="" placeholder="🔑 Password" />
         </div>
         <div className="login-label">
           <label onClick={() => navigate("/tracking")}>Forgot Password ?</label>
         </div>
         <div className="submit-button">
-          <button>Log In</button>
+          <button>
+            Log In
+            <IoLogIn className="icon" />
+          </button>
         </div>
         <div className="login-label login-label-align">
           <label onClick={() => navigate("/signup")}>
