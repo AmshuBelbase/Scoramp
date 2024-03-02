@@ -9,8 +9,8 @@ import { IoMdSettings } from "react-icons/io";
 import { RiTeamFill } from "react-icons/ri";
 import { HiBarsArrowDown, HiMiniBarsArrowUp } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-const NavBar = () => {
+// import axios from "axios";
+const NavBar = ({ setLoginUser }) => {
   const navigate = useNavigate();
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -32,6 +32,10 @@ const NavBar = () => {
   const [noShow, setShow] = useState(false);
   const showMenu = () => {
     setShow(!noShow);
+  };
+  const logout = () => {
+    setLoginUser({});
+    navigate("/");
   };
   return (
     <div className="left-nav">
@@ -58,7 +62,7 @@ const NavBar = () => {
             <IoMdSettings className="icon" />
             <h2>Settings</h2>
           </div>
-          <div className="menu" onClick={() => navigate("/")}>
+          <div className="menu" onClick={logout}>
             <IoLogOut className="icon" />
             <h2>Logout</h2>
           </div>

@@ -12,7 +12,10 @@ import {
   IoIosCloseCircle,
 } from "react-icons/io";
 import { GiNotebook } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+  const navigate = useNavigate();
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -74,7 +77,7 @@ const Home = () => {
         >
           <div className="taskstatus-container">
             <div className="task-status">
-              <div className="first">
+              <div className="first" onClick={() => navigate("/")}>
                 <label>New</label>
                 <BiSolidNotification className="icon" />
               </div>

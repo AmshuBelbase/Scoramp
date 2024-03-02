@@ -3,14 +3,36 @@ import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
 import LoginForm from "./Components/LoginForm/LoginForm";
 import SignUpForm from "./Components/SignUpForm/SignUpForm";
+import { useState } from "react";
 
 // import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
+  const [user, setLoginUser] = useState({
+    username: "",
+    register: "",
+    phone: "",
+    address: "",
+    email: "",
+    password: "",
+  });
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<LoginForm />} />
+        <Route
+          exact
+          path="/"
+          element={
+            user && user._id ? (
+              <>
+                <NavBar setLoginUser={setLoginUser} />
+                <Home setLoginUser={setLoginUser} />
+              </>
+            ) : (
+              <LoginForm setLoginUser={setLoginUser} />
+            )
+          }
+        />
       </Routes>
       <Routes>
         <Route exact path="/signup" element={<SignUpForm />} />
@@ -21,18 +43,12 @@ function App() {
           path="/tracking"
           element={
             <>
-              <NavBar />
-              <Home />
+              <NavBar setLoginUser={setLoginUser} />
+              <Home setLoginUser={setLoginUser} />
             </>
           }
         />
       </Routes>
-      {/* <div className="home-wrap">
-        <NavBar />
-        <Routes>
-          <Route exact path="/tracking" element={<Home />} />
-        </Routes>
-      </div> */}
     </Router>
   );
 }
