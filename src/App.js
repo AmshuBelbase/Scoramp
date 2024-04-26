@@ -3,6 +3,7 @@ import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
 import LoginForm from "./Components/LoginForm/LoginForm";
 import SignUpForm from "./Components/SignUpForm/SignUpForm";
+import Settings from "./Components/Settings/Settings";
 import { useState } from "react";
 
 // import { useState } from "react";
@@ -36,6 +37,18 @@ function App() {
       </Routes>
       <Routes>
         <Route exact path="/signup" element={<SignUpForm />} />
+      </Routes>
+      <Routes>
+        <Route
+          exact
+          path="/settings"
+          element={
+            <>
+              <NavBar setLoginUser={setLoginUser} />
+              <Settings setLoginUser={setLoginUser} />
+            </>
+          }
+        />
       </Routes>
       <Routes>
         <Route

@@ -50,7 +50,7 @@ const NavBar = ({ setLoginUser }) => {
             <MdLeaderboard className="icon" />
             <h2>Leaderboard</h2>
           </div>
-          <div className="menu">
+          <div className="menu" onClick={() => navigate("/tracking")}>
             <AiOutlineFundProjectionScreen className="icon" />
             <h2>Tracking</h2>
           </div>
@@ -58,7 +58,7 @@ const NavBar = ({ setLoginUser }) => {
             <RiTeamFill className="icon" />
             <h2>Teams</h2>
           </div>
-          <div className="menu">
+          <div className="menu" onClick={() => navigate("/settings")}>
             <IoMdSettings className="icon" />
             <h2>Settings</h2>
           </div>

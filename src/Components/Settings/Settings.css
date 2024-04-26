@@ -1,0 +1,126 @@
+.signup-logo-wrapper{
+    display: flex;
+    flex-flow: row nowrap;
+    margin-top: 5vh; 
+    justify-content: center;
+    align-items: center;
+}
+
+
+.signup-logo-wrapper .login-logo{
+    padding: 10vw;
+}
+.signup-logo-wrapper .login-wrapper{
+    display: flex;
+    flex-flow: column nowrap;
+    width: 70vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 0 3vw 0 3vw; 
+    border-radius: 10px;
+    justify-content: space-around;
+    align-items: center;
+}
+.login-wrapper-wrap{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center; 
+} 
+.login-wrapper-wrap .login-wrapper-first, .login-wrapper-wrap .login-wrapper-second{
+    width: 100%;
+    margin: 1vw;
+} 
+.signup-logo-wrapper .login-logo img{
+    width: 30vw;
+    margin: 2vw;
+}
+.signup-logo-wrapper .login-wrapper .title{
+    text-align: center;
+    margin: 4vw;
+    font-size: 2.5vw;
+    font-weight: 600;
+    color: #714d69;
+}
+.signup-logo-wrapper .login-wrapper .email,
+.signup-logo-wrapper .login-wrapper .password, 
+.signup-logo-wrapper .login-wrapper .login-label,
+.signup-logo-wrapper .login-wrapper .submit-button{   
+    width: 100%;
+    align-items: center;
+    margin-bottom: 2vw; 
+} 
+.signup-logo-wrapper .login-wrapper .login-label{
+    text-align: right;
+    margin-top: -1vw;
+    margin-bottom: 2vw;
+    color: #714d69;
+}
+.signup-logo-wrapper .login-wrapper .login-label label{
+    cursor: pointer;
+}
+.signup-logo-wrapper .login-wrapper .email input,
+.signup-logo-wrapper .login-wrapper .password input,
+.signup-logo-wrapper .login-wrapper .submit-button button{
+    font-size: 1.2vw;  
+    padding: 15px;
+    width: calc(100% - 30px); 
+    border: 1px solid black;
+    border-radius: 40px;
+    outline: none;
+} 
+.signup-logo-wrapper .login-wrapper .submit-button button{
+    padding: 10px;
+    width: 100%;
+    color: white;
+    background-color: #714d69;
+    cursor: pointer;
+}
+.signup-logo-wrapper .login-wrapper .submit-button button .icon{
+    margin-left: 1vw;
+    font-size: 1.4vw; 
+ } 
+ .signup-logo-wrapper .login-wrapper .submit-button:hover button .icon{
+     transform: translateX(20%); 
+  } 
+.signup-logo-wrapper .login-wrapper .login-label-align{
+    text-align: center;
+    margin-top: 0.5vw;
+    font-weight: 500;
+}
+@media (max-width: 700px) { 
+    .signup-logo-wrapper{
+        flex-flow: column nowrap;
+        margin-top: 10vh;
+    }
+    .signup-logo-wrapper .login-wrapper{
+        width: 80vw;  
+        padding: 3vw;
+    }
+    .signup-logo-wrapper .login-wrapper .email input,
+    .signup-logo-wrapper .login-wrapper .password input,
+    .signup-logo-wrapper .login-wrapper .login-label,
+    .signup-logo-wrapper .login-wrapper .submit-button button{
+        font-size: 4vw;  
+        margin-bottom: 5vw;
+    }    
+    .signup-logo-wrapper .login-wrapper .login-label{
+        margin-top: -4vw; 
+    }
+    .signup-logo-wrapper .login-wrapper .title{ 
+        font-size: 6vw;
+        margin: 10vw;
+    }
+    .signup-logo-wrapper .login-wrapper .login-label-align{
+        margin-top: 1vw;
+    }
+    .signup-logo-wrapper .login-logo .logo img{
+        width: 50vw;  
+    }
+    
+    .signup-logo-wrapper .login-logo{
+        padding: 8vw;
+    }
+    .signup-logo-wrapper .login-wrapper .submit-button button .icon{ 
+        font-size: 4.5vw; 
+     }
+}
