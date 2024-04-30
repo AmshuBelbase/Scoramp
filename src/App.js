@@ -27,7 +27,7 @@ function App() {
             user && user._id ? (
               <>
                 <NavBar setLoginUser={setLoginUser} />
-                <Home setLoginUser={setLoginUser} />
+                <Home setLoginUser={setLoginUser} user={user} />
               </>
             ) : (
               <LoginForm setLoginUser={setLoginUser} />
@@ -45,7 +45,7 @@ function App() {
           element={
             <>
               <NavBar setLoginUser={setLoginUser} />
-              <SettingsPage setLoginUser={setLoginUser} />
+              <SettingsPage setLoginUser={setLoginUser} user={user} />
             </>
           }
         />
@@ -57,7 +57,7 @@ function App() {
           element={
             <>
               <NavBar setLoginUser={setLoginUser} />
-              <Home setLoginUser={setLoginUser} />
+              <Home setLoginUser={setLoginUser} user={user} />
             </>
           }
         />

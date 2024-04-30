@@ -9,12 +9,12 @@ import axios from "axios";
 
 const SignUpForm = ({ setLoginUser }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
+  const [userSign, setUser] = useState({
     full_name: "",
-    // reg_id: "",
+    reg_id: "",
     phone: "",
-    // field: "",
-    // address: "",
+    field: "",
+    address: "",
     email: "",
     password: "",
     cpassword: "",
@@ -22,32 +22,23 @@ const SignUpForm = ({ setLoginUser }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
-      ...user,
+      ...userSign,
       [name]: value,
     });
   };
   const register = () => {
     const {
       full_name,
-      // reg_id,
+      reg_id,
       phone,
-      // field,
-      // address,
+      field,
+      address,
       email,
       password,
       cpassword,
-    } = user;
-    if (
-      full_name &&
-      // reg_id &&
-      phone &&
-      // field &&
-      // address &&
-      email &&
-      password &&
-      password === cpassword
-    ) {
-      axios.post("http://localhost:9002/register", user).then((res) => {
+    } = userSign;
+    if (full_name && phone && email && password && password === cpassword) {
+      axios.post("http://localhost:9002/register", userSign).then((res) => {
         alert(res.data.message);
         navigate("/");
       });
@@ -57,7 +48,7 @@ const SignUpForm = ({ setLoginUser }) => {
   };
   return (
     <div className="signup-logo-wrapper">
-      {console.log(user)}
+      {console.log(userSign)}
       <div className="login-logo">
         <div className="logo">
           <img src={picture} alt="" />
@@ -75,7 +66,7 @@ const SignUpForm = ({ setLoginUser }) => {
             name="full_name"
             id="full_name"
             placeholder="Full Name"
-            value={user.full_name}
+            value={userSign.full_name}
             onChange={handleChange}
           />
         </div>
@@ -85,7 +76,7 @@ const SignUpForm = ({ setLoginUser }) => {
             name="reg_id"
             id="reg_id"
             placeholder="Enter Registration / Workplace ID"
-            value={user.reg_id}
+            value={userSign.reg_id}
             onChange={handleChange}
           />
         </div> */}
@@ -95,7 +86,7 @@ const SignUpForm = ({ setLoginUser }) => {
             name="field"
             id="field"
             placeholder="Enter Field / Department / Domain"
-            value={user.field}
+            value={userSign.field}
             onChange={handleChange}
           />
         </div> */}
@@ -105,7 +96,7 @@ const SignUpForm = ({ setLoginUser }) => {
             name="address"
             id="address"
             placeholder="Address"
-            value={user.address}
+            value={userSign.address}
             onChange={handleChange}
           />
         </div> */}
@@ -115,7 +106,7 @@ const SignUpForm = ({ setLoginUser }) => {
             name="phone"
             id="phone"
             placeholder="Phone Number"
-            value={user.phone}
+            value={userSign.phone}
             onChange={handleChange}
           />
         </div>
@@ -125,7 +116,7 @@ const SignUpForm = ({ setLoginUser }) => {
             name="email"
             id="email"
             placeholder="Email ( OTP will be sent to verify )"
-            value={user.email}
+            value={userSign.email}
             onChange={handleChange}
           />
         </div>
@@ -135,7 +126,7 @@ const SignUpForm = ({ setLoginUser }) => {
             name="password"
             id="password"
             placeholder="Create Password"
-            value={user.password}
+            value={userSign.password}
             onChange={handleChange}
           />
         </div>
@@ -145,7 +136,7 @@ const SignUpForm = ({ setLoginUser }) => {
             name="cpassword"
             id="cpassword"
             placeholder=" Confirm Password"
-            value={user.cpassword}
+            value={userSign.cpassword}
             onChange={handleChange}
           />
         </div>

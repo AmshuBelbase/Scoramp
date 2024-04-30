@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SettingsPage.css";
 import picture from "../Assets/5.png";
 import { IoLogIn } from "react-icons/io5";
@@ -7,57 +7,35 @@ import { IoLogIn } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Settings = ({ setLoginUser }) => {
+const Settings = ({ setLoginUser, user }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
+  const [updatedUser, setUser] = useState({
     full_name: "",
-    // reg_id: "",
+    reg_id: "",
     phone: "",
-    // field: "",
-    // address: "",
+    field: "",
+    address: "",
     email: "",
     password: "",
-    cpassword: "",
   });
+  useEffect(() => {
+    axios
+      .post("http://localhost:9002/getUser", updatedUser)
+      .then((user) => console.log(user.data))
+      .catch((err) => console.log(err));
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
-      ...user,
+      ...updatedUser,
       [name]: value,
     });
   };
-  const register = () => {
-    const {
-      full_name,
-      // reg_id,
-      phone,
-      // field,
-      // address,
-      email,
-      password,
-      cpassword,
-    } = user;
-    if (
-      full_name &&
-      // reg_id &&
-      phone &&
-      // field &&
-      // address &&
-      email &&
-      password &&
-      password === cpassword
-    ) {
-      axios.post("http://localhost:9002/register", user).then((res) => {
-        alert(res.data.message);
-        navigate("/");
-      });
-    } else {
-      alert("You Entered Something Wrong ❌");
-    }
-  };
+  const update = () => {};
   return (
     <div className="signup-logo-wrapper">
-      {/* {console.log(user)} */}
+      {console.log(user)}
 
       <div className="login-wrapper">
         <div className="title">
@@ -83,7 +61,7 @@ const Settings = ({ setLoginUser }) => {
                 name="reg_id"
                 id="reg_id"
                 placeholder="Enter Registration / Workplace ID"
-                value={user.reg_id}
+                value={user.reg_id === "-" ? "" : user.reg_id}
                 onChange={handleChange}
               />
             </div>
@@ -93,7 +71,7 @@ const Settings = ({ setLoginUser }) => {
                 name="field"
                 id="field"
                 placeholder="Enter Field / Department / Domain"
-                value={user.field}
+                value={user.field === "-" ? "" : user.field}
                 onChange={handleChange}
               />
             </div>
@@ -103,7 +81,7 @@ const Settings = ({ setLoginUser }) => {
                 name="address"
                 id="address"
                 placeholder="Address"
-                value={user.address}
+                value={user.address === "-" ? "" : user.address}
                 onChange={handleChange}
               />
             </div>
@@ -135,12 +113,12 @@ const Settings = ({ setLoginUser }) => {
                 name="cpassword"
                 id="cpassword"
                 placeholder=" Reset Password"
-                value={user.cpassword}
+                value={user.password}
                 onChange={handleChange}
               />
             </div>
             <div className="submit-button">
-              <button onClick={register}>
+              <button onClick={update}>
                 Update <IoLogIn className="icon" />
               </button>
             </div>

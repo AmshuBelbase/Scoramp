@@ -14,12 +14,21 @@ import {
 import { GiNotebook } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home = ({ setLoginUser, user }) => {
   const navigate = useNavigate();
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  useEffect(() => {
+    // Call navigate() inside useEffect
+    if (!user || !user._id) {
+      // Navigate to the desired route
+      navigate("/");
+    } else {
+      console.log("No need to navigate");
+    }
+  }, [user]);
   useEffect(() => {
     const handleResize = () => {
       setWindowSize({
@@ -48,7 +57,7 @@ const Home = () => {
       <div className={isActive ? "top-nav passive" : "top-nav"}>
         <div className="menu menu1">
           <AiOutlineFundProjectionScreen className="icon" />
-          <h2>Tracking</h2>
+          <h2>Tracking - {user.full_name}</h2>
         </div>
         <div className="menu" onClick={toggleClass}>
           <IoMdAddCircle className="icon" />
