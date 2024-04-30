@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Settings.css";
+import "./SettingsPage.css";
 import picture from "../Assets/5.png";
 import { IoLogIn } from "react-icons/io5";
 // import { MdOutgoingMail } from "react-icons/md";

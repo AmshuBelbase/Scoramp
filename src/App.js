@@ -3,7 +3,7 @@ import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
 import LoginForm from "./Components/LoginForm/LoginForm";
 import SignUpForm from "./Components/SignUpForm/SignUpForm";
-import Settings from "./Components/Settings/Settings";
+import SettingsPage from "./Components/SettingsPage/SettingsPage";
 import { useState } from "react";
 
 // import { useState } from "react";
@@ -45,7 +45,7 @@ function App() {
           element={
             <>
               <NavBar setLoginUser={setLoginUser} />
-              <Settings setLoginUser={setLoginUser} />
+              <SettingsPage setLoginUser={setLoginUser} />
             </>
           }
         />
