@@ -314,53 +314,55 @@ const Teams = ({ setLoginUser, user }) => {
             })}
           </div>
         </div>
-        {(windowSize.width > 708 || leftpull) && (
-          <div
-            className={
-              windowSize.width > 708
-                ? "right-container"
-                : "right-container right-container-small"
-            }
-          >
-            <div className="bottom-rgt">
-              {myApprovals.map((myApproval) => {
-                console.log("approval length");
-                console.log(Object.keys(myApprovalsDetails).length);
-                return (
-                  Object.keys(myApprovals).length != 0 &&
-                  Object.keys(myApprovalsDetails).length != 0 && (
-                    <div className="bottom-right-up">
-                      <div>
-                        {myApprovalsDetails[myApproval.email].full_name} -{" "}
-                        {myApproval.team_code}
+        {(windowSize.width > 708 || leftpull) &&
+          Object.keys(myApprovals).length != 0 &&
+          Object.keys(myApprovalsDetails).length != 0 && (
+            <div
+              className={
+                windowSize.width > 708
+                  ? "right-container"
+                  : "right-container right-container-small"
+              }
+            >
+              <div className="bottom-rgt">
+                {myApprovals.map((myApproval) => {
+                  console.log("approval length");
+                  console.log(Object.keys(myApprovalsDetails).length);
+                  return (
+                    Object.keys(myApprovals).length != 0 &&
+                    Object.keys(myApprovalsDetails).length != 0 && (
+                      <div className="bottom-right-up">
+                        <div>
+                          {myApprovalsDetails[myApproval.email].full_name} -{" "}
+                          {myApproval.team_code}
+                        </div>
+                        <div className="email">
+                          <input
+                            type="button"
+                            data_name={myApproval.email}
+                            data_code={myApproval.team_code}
+                            value="Approve"
+                            class="approve"
+                            onClick={approveBtn}
+                          />
+                        </div>
+                        <div className="email">
+                          <input
+                            type="button"
+                            data_name={myApproval.email}
+                            data_code={myApproval.team_code}
+                            value="Decline"
+                            class="decline"
+                            onClick={declineBtn}
+                          />
+                        </div>
                       </div>
-                      <div className="email">
-                        <input
-                          type="button"
-                          data_name={myApproval.email}
-                          data_code={myApproval.team_code}
-                          value="Approve"
-                          class="approve"
-                          onClick={approveBtn}
-                        />
-                      </div>
-                      <div className="email">
-                        <input
-                          type="button"
-                          data_name={myApproval.email}
-                          data_code={myApproval.team_code}
-                          value="Decline"
-                          class="decline"
-                          onClick={declineBtn}
-                        />
-                      </div>
-                    </div>
-                  )
-                );
-              })}
+                    )
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
 
       {isActive && (
