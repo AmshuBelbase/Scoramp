@@ -56,14 +56,48 @@ const Teams = ({ setLoginUser, user }) => {
     });
   }, [myTeams]); // This will run every time `myTeams` changes
 
-  useEffect(() => {
-    console.log("Combined : ");
-    console.log(myTeamsDetails);
-  }, [myTeamsDetails]);
-
   //   useEffect(() => {
-  //     console.log(joinTeam);
-  //   }, [joinTeam]);
+  //     console.log("Combined : ");
+  //     console.log(myTeamsDetails);
+  //   }, [myTeamsDetails]);
+
+  const [myApprovals, setMyApprovals] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:9002/getApproveRequests", user)
+      .then((res) => {
+        console.log(res.data.message);
+        setMyApprovals(res.data.approvals);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setLoginUser, user, newTeam]);
+
+  const [myApprovalsDetails, setMyApprovalsDetails] = useState([]);
+  useEffect(() => {
+    console.log("All approvals : ");
+    console.log(myApprovals);
+    myApprovals.forEach((my_approval) => {
+      axios
+        .post("http://localhost:9002/getUserDetails", my_approval)
+        .then((userFound) => {
+          console.log("This User Detail : ");
+          console.log(userFound.data.user);
+          setMyApprovalsDetails((prevDetails) => ({
+            ...prevDetails,
+            [my_approval.email]: userFound.data.user, // Assuming team_code is unique
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }, [myApprovals]); // This will run every time `myTeams` changes
+
+  useEffect(() => {
+    console.log(myApprovalsDetails);
+  }, [myApprovalsDetails]);
 
   const handleJoinTeamChange = (e) => {
     const { name, value } = e.target;
@@ -96,6 +130,58 @@ const Teams = ({ setLoginUser, user }) => {
         ...newTeam,
         [name]: value,
       });
+    }
+  };
+
+  const approveBtn = (e) => {
+    const data_name = e.target.getAttribute("data_name");
+    const data_code = e.target.getAttribute("data_code");
+    if (data_name && data_code) {
+      axios
+        .post("http://localhost:9002/approveBtn", {
+          data_name: data_name,
+          data_code: data_code,
+        })
+        .then((res) => {
+          alert(res.data.message);
+          setNewTeam({
+            ...newTeam,
+            email: user.email,
+            team_name: "",
+            description: "",
+            type: "",
+            team_code: "",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    console.log(data_name);
+  };
+  const declineBtn = (e) => {
+    const data_name = e.target.getAttribute("data_name");
+    const data_code = e.target.getAttribute("data_code");
+    if (data_name && data_code) {
+      axios
+        .post("http://localhost:9002/declineBtn", {
+          data_name: data_name,
+          data_code: data_code,
+        })
+        .then((res) => {
+          alert(res.data.message);
+          setNewTeam({
+            ...newTeam,
+            email: user.email,
+            team_name: "",
+            description: "",
+            type: "",
+            team_code: "",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -237,87 +323,41 @@ const Teams = ({ setLoginUser, user }) => {
             }
           >
             <div className="bottom-rgt">
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
-              <div className="bottom-right-up">
-                <div>Name here</div>
-                <div className="email">
-                  <input type="button" value="Approve" class="approve" />
-                </div>
-                <div className="email">
-                  <input type="button" value="Decline" class="decline" />
-                </div>
-              </div>
+              {myApprovals.map((myApproval) => {
+                console.log("approval length");
+                console.log(Object.keys(myApprovalsDetails).length);
+                return (
+                  Object.keys(myApprovals).length != 0 &&
+                  Object.keys(myApprovalsDetails).length != 0 && (
+                    <div className="bottom-right-up">
+                      <div>
+                        {myApprovalsDetails[myApproval.email].full_name} -{" "}
+                        {myApproval.team_code}
+                      </div>
+                      <div className="email">
+                        <input
+                          type="button"
+                          data_name={myApproval.email}
+                          data_code={myApproval.team_code}
+                          value="Approve"
+                          class="approve"
+                          onClick={approveBtn}
+                        />
+                      </div>
+                      <div className="email">
+                        <input
+                          type="button"
+                          data_name={myApproval.email}
+                          data_code={myApproval.team_code}
+                          value="Decline"
+                          class="decline"
+                          onClick={declineBtn}
+                        />
+                      </div>
+                    </div>
+                  )
+                );
+              })}
             </div>
           </div>
         )}
