@@ -90,7 +90,7 @@
 .signup-logo-wrapper .login-wrapper .submit-button{
     margin-top: 3vw;
 }
-label{
+.signup-logo-wrapper .login-wrapper .email label{
     margin: 1vw;
     font-size: 0.8vw;  
 }

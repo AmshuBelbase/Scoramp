@@ -20,6 +20,10 @@ const Teams = ({ setLoginUser, user }) => {
     type: "",
     team_code: "",
   });
+  const [joinTeam, setJoinTeam] = useState({
+    email: user.email,
+    team_code: "",
+  });
   const [myTeams, setMyTeams] = useState([]);
   useEffect(() => {
     axios
@@ -56,6 +60,18 @@ const Teams = ({ setLoginUser, user }) => {
     console.log("Combined : ");
     console.log(myTeamsDetails);
   }, [myTeamsDetails]);
+
+  //   useEffect(() => {
+  //     console.log(joinTeam);
+  //   }, [joinTeam]);
+
+  const handleJoinTeamChange = (e) => {
+    const { name, value } = e.target;
+    setJoinTeam({
+      ...joinTeam,
+      [name]: value,
+    });
+  };
 
   const handlenewTeamChange = (e) => {
     const { name, value } = e.target;
@@ -98,6 +114,25 @@ const Teams = ({ setLoginUser, user }) => {
         });
         if (res.data.stat == "true") {
           toggleClass();
+        }
+      });
+    } else {
+      alert("You Entered Something Wrong ❌");
+    }
+  };
+
+  const joinNewTeam = () => {
+    const { email, team_code } = joinTeam;
+    if (email && team_code) {
+      axios.post("http://localhost:9002/joinNewTeam", joinTeam).then((res) => {
+        alert(res.data.message);
+        setJoinTeam({
+          ...joinTeam,
+          email: user.email,
+          team_code: "",
+        });
+        if (res.data.stat == "true") {
+          toggleJoinClass();
         }
       });
     } else {
@@ -178,7 +213,9 @@ const Teams = ({ setLoginUser, user }) => {
                 team.approval == "yes" && (
                   <div className="task-status">
                     <div className="first">
-                      <label>{team.email}</label>
+                      <label>
+                        Created By: {myTeamsDetails[team.team_code]?.email}
+                      </label>
                       {/* <IoCheckmarkDoneCircle className="icon" /> */}
                     </div>
                     <div className="second">
@@ -199,60 +236,87 @@ const Teams = ({ setLoginUser, user }) => {
                 : "right-container right-container-small"
             }
           >
-            {/* <div className="top-right">
-              <div className="top-right-up">
-                <div>Online</div>
-                <div>See All</div>
-              </div>
-              <div className="top-right-down">
-                <div className="menu-icon">
-                  <img src={avatar} alt="avatar" className="avatar" />
-                  <div className="member-name">MemberMemberMember</div>
-                </div>
-                <div className="menu-icon">
-                  <img src={avatar} alt="avatar" className="avatar" />
-                  <div className="member-name">Member 2</div>
-                </div>
-                <div className="menu-icon">
-                  <img src={avatar} alt="avatar" className="avatar" />
-                  <div className="member-name">Member 3</div>
-                </div>
-                <div className="menu-icon">
-                  <img src={avatar} alt="avatar" className="avatar" />
-                  <div className="member-name">Member 4</div>
-                </div>
-                <div className="menu-icon">
-                  <img src={avatar} alt="avatar" className="avatar" />
-                  <div className="member-name">Member 5</div>
-                </div>
-                <div className="menu-icon">
-                  <img src={avatar} alt="avatar" className="avatar" />
-                  <div className="member-name">Member 6</div>
-                </div>
-                <div className="menu-icon">
-                  <img src={avatar} alt="avatar" className="avatar" />
-                  <div className="member-name">Member 7</div>
-                </div>
-                <div className="menu-icon">
-                  <img src={avatar} alt="avatar" className="avatar" />
-                  <div className="member-name">Member 8</div>
-                </div>
-              </div>
-            </div> */}
-            <div className="bottom-right">
+            <div className="bottom-rgt">
               <div className="bottom-right-up">
-                <div>Search</div>
+                <div>Name here</div>
                 <div className="email">
-                  <input
-                    type="text"
-                    name="full_name"
-                    id="full_name"
-                    placeholder="Full Name"
-                    // value={userSign.full_name}
-                    // onChange={handleChange}
-                  />
+                  <input type="button" value="Approve" class="approve" />
                 </div>
-                {/* <div>See All</div> */}
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
+              </div>
+              <div className="bottom-right-up">
+                <div>Name here</div>
+                <div className="email">
+                  <input type="button" value="Approve" class="approve" />
+                </div>
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
+              </div>
+              <div className="bottom-right-up">
+                <div>Name here</div>
+                <div className="email">
+                  <input type="button" value="Approve" class="approve" />
+                </div>
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
+              </div>
+              <div className="bottom-right-up">
+                <div>Name here</div>
+                <div className="email">
+                  <input type="button" value="Approve" class="approve" />
+                </div>
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
+              </div>
+              <div className="bottom-right-up">
+                <div>Name here</div>
+                <div className="email">
+                  <input type="button" value="Approve" class="approve" />
+                </div>
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
+              </div>
+              <div className="bottom-right-up">
+                <div>Name here</div>
+                <div className="email">
+                  <input type="button" value="Approve" class="approve" />
+                </div>
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
+              </div>
+              <div className="bottom-right-up">
+                <div>Name here</div>
+                <div className="email">
+                  <input type="button" value="Approve" class="approve" />
+                </div>
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
+              </div>
+              <div className="bottom-right-up">
+                <div>Name here</div>
+                <div className="email">
+                  <input type="button" value="Approve" class="approve" />
+                </div>
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
+              </div>
+              <div className="bottom-right-up">
+                <div>Name here</div>
+                <div className="email">
+                  <input type="button" value="Approve" class="approve" />
+                </div>
+                <div className="email">
+                  <input type="button" value="Decline" class="decline" />
+                </div>
               </div>
             </div>
           </div>
@@ -335,14 +399,19 @@ const Teams = ({ setLoginUser, user }) => {
           </div>
           <div className="popup-body">
             <div className="form_container">
-              <form name="form">
-                <div className="form_item">
-                  <input type="number" placeholder="Team Code" />
-                </div>
-                <div className="btn">
-                  <input type="submit" value="Join Team" />
-                </div>
-              </form>
+              <div className="form_item">
+                <input
+                  type="text"
+                  placeholder="Team Code"
+                  name="team_code"
+                  id="team_code"
+                  value={joinTeam.team_code}
+                  onChange={handleJoinTeamChange}
+                />
+              </div>
+              <div className="btn">
+                <input type="button" value="Join Team" onClick={joinNewTeam} />
+              </div>
             </div>
           </div>
         </div>
