@@ -175,7 +175,7 @@ const Home = ({ setLoginUser, user }) => {
             </div>
             <div className="task-status">
               <div className="first">
-                <label>In progress</label>
+                <label>Nearing Deadline</label>
                 <TbProgress className="icon" />
               </div>
               <div className="second">5</div>
@@ -192,13 +192,13 @@ const Home = ({ setLoginUser, user }) => {
           </div>
 
           <div className="table-top">
-            <div className="head">Task Tracking</div>
-            <div className="taskstat-container">
+            <div className="head">Tasks To Do</div>
+            {/* <div className="taskstat-container">
               <div className="task-stat">New</div>
-              <div className="task-stat">In progress</div>
+              <div className="task-stat">Nearing Deadline</div>
               <div className="task-stat">Completed</div>
-            </div>
-            <div className="dropdown">
+            </div> */}
+            {/* <div className="dropdown">
               <button className="dropbtn">
                 Sort By <IoIosArrowDown className="icon" />
               </button>
@@ -206,7 +206,7 @@ const Home = ({ setLoginUser, user }) => {
                 <label>Date</label>
                 <label>Alphabet</label>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="task-table">
             <div className="task-table-package">
