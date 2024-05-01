@@ -1,8 +1,5 @@
 import "./Teams.css";
 import { useState, useEffect } from "react";
-import { BiSolidNotification } from "react-icons/bi";
-import { TbProgress } from "react-icons/tb";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { MdGroups } from "react-icons/md";
 import { MdConnectWithoutContact } from "react-icons/md";
 import { HiBarsArrowDown, HiMiniBarsArrowUp } from "react-icons/hi2";
@@ -23,6 +20,43 @@ const Teams = ({ setLoginUser, user }) => {
     type: "",
     team_code: "",
   });
+  const [myTeams, setMyTeams] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:9002/getMyTeams", user)
+      .then((teamFound) => {
+        setMyTeams(teamFound.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setLoginUser, user, newTeam]);
+  const [myTeamsDetails, setMyTeamsDetails] = useState([]);
+  useEffect(() => {
+    console.log("All teams : ");
+    console.log(myTeams);
+    myTeams.forEach((team) => {
+      axios
+        .post("http://localhost:9002/getTeamDetails", team)
+        .then((teamFound) => {
+          console.log("This Team Detail : ");
+          console.log(teamFound.data);
+          setMyTeamsDetails((prevDetails) => ({
+            ...prevDetails,
+            [team.team_code]: teamFound.data.team, // Assuming team_code is unique
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }, [myTeams]); // This will run every time `myTeams` changes
+
+  useEffect(() => {
+    console.log("Combined : ");
+    console.log(myTeamsDetails);
+  }, [myTeamsDetails]);
+
   const handlenewTeamChange = (e) => {
     const { name, value } = e.target;
     if (name == "type" && value != "") {
@@ -48,6 +82,7 @@ const Teams = ({ setLoginUser, user }) => {
       });
     }
   };
+
   const createTeam = () => {
     const { email, team_name, description, type, team_code } = newTeam;
     if (team_name && description && email && type && team_code) {
@@ -138,30 +173,22 @@ const Teams = ({ setLoginUser, user }) => {
           }
         >
           <div className="taskstatus-container">
-            <div className="task-status">
-              <div className="first" onClick={() => navigate("/")}>
-                <label>New</label>
-                <BiSolidNotification className="icon" />
-              </div>
-              <div className="second">5</div>
-              <div className="third">+5 from yesterday</div>
-            </div>
-            <div className="task-status">
-              <div className="first">
-                <label>In progress</label>
-                <TbProgress className="icon" />
-              </div>
-              <div className="second">5</div>
-              <div className="third">+5 from yesterday</div>
-            </div>
-            <div className="task-status">
-              <div className="first">
-                <label>Completed</label>
-                <IoCheckmarkDoneCircle className="icon" />
-              </div>
-              <div className="second">5</div>
-              <div className="third">+5 from yesterday</div>
-            </div>
+            {myTeams.map((team) => {
+              return (
+                team.approval == "yes" && (
+                  <div className="task-status">
+                    <div className="first">
+                      <label>{team.email}</label>
+                      {/* <IoCheckmarkDoneCircle className="icon" /> */}
+                    </div>
+                    <div className="second">
+                      {myTeamsDetails[team.team_code]?.team_name}
+                    </div>
+                    <div className="third">Team Code : {team.team_code}</div>
+                  </div>
+                )
+              );
+            })}
           </div>
         </div>
         {(windowSize.width > 708 || leftpull) && (

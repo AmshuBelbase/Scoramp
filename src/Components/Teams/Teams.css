@@ -67,7 +67,7 @@
 .right-wrap .container .left-container .taskstatus-container{ 
     width: 100%; 
     display: flex;
-    flex-flow: row nowrap;    
+    flex-flow: row wrap;    
     border-radius: 0.5vw;
     justify-content: space-around; 
 }
@@ -81,13 +81,16 @@
 .left-container-small .taskstatus-container .task-status{
     width: 25vw;
 }
-.taskstatus-container > div:nth-child(1){ 
+.taskstatus-container div{
+    margin: 0.5vw;
+}
+.taskstatus-container > div:nth-child(3n + 1){ 
     background-color: #dce7f0; 
 }
-.taskstatus-container > div:nth-child(2){ 
+.taskstatus-container > div:nth-child(3n + 2){ 
     background-color: #ead2dd; 
 }
-.taskstatus-container > div:nth-child(3){ 
+.taskstatus-container > div:nth-child(3n + 3){ 
     background-color: #ffeae2; 
 }
 .left-container .taskstatus-container .task-status .first{
@@ -103,24 +106,24 @@
 .left-container .taskstatus-container .task-status .third{
     font-size: 0.8vw;  
 } 
-.left-container .taskstatus-container > div:nth-child(1) .first .icon,
-.left-container .taskstatus-container > div:nth-child(1) .second
+.left-container .taskstatus-container > div:nth-child(3n + 1) .first .icon,
+.left-container .taskstatus-container > div:nth-child(3n + 1) .second
 {
     font-weight: bold;
-    font-size: 2.5vw; 
+    font-size: 1.5vw; 
     color: #369ae6;    
 }
-.left-container .taskstatus-container > div:nth-child(2) .first .icon,
-.left-container .taskstatus-container > div:nth-child(2) .second{
+.left-container .taskstatus-container > div:nth-child(3n + 2) .first .icon,
+.left-container .taskstatus-container > div:nth-child(3n + 2) .second{
     font-weight: bold;
     color: #ff57a5;
-    font-size: 2.5vw; 
+    font-size: 1.5vw; 
 }
-.left-container .taskstatus-container > div:nth-child(3) .first .icon,
-.left-container .taskstatus-container > div:nth-child(3) .second{
+.left-container .taskstatus-container > div:nth-child(3n + 3) .first .icon,
+.left-container .taskstatus-container > div:nth-child(3n + 3) .second{
     font-weight: bold;
     color: #f76340;
-    font-size: 2.5vw; 
+    font-size: 1.5vw; 
 }
 .left-container .taskstatus-container .third{
     color: gray;
@@ -480,12 +483,12 @@ color: #fff;
         font-size: 3vw;  
         margin-bottom: 2vw;
     }
-    .left-container .taskstatus-container > div:nth-child(1) .first .icon,
-    .left-container .taskstatus-container > div:nth-child(1) .second,
-    .left-container .taskstatus-container > div:nth-child(2) .first .icon,
-    .left-container .taskstatus-container > div:nth-child(2) .second,
-    .left-container .taskstatus-container > div:nth-child(3) .first .icon,
-    .left-container .taskstatus-container > div:nth-child(3) .second
+    .left-container .taskstatus-container > div:nth-child(3n + 1) .first .icon,
+    .left-container .taskstatus-container > div:nth-child(3n + 1) .second,
+    .left-container .taskstatus-container > div:nth-child(3n + 2) .first .icon,
+    .left-container .taskstatus-container > div:nth-child(3n + 2) .second,
+    .left-container .taskstatus-container > div:nth-child(3n + 3) .first .icon,
+    .left-container .taskstatus-container > div:nth-child(3n + 3) .second
     { 
     font-size: 4vw;  
     margin-bottom: 2.5vw;   
