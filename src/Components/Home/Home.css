@@ -320,9 +320,9 @@
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(64, 42, 2, 0.5); 
 } 
-.right-wrap .container .right-container .bottom-right{
+/* .right-wrap .container .right-container .bottom-right{
     margin-top: 3vw;
-} 
+}  */
 .right-wrap .container .right-container .top-right-up div:nth-child(1),
 .right-wrap .container .right-container .bottom-right-up div:nth-child(1){
     font-weight: bold;

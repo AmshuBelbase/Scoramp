@@ -6,6 +6,8 @@ import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { TbProgress } from "react-icons/tb";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { HiBarsArrowDown, HiMiniBarsArrowUp } from "react-icons/hi2";
+import axios from "axios";
+
 import {
   IoIosArrowDown,
   IoMdAddCircle,
@@ -21,9 +23,7 @@ const Home = ({ setLoginUser, user }) => {
     height: window.innerHeight,
   });
   useEffect(() => {
-    // Call navigate() inside useEffect
     if (!user || !user._id) {
-      // Navigate to the desired route
       navigate("/");
     }
   }, [user]);
@@ -49,6 +49,88 @@ const Home = ({ setLoginUser, user }) => {
   const leftPull = () => {
     setLeftPull(!leftpull);
   };
+
+  const [newTask, setNewTask] = useState({
+    email: user.email,
+    task_title: "",
+    team_code: "",
+    full_marks: "",
+    deadline: "",
+    description: "",
+  });
+  const handleNewTaskChange = (e) => {
+    const { name, value } = e.target;
+    setNewTask({
+      ...newTask,
+      [name]: value,
+    });
+  };
+
+  const [myOwnTeams, setMyOwnTeams] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:9002/getMyOwnTeams", user)
+      .then((teamFound) => {
+        setMyOwnTeams(teamFound.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setLoginUser, user]);
+
+  const assignTask = () => {
+    const { email, task_title, team_code, full_marks, deadline, description } =
+      newTask;
+    if (
+      description &&
+      email &&
+      task_title &&
+      team_code &&
+      full_marks &&
+      deadline
+    ) {
+      axios.post("http://localhost:9002/assignTask", newTask).then((res) => {
+        alert(res.data.message);
+        setNewTask({
+          ...newTask,
+          email: user.email,
+          task_title: "",
+          team_code: "",
+          full_marks: "",
+          deadline: "",
+          description: "",
+        });
+        if (res.data.stat == "true") {
+          toggleClass();
+        }
+      });
+    } else {
+      alert("You Entered Something Wrong ❌");
+    }
+  };
+
+  // const [myOwnTeamsDetails, setMyOwnTeamsDetails] = useState([]);
+  // useEffect(() => {
+  //   myOwnTeams.forEach((team) => {
+  //     axios
+  //       .post("http://localhost:9002/getTeamDetails", team)
+  //       .then((teamFound) => {
+  //         // console.log("This Team Detail : ");
+  //         // console.log(teamFound.data);
+  //         setMyOwnTeamsDetails((prevDetails) => ({
+  //           ...prevDetails,
+  //           [team.team_code]: teamFound.data.team, // Assuming team_code is unique
+  //         }));
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   });
+  // }, [myOwnTeams]); // This will run every time `myTeams` changes
+
+  useEffect(() => {
+    console.log(newTask);
+  }, [newTask]);
 
   return (
     <div className="right-wrap">
@@ -169,10 +251,9 @@ const Home = ({ setLoginUser, user }) => {
                 : "right-container right-container-small"
             }
           >
-            <div className="top-right">
+            {/* <div className="top-right">
               <div className="top-right-up">
                 <div>Online</div>
-                <div>See All</div>
               </div>
               <div className="top-right-down">
                 <div className="menu-icon">
@@ -208,11 +289,10 @@ const Home = ({ setLoginUser, user }) => {
                   <div className="member-name">Member 8</div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="bottom-right">
               <div className="bottom-right-up">
                 <div>Recent activities</div>
-                <div>See All</div>
               </div>
             </div>
           </div>
@@ -229,44 +309,74 @@ const Home = ({ setLoginUser, user }) => {
           </div>
           <div className="popup-body">
             <div className="form_container">
-              <form name="form">
+              <div className="form_item">
+                <input
+                  type="text"
+                  placeholder="Task Title"
+                  name="task_title"
+                  id="task_title"
+                  value={newTask.task_title}
+                  onChange={handleNewTaskChange}
+                />
+              </div>
+              <div className="form_item">
+                <textarea
+                  className="adjustable-textbox"
+                  placeholder="Description"
+                  name="description"
+                  id="description"
+                  value={newTask.description}
+                  onChange={handleNewTaskChange}
+                ></textarea>
+                <div className="error" id="phone"></div>
+              </div>
+              <div className="form_wrap form_grp">
                 <div className="form_item">
-                  <input type="text" placeholder="Task Title" />
+                  <select
+                    name="team_code"
+                    id="team_code"
+                    value={newTask.team_code}
+                    onChange={handleNewTaskChange}
+                  >
+                    <option value="">-- Task For --</option>
+                    {myOwnTeams.map((team) => {
+                      return (
+                        <option value={team.team_code}>{team.team_name}</option>
+                      );
+                    })}
+                  </select>
                 </div>
                 <div className="form_item">
-                  <textarea
-                    className="adjustable-textbox"
-                    placeholder="Description"
-                  ></textarea>
-                  <div className="error" id="phone"></div>
+                  <input
+                    type="number"
+                    placeholder="Marks"
+                    name="full_marks"
+                    id="full_marks"
+                    value={newTask.full_marks}
+                    onChange={handleNewTaskChange}
+                  />
                 </div>
-                <div className="form_wrap form_grp">
-                  <div className="form_item">
-                    <select name="country">
-                      <option> -- Task For --</option>
-                      <option>Option 1</option>
-                      <option>Option 2</option>
-                      <option>Option 3</option>
-                    </select>
-                  </div>
-                  <div className="form_item">
-                    <input type="number" placeholder="Marks" />
-                  </div>
-                </div>
-                <div className="form_wrap form_grp">
-                  <div className="form_item">Last Date : </div>
-                  <div className="form_item">
-                    <input type="date" placeholder="Deadline" />
-                  </div>
-                </div>
+              </div>
+              <div className="form_wrap form_grp">
+                <div className="form_item">Last Date : </div>
                 <div className="form_item">
+                  <input
+                    type="date"
+                    placeholder="Deadline"
+                    name="deadline"
+                    id="deadline"
+                    value={newTask.deadline}
+                    onChange={handleNewTaskChange}
+                  />
+                </div>
+              </div>
+              {/* <div className="form_item">
                   <input type="file" />
                   <div className="error" id="phone"></div>
-                </div>
-                <div className="btn">
-                  <input type="submit" value="Assign" />
-                </div>
-              </form>
+                </div> */}
+              <div className="btn">
+                <input type="button" value="Assign" onClick={assignTask} />
+              </div>
             </div>
           </div>
         </div>
