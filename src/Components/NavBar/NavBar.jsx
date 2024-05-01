@@ -54,7 +54,7 @@ const NavBar = ({ setLoginUser }) => {
             <AiOutlineFundProjectionScreen className="icon" />
             <h2>Tracking</h2>
           </div>
-          <div className="menu">
+          <div className="menu" onClick={() => navigate("/teams")}>
             <RiTeamFill className="icon" />
             <h2>Teams</h2>
           </div>

@@ -4,6 +4,8 @@ import NavBar from "./Components/NavBar/NavBar";
 import LoginForm from "./Components/LoginForm/LoginForm";
 import SignUpForm from "./Components/SignUpForm/SignUpForm";
 import SettingsPage from "./Components/SettingsPage/SettingsPage";
+import Teams from "./Components/Teams/Teams";
+
 import { useState } from "react";
 
 // import { useState } from "react";
@@ -58,6 +60,18 @@ function App() {
             <>
               <NavBar setLoginUser={setLoginUser} />
               <Home setLoginUser={setLoginUser} user={user} />
+            </>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          exact
+          path="/teams"
+          element={
+            <>
+              <NavBar setLoginUser={setLoginUser} />
+              <Teams setLoginUser={setLoginUser} user={user} />
             </>
           }
         />

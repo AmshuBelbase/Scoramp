@@ -66,7 +66,6 @@ const Settings = ({ setLoginUser, user }) => {
         .post("http://localhost:9002/updateUser", updatedUser)
         .then((res) => {
           alert(res.data.message);
-          // console.log(res.data.userUpdated);
           setLoginUser(res.data.userUpdated);
         });
     } else {
