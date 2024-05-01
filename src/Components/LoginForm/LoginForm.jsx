@@ -27,7 +27,7 @@ const LoginForm = ({ setLoginUser }) => {
       axios.post("http://localhost:9002/login", userLog).then((res) => {
         alert(res.data.message);
         if (typeof res.data.user === "object") {
-          console.log(res.data.user);
+          // console.log(res.data.user);
           setLoginUser(res.data.user);
           navigate("/tracking");
         } else {

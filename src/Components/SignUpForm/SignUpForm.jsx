@@ -48,7 +48,7 @@ const SignUpForm = ({ setLoginUser }) => {
   };
   return (
     <div className="signup-logo-wrapper">
-      {console.log(userSign)}
+      {/* {console.log(userSign)} */}
       <div className="login-logo">
         <div className="logo">
           <img src={picture} alt="" />

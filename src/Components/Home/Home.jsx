@@ -25,8 +25,6 @@ const Home = ({ setLoginUser, user }) => {
     if (!user || !user._id) {
       // Navigate to the desired route
       navigate("/");
-    } else {
-      console.log("No need to navigate");
     }
   }, [user]);
   useEffect(() => {
