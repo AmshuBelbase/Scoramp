@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./SettingsPage.css";
-import picture from "../Assets/5.png";
 import { IoLogIn } from "react-icons/io5";
-// import { MdOutgoingMail } from "react-icons/md";
-// import { FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Settings = ({ setLoginUser, user }) => {
   const navigate = useNavigate();
   const [updatedUser, setUser] = useState({
+    id: user._id,
     full_name: "",
     reg_id: "",
     phone: "",
@@ -21,9 +19,26 @@ const Settings = ({ setLoginUser, user }) => {
   useEffect(() => {
     axios
       .post("http://localhost:9002/getUser", updatedUser)
-      .then((user) => console.log(user.data))
+      .then((userFound) => {
+        if (typeof userFound.data.user === "object") {
+          console.log(userFound.data.user);
+          setUser({
+            ...updatedUser,
+            full_name: userFound.data.user.full_name,
+            reg_id: userFound.data.user.reg_id,
+            phone: userFound.data.user.phone,
+            field: userFound.data.user.field,
+            address: userFound.data.user.address,
+            email: userFound.data.user.email,
+            password: userFound.data.user.password,
+          });
+        } else {
+          console.log("No Values");
+          console.log(typeof userFound.data.user);
+        }
+      })
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,11 +47,13 @@ const Settings = ({ setLoginUser, user }) => {
       [name]: value,
     });
   };
-  const update = () => {};
+  const update = () => {
+    console.log(updatedUser);
+    const { id, full_name, reg_id, phone, field, address, email, password } =
+      updatedUser;
+  };
   return (
     <div className="signup-logo-wrapper">
-      {console.log(user)}
-
       <div className="login-wrapper">
         <div className="title">
           Update Account
@@ -51,7 +68,7 @@ const Settings = ({ setLoginUser, user }) => {
                 name="full_name"
                 id="full_name"
                 placeholder="Full Name"
-                value={user.full_name}
+                value={updatedUser.full_name}
                 onChange={handleChange}
               />
             </div>
@@ -61,7 +78,7 @@ const Settings = ({ setLoginUser, user }) => {
                 name="reg_id"
                 id="reg_id"
                 placeholder="Enter Registration / Workplace ID"
-                value={user.reg_id === "-" ? "" : user.reg_id}
+                value={updatedUser.reg_id === "-" ? "" : updatedUser.reg_id}
                 onChange={handleChange}
               />
             </div>
@@ -71,7 +88,7 @@ const Settings = ({ setLoginUser, user }) => {
                 name="field"
                 id="field"
                 placeholder="Enter Field / Department / Domain"
-                value={user.field === "-" ? "" : user.field}
+                value={updatedUser.field === "-" ? "" : updatedUser.field}
                 onChange={handleChange}
               />
             </div>
@@ -81,7 +98,7 @@ const Settings = ({ setLoginUser, user }) => {
                 name="address"
                 id="address"
                 placeholder="Address"
-                value={user.address === "-" ? "" : user.address}
+                value={updatedUser.address === "-" ? "" : updatedUser.address}
                 onChange={handleChange}
               />
             </div>
@@ -93,7 +110,7 @@ const Settings = ({ setLoginUser, user }) => {
                 name="phone"
                 id="phone"
                 placeholder="Phone Number"
-                value={user.phone}
+                value={updatedUser.phone}
                 onChange={handleChange}
               />
             </div>
@@ -103,7 +120,7 @@ const Settings = ({ setLoginUser, user }) => {
                 name="email"
                 id="email"
                 placeholder="Email ( OTP will be sent to verify )"
-                value={user.email}
+                value={updatedUser.email}
                 onChange={handleChange}
               />
             </div>
@@ -113,7 +130,7 @@ const Settings = ({ setLoginUser, user }) => {
                 name="cpassword"
                 id="cpassword"
                 placeholder=" Reset Password"
-                value={user.password}
+                value={updatedUser.password}
                 onChange={handleChange}
               />
             </div>
