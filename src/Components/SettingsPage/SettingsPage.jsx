@@ -51,6 +51,15 @@ const Settings = ({ setLoginUser, user }) => {
     console.log(updatedUser);
     const { id, full_name, reg_id, phone, field, address, email, password } =
       updatedUser;
+    if (full_name && phone && email && password) {
+      axios
+        .post("http://localhost:9002/updateUser", updatedUser)
+        .then((res) => {
+          console.log(res.data.message);
+        });
+    } else {
+      alert("You Entered Something Wrong ❌");
+    }
   };
   return (
     <div className="signup-logo-wrapper">
