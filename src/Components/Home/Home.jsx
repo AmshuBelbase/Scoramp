@@ -142,10 +142,6 @@ const Home = ({ setLoginUser, user }) => {
     toggleTaskTabActiveClass();
   };
 
-  useEffect(() => {
-    console.log(subTask);
-  }, [subTask]);
-
   const toggleTaskTabActiveClass = () => {
     setTaskTabActive(!isTaskTabActive);
   };
@@ -224,6 +220,21 @@ const Home = ({ setLoginUser, user }) => {
       });
   }, [user, myTeamsDetails]);
 
+  const [myTaskSubmissions, setMyTaskSubmissions] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:9002/getMyTaskSubmissions", myTeamsDetails)
+      .then((taskFound) => {
+        setMyTaskSubmissions(taskFound.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [user, myTeamsDetails, subTask]);
+  // useEffect(() => {
+  //   console.log(myTaskSubmissions);
+  // }, [myTaskSubmissions]);
+
   const [count, setCount] = useState({
     newCount: 0,
     nearingCount: 0,
@@ -233,9 +244,17 @@ const Home = ({ setLoginUser, user }) => {
   useEffect(() => {
     let newCount = 0;
     let nearingCount = 0;
+    let completedCount = 0;
+    let facultyCheckWaitCount = 0;
 
     myTasks.forEach((task) => {
-      if (task.email != user.email) {
+      const taskIdExists = myTaskSubmissions.some(
+        (sub_task) => sub_task.task_id === task._id
+      );
+      const facultyChecked = myTaskSubmissions.some(
+        (sub_task) => sub_task.fscore === -1
+      );
+      if (task.email != user.email && !taskIdExists) {
         newCount = newCount + 1;
         const dateString = task.deadline;
         const targetDate = new Date(dateString);
@@ -256,6 +275,11 @@ const Home = ({ setLoginUser, user }) => {
         if (differenceInDays <= 2) {
           nearingCount += 1;
         }
+      } else if (task.email != user.email && taskIdExists) {
+        completedCount += 1;
+        if (facultyChecked) {
+          facultyCheckWaitCount += 1;
+        }
       }
     });
     // setCount(newCount);
@@ -263,6 +287,8 @@ const Home = ({ setLoginUser, user }) => {
       ...count,
       newCount: newCount,
       nearingCount: nearingCount,
+      completedCount: completedCount,
+      facultyCheckWaitCount: facultyCheckWaitCount,
     });
   }, [myTasks, user]);
 
@@ -384,9 +410,11 @@ const Home = ({ setLoginUser, user }) => {
               </div>
               <div className="second">{count.completedCount}</div>
               <div className="third">
-                {count.completedCount == 0
-                  ? "No Tasks Approved Yet"
-                  : "Tasks Approved Till Now"}
+                {count.facultyCheckWaitCount == 0
+                  ? "All Tasks are Approved"
+                  : count.facultyCheckWaitCount == 1
+                  ? count.facultyCheckWaitCount + " Task to be Approved"
+                  : count.facultyCheckWaitCount + " Tasks to be Approved"}
               </div>
             </div>
           </div>
@@ -410,7 +438,10 @@ const Home = ({ setLoginUser, user }) => {
           </div>
           <div className="task-table">
             {myTasks.map((task) => {
-              if (task.email != user.email) {
+              const taskIdExists = myTaskSubmissions.some(
+                (sub_task) => sub_task.task_id === task._id
+              );
+              if (task.email != user.email && !taskIdExists) {
                 const currentDateTime = new Date();
                 const targetDateTime = new Date(task.deadline);
                 const obInMillis = targetDateTime - currentDateTime;
