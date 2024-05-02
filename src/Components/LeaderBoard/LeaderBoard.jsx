@@ -105,40 +105,40 @@ const LeaderBoard = ({ setLoginUser, user }) => {
           console.log(myTaskApprovalsDetails);
 
           return (
-            <div class="tablecontainer">
-              <h2>
-                {myTeamsDetails[team.team_code]?.team_name}{" "}
-                {/* <small>Triggers on 767px</small> */}
-              </h2>
-              <ul class="responsive-table">
-                <li class="table-header">
-                  <div class="col col-1">Name</div>
-                  <div class="col col-2">Task Title</div>
-                  <div class="col col-3">Faculty Score</div>
-                  <div class="col col-4">Time Score</div>
-                </li>
-                {myTaskSubmissions.map((subs) => {
-                  return (
-                    subs.team_code == team.team_code && (
-                      <li class="table-row">
-                        <div class="col col-1" data-label="Job Id">
-                          {myTaskApprovalsDetails[subs.email].full_name}
-                        </div>
-                        <div class="col col-2" data-label="Customer Name">
-                          {subs.task_id}
-                        </div>
-                        <div class="col col-3" data-label="Amount">
-                          {subs.fscore}
-                        </div>
-                        <div class="col col-4" data-label="Payment Status">
-                          {subs.tscore}
-                        </div>
-                      </li>
-                    )
-                  );
-                })}
-              </ul>
-            </div>
+            Object.keys(myTaskSubmissions).length != 0 &&
+            Object.keys(myTaskApprovalsDetails).length != 0 && (
+              <div class="tablecontainer">
+                <h2>{myTeamsDetails[team.team_code]?.team_name} </h2>
+                <ul class="responsive-table">
+                  <li class="table-header">
+                    <div class="col col-1">Name</div>
+                    <div class="col col-2">Task Title</div>
+                    <div class="col col-3">Faculty Score</div>
+                    <div class="col col-4">Time Score</div>
+                  </li>
+                  {myTaskSubmissions.map((subs) => {
+                    return (
+                      subs.team_code == team.team_code && (
+                        <li class="table-row">
+                          <div class="col col-1" data-label="Job Id">
+                            {myTaskApprovalsDetails[subs.email].full_name}
+                          </div>
+                          <div class="col col-2" data-label="Customer Name">
+                            {subs.task_id}
+                          </div>
+                          <div class="col col-3" data-label="Amount">
+                            {subs.fscore}
+                          </div>
+                          <div class="col col-4" data-label="Payment Status">
+                            {subs.tscore}
+                          </div>
+                        </li>
+                      )
+                    );
+                  })}
+                </ul>
+              </div>
+            )
           );
         }
       })}
