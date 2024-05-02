@@ -303,7 +303,7 @@ const Home = ({ setLoginUser, user }) => {
           </div>
 
           <div className="table-top">
-            <div className="head">Assigned To You (Click to Open)</div>
+            <div className="head">Assignments</div>
             {/* <div className="taskstat-container">
               <div className="task-stat">New</div>
               <div className="task-stat">Nearing Deadline</div>
@@ -349,13 +349,13 @@ const Home = ({ setLoginUser, user }) => {
                           {myTeamsDetails[task.team_code].team_name}
                         </div>
                         <div className="given-date">
-                          Full Marks : {task.full_marks}
+                          {task.full_marks} points
                         </div>
                         <div className="given-date">
-                          Given : {task.given_date}
+                          Given : {new Date(task.given_date).toLocaleString()}
                         </div>
                         <div className="given-date">
-                          Deadline: {task.deadline}
+                          Deadline: {new Date(task.deadline).toLocaleString()}
                         </div>
                         <div className="complete-percent">
                           Remaining Time:{" "}
@@ -488,7 +488,7 @@ const Home = ({ setLoginUser, user }) => {
                       <div className="form_item">
                         <input
                           type="text"
-                          placeholder={"Current Time Marks : " + obTime}
+                          placeholder={"Current Time Score : " + obTime}
                           disabled
                         />
                       </div>
@@ -506,7 +506,9 @@ const Home = ({ setLoginUser, user }) => {
                       <div className="form_item">
                         <input
                           type="text"
-                          placeholder={task.given_date}
+                          placeholder={new Date(
+                            task.given_date
+                          ).toLocaleString()}
                           disabled
                         />
                       </div>
@@ -514,7 +516,7 @@ const Home = ({ setLoginUser, user }) => {
                       <div className="form_item">
                         <input
                           type="text"
-                          placeholder={task.deadline}
+                          placeholder={new Date(task.deadline).toLocaleString()}
                           disabled
                         />
                       </div>
@@ -522,7 +524,7 @@ const Home = ({ setLoginUser, user }) => {
                     <div className="form_item">
                       <textarea
                         className="adjustable-textbox"
-                        placeholder={"Description"}
+                        placeholder={"Enter any Submission Details"}
                       ></textarea>
                       <div className="error" id="phone"></div>
                     </div>
@@ -533,7 +535,7 @@ const Home = ({ setLoginUser, user }) => {
                     <div className="btn">
                       <input
                         type="button"
-                        value="Assign"
+                        value="Submit Task"
                         onClick={assignTask}
                       />
                     </div>
@@ -593,7 +595,7 @@ const Home = ({ setLoginUser, user }) => {
                 <div className="form_item">
                   <input
                     type="number"
-                    placeholder="Marks"
+                    placeholder="Full Marks"
                     name="full_marks"
                     id="full_marks"
                     value={newTask.full_marks}
