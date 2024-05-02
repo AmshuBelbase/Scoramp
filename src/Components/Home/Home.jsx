@@ -46,10 +46,74 @@ const Home = ({ setLoginUser, user }) => {
   };
   const [isTaskTabActive, setTaskTabActive] = useState(false);
   const [openTask, setOpenTask] = useState("");
+  const [subTask, setSubTask] = useState({
+    email: user.email,
+    task_id: "",
+    team_code: "",
+    full_marks: "",
+    subDate: "",
+    submissionMessage: "",
+    fscore: "no",
+    tscore: "no",
+  });
+  const handleSubTaskChange = (e) => {
+    const { name, value } = e.target;
+    setSubTask({
+      ...subTask,
+      [name]: value,
+    });
+  };
+
+  const submitTask = () => {
+    const { email, task_id, team_code, full_marks, submissionMessage, tscore } =
+      subTask;
+    if (
+      email &&
+      task_id &&
+      team_code &&
+      full_marks &&
+      submissionMessage &&
+      tscore
+    ) {
+    } else {
+      alert("You entered something wrong ❌");
+    }
+  };
+
   const toggleTaskTab = (e) => {
+    myTasks.map((task) => {
+      if (task._id == e) {
+        const currentDateTime = new Date();
+        const targetDateTime = new Date(task.deadline);
+        const obInMillis = targetDateTime - currentDateTime;
+        const obInMinutes = Math.floor(obInMillis / (1000 * 60));
+
+        const givenDateTime = new Date(task.given_date);
+        const FullInMillis = targetDateTime - givenDateTime;
+        const FullInMinutes = Math.floor(FullInMillis / (1000 * 60));
+
+        let obTime = ((obInMinutes * task.full_marks) / FullInMinutes).toFixed(
+          2
+        );
+        obTime =
+          obTime > (80 * task.full_marks) / 100 ? task.full_marks : obTime;
+        setSubTask({
+          ...subTask,
+          task_id: task._id,
+          team_code: task.team_code,
+          full_marks: task.full_marks,
+          tscore: obTime,
+        });
+      }
+    });
     setOpenTask(e);
     toggleTaskTabActiveClass();
   };
+
+  useEffect(() => {
+    console.log(subTask);
+  }, [subTask]);
+
   const toggleTaskTabActiveClass = () => {
     setTaskTabActive(!isTaskTabActive);
   };
@@ -115,13 +179,6 @@ const Home = ({ setLoginUser, user }) => {
         });
     });
   }, [myTeams]); // This will run every time `myTeams` changes
-
-  // useEffect(() => {
-  //   // console.log("All teams I am in: ");
-  //   Object.values(myTeamsDetails).forEach((each) => {
-  //     console.log(each.team_code);
-  //   });
-  // }, [myTeamsDetails]);
 
   const [myTasks, setMyTasks] = useState([]);
   useEffect(() => {
@@ -442,21 +499,6 @@ const Home = ({ setLoginUser, user }) => {
       {isTaskTabActive &&
         myTasks.map((task) => {
           if (task._id == openTask) {
-            const currentDateTime = new Date();
-            const targetDateTime = new Date(task.deadline);
-            const obInMillis = targetDateTime - currentDateTime;
-            const obInMinutes = Math.floor(obInMillis / (1000 * 60));
-
-            const givenDateTime = new Date(task.given_date);
-            const FullInMillis = targetDateTime - givenDateTime;
-            const FullInMinutes = Math.floor(FullInMillis / (1000 * 60));
-
-            let obTime = (
-              (obInMinutes * task.full_marks) /
-              FullInMinutes
-            ).toFixed(2);
-            obTime =
-              obTime > (80 * task.full_marks) / 100 ? task.full_marks : obTime;
             return (
               <div className="popup-container">
                 <div className="head-wrap">
@@ -488,7 +530,9 @@ const Home = ({ setLoginUser, user }) => {
                       <div className="form_item">
                         <input
                           type="text"
-                          placeholder={"Current Time Score : " + obTime}
+                          name="tscore"
+                          id="tscore"
+                          placeholder={"Current Time Score : " + subTask.tscore}
                           disabled
                         />
                       </div>
@@ -524,7 +568,10 @@ const Home = ({ setLoginUser, user }) => {
                     <div className="form_item">
                       <textarea
                         className="adjustable-textbox"
+                        name="submissionMessage"
                         placeholder={"Enter any Submission Details"}
+                        value={subTask.submissionMessage}
+                        onChange={handleSubTaskChange}
                       ></textarea>
                       <div className="error" id="phone"></div>
                     </div>
@@ -536,7 +583,7 @@ const Home = ({ setLoginUser, user }) => {
                       <input
                         type="button"
                         value="Submit Task"
-                        onClick={assignTask}
+                        onClick={submitTask}
                       />
                     </div>
                   </div>
