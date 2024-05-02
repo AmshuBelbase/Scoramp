@@ -28,7 +28,7 @@ function App() {
           element={
             user && user._id ? (
               <>
-                <NavBar setLoginUser={setLoginUser} />
+                <NavBar setLoginUser={setLoginUser} user={user} />
                 <Home setLoginUser={setLoginUser} user={user} />
               </>
             ) : (
@@ -46,7 +46,7 @@ function App() {
           path="/settings"
           element={
             <>
-              <NavBar setLoginUser={setLoginUser} />
+              <NavBar setLoginUser={setLoginUser} user={user} />
               <SettingsPage setLoginUser={setLoginUser} user={user} />
             </>
           }
@@ -58,7 +58,7 @@ function App() {
           path="/tracking"
           element={
             <>
-              <NavBar setLoginUser={setLoginUser} />
+              <NavBar setLoginUser={setLoginUser} user={user} />
               <Home setLoginUser={setLoginUser} user={user} />
             </>
           }
@@ -70,7 +70,7 @@ function App() {
           path="/teams"
           element={
             <>
-              <NavBar setLoginUser={setLoginUser} />
+              <NavBar setLoginUser={setLoginUser} user={user} />
               <Teams setLoginUser={setLoginUser} user={user} />
             </>
           }

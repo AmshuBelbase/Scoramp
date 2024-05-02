@@ -10,7 +10,7 @@ import { RiTeamFill } from "react-icons/ri";
 import { HiBarsArrowDown, HiMiniBarsArrowUp } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
-const NavBar = ({ setLoginUser }) => {
+const NavBar = ({ setLoginUser, user }) => {
   const navigate = useNavigate();
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -33,6 +33,7 @@ const NavBar = ({ setLoginUser }) => {
   const showMenu = () => {
     setShow(!noShow);
   };
+
   const logout = () => {
     setLoginUser({});
     navigate("/");

@@ -34,7 +34,7 @@ const Teams = ({ setLoginUser, user }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [setLoginUser, user, newTeam]);
+  }, [user, newTeam]);
   const [myTeamsDetails, setMyTeamsDetails] = useState([]);
   useEffect(() => {
     console.log("All teams : ");
@@ -72,7 +72,7 @@ const Teams = ({ setLoginUser, user }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [setLoginUser, user, newTeam]);
+  }, [user, newTeam]);
 
   const [myApprovalsDetails, setMyApprovalsDetails] = useState([]);
   useEffect(() => {
@@ -334,7 +334,7 @@ const Teams = ({ setLoginUser, user }) => {
                       <div className="bottom-right-up">
                         <div>
                           {myApprovalsDetails[myApproval.email].full_name} -{" "}
-                          {myApproval.team_code}
+                          {myTeamsDetails[myApproval.team_code]?.team_name}
                         </div>
                         <div className="email">
                           <input

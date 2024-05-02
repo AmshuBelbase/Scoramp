@@ -45,6 +45,11 @@ const Home = ({ setLoginUser, user }) => {
     setIsActive(!isActive);
   };
   const [isTaskTabActive, setTaskTabActive] = useState(false);
+  const [openTask, setOpenTask] = useState("");
+  const toggleTaskTab = (e) => {
+    setOpenTask(e);
+    toggleTaskTabActiveClass();
+  };
   const toggleTaskTabActiveClass = () => {
     setTaskTabActive(!isTaskTabActive);
   };
@@ -80,7 +85,7 @@ const Home = ({ setLoginUser, user }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [setLoginUser, user]);
+  }, [user]);
 
   const [myTeams, setMyTeams] = useState([]);
   useEffect(() => {
@@ -92,7 +97,7 @@ const Home = ({ setLoginUser, user }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [setLoginUser, user]);
+  }, [user]);
 
   const [myTeamsDetails, setMyTeamsDetails] = useState([]);
   useEffect(() => {
@@ -111,12 +116,12 @@ const Home = ({ setLoginUser, user }) => {
     });
   }, [myTeams]); // This will run every time `myTeams` changes
 
-  useEffect(() => {
-    console.log("All teams I am in: ");
-    Object.values(myTeamsDetails).forEach((each) => {
-      console.log(each.team_code);
-    });
-  }, [myTeamsDetails]);
+  // useEffect(() => {
+  //   // console.log("All teams I am in: ");
+  //   Object.values(myTeamsDetails).forEach((each) => {
+  //     console.log(each.team_code);
+  //   });
+  // }, [myTeamsDetails]);
 
   const [myTasks, setMyTasks] = useState([]);
   useEffect(() => {
@@ -128,7 +133,7 @@ const Home = ({ setLoginUser, user }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [setLoginUser, user, myTeamsDetails]);
+  }, [user, myTeamsDetails]);
 
   const [count, setCount] = useState({
     newCount: 0,
@@ -159,7 +164,7 @@ const Home = ({ setLoginUser, user }) => {
             Date.UTC(currentYear, currentMonth, currentDay)) /
             (1000 * 60 * 60 * 24)
         );
-        if (differenceInDays <= 5) {
+        if (differenceInDays <= 2) {
           nearingCount += 1;
         }
       }
@@ -280,7 +285,7 @@ const Home = ({ setLoginUser, user }) => {
               <div className="third">
                 {count.nearingCount == 0
                   ? "No Nearing Deadline"
-                  : "Need to be completed in 5 days"}
+                  : "Deadline within 2 days"}
               </div>
             </div>
             <div className="task-status">
@@ -290,7 +295,7 @@ const Home = ({ setLoginUser, user }) => {
               </div>
               <div className="second">{count.completedCount}</div>
               <div className="third">
-                {count.nearingCount == 0
+                {count.completedCount == 0
                   ? "No Tasks Approved Yet"
                   : "Tasks Approved Till Now"}
               </div>
@@ -298,7 +303,7 @@ const Home = ({ setLoginUser, user }) => {
           </div>
 
           <div className="table-top">
-            <div className="head">Remaining Tasks</div>
+            <div className="head">Assigned To You (Click to Open)</div>
             {/* <div className="taskstat-container">
               <div className="task-stat">New</div>
               <div className="task-stat">Nearing Deadline</div>
@@ -317,10 +322,19 @@ const Home = ({ setLoginUser, user }) => {
           <div className="task-table">
             {myTasks.map((task) => {
               if (task.email != user.email) {
+                const currentDateTime = new Date();
+                const targetDateTime = new Date(task.deadline);
+                const obInMillis = targetDateTime - currentDateTime;
+                const obInMinutes = Math.floor(obInMillis / (1000 * 60));
+                const days = Math.floor(obInMinutes / (60 * 24));
+                const remainingHours = Math.floor(
+                  (obInMinutes % (60 * 24)) / 60
+                );
+                const remainingMinutes = obInMinutes % 60;
                 return (
                   <div
                     className="task-table-package"
-                    onClick={toggleTaskTabActiveClass}
+                    onClick={(e) => toggleTaskTab(task._id)}
                   >
                     <div className="task-table-icon">
                       <GiNotebook className="icon" />
@@ -338,10 +352,28 @@ const Home = ({ setLoginUser, user }) => {
                           Full Marks : {task.full_marks}
                         </div>
                         <div className="given-date">
-                          Given : {task.given_date} | Deadline: {task.deadline}
+                          Given : {task.given_date}
+                        </div>
+                        <div className="given-date">
+                          Deadline: {task.deadline}
                         </div>
                         <div className="complete-percent">
-                          Given By: {task.email}
+                          Remaining Time:{" "}
+                          {days == 0
+                            ? ""
+                            : days == 1
+                            ? days + " day "
+                            : days + " days "}
+                          {remainingHours == 0
+                            ? ""
+                            : remainingHours == 1
+                            ? remainingHours + " hr "
+                            : remainingHours + " hrs "}
+                          {remainingMinutes == 0
+                            ? ""
+                            : remainingMinutes == 1
+                            ? remainingMinutes + " min "
+                            : remainingMinutes + " mins "}
                         </div>
                       </div>
                     </div>
@@ -406,88 +438,111 @@ const Home = ({ setLoginUser, user }) => {
           </div>
         )}
       </div>
-      {isTaskTabActive && (
-        <div className="popup-container">
-          <div className="head-wrap">
-            <div className="head-title">New Task</div>
-            <div className="head-close" onClick={toggleTaskTabActiveClass}>
-              <IoIosCloseCircle />
-            </div>
-          </div>
-          <div className="popup-body">
-            <div className="form_container">
-              <div className="form_item">
-                <input
-                  type="text"
-                  placeholder="Task Title"
-                  name="task_title"
-                  id="task_title"
-                  value={newTask.task_title}
-                  onChange={handleNewTaskChange}
-                />
-              </div>
-              <div className="form_item">
-                <textarea
-                  className="adjustable-textbox"
-                  placeholder="Description"
-                  name="description"
-                  id="description"
-                  value={newTask.description}
-                  onChange={handleNewTaskChange}
-                ></textarea>
-                <div className="error" id="phone"></div>
-              </div>
-              <div className="form_wrap form_grp">
-                <div className="form_item">
-                  <select
-                    name="team_code"
-                    id="team_code"
-                    value={newTask.team_code}
-                    onChange={handleNewTaskChange}
+
+      {isTaskTabActive &&
+        myTasks.map((task) => {
+          if (task._id == openTask) {
+            const currentDateTime = new Date();
+            const targetDateTime = new Date(task.deadline);
+            const obInMillis = targetDateTime - currentDateTime;
+            const obInMinutes = Math.floor(obInMillis / (1000 * 60));
+
+            const givenDateTime = new Date(task.given_date);
+            const FullInMillis = targetDateTime - givenDateTime;
+            const FullInMinutes = Math.floor(FullInMillis / (1000 * 60));
+
+            let obTime = (
+              (obInMinutes * task.full_marks) /
+              FullInMinutes
+            ).toFixed(2);
+            obTime =
+              obTime > (80 * task.full_marks) / 100 ? task.full_marks : obTime;
+            return (
+              <div className="popup-container">
+                <div className="head-wrap">
+                  <div className="head-title">{task.task_title}</div>
+                  <div
+                    className="head-close"
+                    onClick={toggleTaskTabActiveClass}
                   >
-                    <option value="">-- Task For --</option>
-                    {myOwnTeams.map((team) => {
-                      return (
-                        <option value={team.team_code}>{team.team_name}</option>
-                      );
-                    })}
-                  </select>
+                    <IoIosCloseCircle />
+                  </div>
                 </div>
-                <div className="form_item">
-                  <input
-                    type="number"
-                    placeholder="Marks"
-                    name="full_marks"
-                    id="full_marks"
-                    value={newTask.full_marks}
-                    onChange={handleNewTaskChange}
-                  />
-                </div>
-              </div>
-              <div className="form_wrap form_grp">
-                <div className="form_item">Last Date : </div>
-                <div className="form_item">
-                  <input
-                    type="date"
-                    placeholder="Deadline"
-                    name="deadline"
-                    id="deadline"
-                    value={newTask.deadline}
-                    onChange={handleNewTaskChange}
-                  />
-                </div>
-              </div>
-              {/* <div className="form_item">
+                <div className="popup-body">
+                  <div className="form_container">
+                    <div className="form_wrap form_grp">
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          placeholder={myTeamsDetails[task.team_code].team_name}
+                          disabled
+                        />
+                      </div>
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          placeholder={"Full Marks : " + task.full_marks}
+                          disabled
+                        />
+                      </div>
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          placeholder={"Current Time Marks : " + obTime}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="form_item">
+                      <input
+                        type="text"
+                        placeholder={task.description}
+                        disabled
+                      />
+                    </div>
+
+                    <div className="form_wrap form_grp">
+                      <div className="form_item">Given Date: </div>
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          placeholder={task.given_date}
+                          disabled
+                        />
+                      </div>
+                      <div className="form_item">Last Date : </div>
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          placeholder={task.deadline}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="form_item">
+                      <textarea
+                        className="adjustable-textbox"
+                        placeholder={"Description"}
+                      ></textarea>
+                      <div className="error" id="phone"></div>
+                    </div>
+                    {/* <div className="form_item">
                   <input type="file" />
                   <div className="error" id="phone"></div>
                 </div> */}
-              <div className="btn">
-                <input type="button" value="Assign" onClick={assignTask} />
+                    <div className="btn">
+                      <input
+                        type="button"
+                        value="Assign"
+                        onClick={assignTask}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+            );
+          }
+        })}
       {isActive && (
         <div className="popup-container">
           <div className="head-wrap">
@@ -550,7 +605,7 @@ const Home = ({ setLoginUser, user }) => {
                 <div className="form_item">Last Date : </div>
                 <div className="form_item">
                   <input
-                    type="date"
+                    type="datetime-local"
                     placeholder="Deadline"
                     name="deadline"
                     id="deadline"
