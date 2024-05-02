@@ -45,6 +45,8 @@ const Home = ({ setLoginUser, user }) => {
     setIsActive(!isActive);
   };
   const [isTaskTabActive, setTaskTabActive] = useState(false);
+  const [isTaskApproveTabActive, setTaskApproveTabActive] = useState(false);
+
   const [openTask, setOpenTask] = useState("");
   const [subTask, setSubTask] = useState({
     email: user.email,
@@ -144,6 +146,21 @@ const Home = ({ setLoginUser, user }) => {
 
   const toggleTaskTabActiveClass = () => {
     setTaskTabActive(!isTaskTabActive);
+  };
+
+  const [openSubTask, setOpenSubTask] = useState({});
+  const toggleTaskApproveTabActiveClass = () => {
+    setTaskApproveTabActive(!isTaskApproveTabActive);
+  };
+  const setAndOpenSubTask = (e) => {
+    const sub_id = e.target.getAttribute("data_name");
+    const t_id = e.target.getAttribute("data_code");
+    setOpenSubTask({
+      ...openSubTask,
+      sub_id: sub_id,
+      t_id: t_id,
+    });
+    toggleTaskApproveTabActiveClass();
   };
 
   const [leftpull, setLeftPull] = useState(false);
@@ -323,6 +340,23 @@ const Home = ({ setLoginUser, user }) => {
     }
   };
 
+  const [myTaskApprovalsDetails, setMyTaskApprovalsDetails] = useState([]);
+  useEffect(() => {
+    myTaskSubmissions.forEach((my_approval) => {
+      axios
+        .post("http://localhost:9002/getUserDetails", my_approval)
+        .then((userFound) => {
+          setMyTaskApprovalsDetails((prevDetails) => ({
+            ...prevDetails,
+            [my_approval.email]: userFound.data.user,
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }, [myTaskSubmissions]);
+
   // const [myOwnTeamsDetails, setMyOwnTeamsDetails] = useState([]);
   // useEffect(() => {
   //   myOwnTeams.forEach((team) => {
@@ -345,7 +379,11 @@ const Home = ({ setLoginUser, user }) => {
   return (
     <div className="right-wrap">
       <div
-        className={isActive || isTaskTabActive ? "top-nav passive" : "top-nav"}
+        className={
+          isActive || isTaskTabActive || isTaskApproveTabActive
+            ? "top-nav passive"
+            : "top-nav"
+        }
       >
         <div className="menu menu1">
           <AiOutlineFundProjectionScreen className="icon" />
@@ -368,7 +406,9 @@ const Home = ({ setLoginUser, user }) => {
 
       <div
         className={
-          isActive || isTaskTabActive ? "container passive" : "container"
+          isActive || isTaskTabActive || isTaskApproveTabActive
+            ? "container passive"
+            : "container"
         }
       >
         <div
@@ -552,12 +592,122 @@ const Home = ({ setLoginUser, user }) => {
             </div> */}
             <div className="bottom-right">
               <div className="bottom-right-up">
-                <div>Recent activities</div>
+                <div>Approve Assignments</div>
               </div>
+              {myTaskSubmissions.map((myApproval) => {
+                return (
+                  Object.keys(myTaskSubmissions).length != 0 &&
+                  myApproval.email != user.email && (
+                    <div className="bottom-right-up">
+                      <div>
+                        {myTaskApprovalsDetails[myApproval.email]?.full_name} -{" "}
+                        {myTeamsDetails[myApproval.team_code]?.team_name}
+                      </div>
+                      <div className="email">
+                        <input
+                          type="button"
+                          data_name={myApproval._id}
+                          data_code={myApproval.task_id}
+                          value="View"
+                          class="view"
+                          onClick={setAndOpenSubTask}
+                        />
+                      </div>
+                    </div>
+                  )
+                );
+              })}
             </div>
           </div>
         )}
       </div>
+      {isTaskApproveTabActive &&
+        myTaskSubmissions.map((task) => {
+          if (
+            openSubTask.sub_id !== "undefined" &&
+            task._id == openSubTask.sub_id
+          ) {
+            const taskMain = myTasks.find(
+              (taskM) => taskM._id === openSubTask.t_id
+            );
+            return (
+              <div className="popup-container">
+                <div className="head-wrap">
+                  <div className="head-title">{taskMain.task_title}</div>
+                  <div
+                    className="head-close"
+                    onClick={toggleTaskApproveTabActiveClass}
+                  >
+                    <IoIosCloseCircle />
+                  </div>
+                </div>
+                <div className="popup-body">
+                  <div className="form_container">
+                    <div className="form_wrap form_grp">
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          placeholder={
+                            myTeamsDetails[taskMain.team_code].team_name
+                          }
+                          disabled
+                        />
+                      </div>
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          placeholder={"Full Marks : " + taskMain.full_marks}
+                          disabled
+                        />
+                      </div>
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          name="tscore"
+                          id="tscore"
+                          placeholder={"Time Score : " + task.tscore}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="form_item">
+                      <input
+                        type="text"
+                        placeholder={task.submissionMessage}
+                        disabled
+                      />
+                    </div>
+
+                    <div className="form_wrap form_grp">
+                      <div className="form_item">Submitted Date: </div>
+                      <div className="form_item">
+                        <input
+                          type="text"
+                          placeholder={new Date(task.subDate).toLocaleString()}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="btn approve">
+                      <input
+                        type="button"
+                        value="Approve ✅"
+                        // onClick={acceptTask}
+                      />
+                    </div>
+                    <div className="btn reject">
+                      <input
+                        type="button"
+                        value="Reject ❌"
+                        // onClick={rejectTask}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        })}
 
       {isTaskTabActive &&
         myTasks.map((task) => {

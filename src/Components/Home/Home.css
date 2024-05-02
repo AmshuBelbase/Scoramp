@@ -452,7 +452,10 @@ outline: none;
 .form_container .form_item input::placeholder,
 .form_container .form_item textarea::placeholder{
 color: #714d69;
+}.form_container .btn {
+    margin-bottom: 0.3vw;
 } 
+
 .form_container .btn input[type="submit"]{
 font-size: 1.5vw;
 background: #714d69;
@@ -556,4 +559,4 @@ padding: 1.3vw;
 .container .left-container .task-table .task-table-package .task-table-list .title{
     font-size: 2.5vw; 
 }    
-}
+} 
