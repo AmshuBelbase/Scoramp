@@ -141,6 +141,9 @@
     border-top: 0.5px solid rgb(220, 220, 220); 
 
 }
+.container .left-container .task-table .task-table-package:hover{
+    cursor: pointer;
+}
 .container .left-container .task-table .task-table-package:nth-child(1){
     border-top: none; 
 }

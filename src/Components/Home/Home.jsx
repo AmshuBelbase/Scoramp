@@ -44,6 +44,10 @@ const Home = ({ setLoginUser, user }) => {
   const toggleClass = () => {
     setIsActive(!isActive);
   };
+  const [isTaskTabActive, setTaskTabActive] = useState(false);
+  const toggleTaskTabActiveClass = () => {
+    setTaskTabActive(!isTaskTabActive);
+  };
 
   const [leftpull, setLeftPull] = useState(false);
   const leftPull = () => {
@@ -220,7 +224,9 @@ const Home = ({ setLoginUser, user }) => {
 
   return (
     <div className="right-wrap">
-      <div className={isActive ? "top-nav passive" : "top-nav"}>
+      <div
+        className={isActive || isTaskTabActive ? "top-nav passive" : "top-nav"}
+      >
         <div className="menu menu1">
           <AiOutlineFundProjectionScreen className="icon" />
           <h2>Tracking - {user.full_name}</h2>
@@ -240,7 +246,11 @@ const Home = ({ setLoginUser, user }) => {
         )}
       </div>
 
-      <div className={isActive ? "container passive" : "container"}>
+      <div
+        className={
+          isActive || isTaskTabActive ? "container passive" : "container"
+        }
+      >
         <div
           className={
             windowSize.width <= 708
@@ -307,10 +317,11 @@ const Home = ({ setLoginUser, user }) => {
           <div className="task-table">
             {myTasks.map((task) => {
               if (task.email != user.email) {
-                console.log("Details");
-                console.log(myTeamsDetails);
                 return (
-                  <div className="task-table-package">
+                  <div
+                    className="task-table-package"
+                    onClick={toggleTaskTabActiveClass}
+                  >
                     <div className="task-table-icon">
                       <GiNotebook className="icon" />
                     </div>
@@ -395,7 +406,88 @@ const Home = ({ setLoginUser, user }) => {
           </div>
         )}
       </div>
-
+      {isTaskTabActive && (
+        <div className="popup-container">
+          <div className="head-wrap">
+            <div className="head-title">New Task</div>
+            <div className="head-close" onClick={toggleTaskTabActiveClass}>
+              <IoIosCloseCircle />
+            </div>
+          </div>
+          <div className="popup-body">
+            <div className="form_container">
+              <div className="form_item">
+                <input
+                  type="text"
+                  placeholder="Task Title"
+                  name="task_title"
+                  id="task_title"
+                  value={newTask.task_title}
+                  onChange={handleNewTaskChange}
+                />
+              </div>
+              <div className="form_item">
+                <textarea
+                  className="adjustable-textbox"
+                  placeholder="Description"
+                  name="description"
+                  id="description"
+                  value={newTask.description}
+                  onChange={handleNewTaskChange}
+                ></textarea>
+                <div className="error" id="phone"></div>
+              </div>
+              <div className="form_wrap form_grp">
+                <div className="form_item">
+                  <select
+                    name="team_code"
+                    id="team_code"
+                    value={newTask.team_code}
+                    onChange={handleNewTaskChange}
+                  >
+                    <option value="">-- Task For --</option>
+                    {myOwnTeams.map((team) => {
+                      return (
+                        <option value={team.team_code}>{team.team_name}</option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="form_item">
+                  <input
+                    type="number"
+                    placeholder="Marks"
+                    name="full_marks"
+                    id="full_marks"
+                    value={newTask.full_marks}
+                    onChange={handleNewTaskChange}
+                  />
+                </div>
+              </div>
+              <div className="form_wrap form_grp">
+                <div className="form_item">Last Date : </div>
+                <div className="form_item">
+                  <input
+                    type="date"
+                    placeholder="Deadline"
+                    name="deadline"
+                    id="deadline"
+                    value={newTask.deadline}
+                    onChange={handleNewTaskChange}
+                  />
+                </div>
+              </div>
+              {/* <div className="form_item">
+                  <input type="file" />
+                  <div className="error" id="phone"></div>
+                </div> */}
+              <div className="btn">
+                <input type="button" value="Assign" onClick={assignTask} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {isActive && (
         <div className="popup-container">
           <div className="head-wrap">
