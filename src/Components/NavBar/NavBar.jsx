@@ -47,7 +47,7 @@ const NavBar = ({ setLoginUser, user }) => {
         <div
           className={windowSize.width > 770 ? "menu-items" : "menu-items-small"}
         >
-          <div className="menu">
+          <div className="menu" onClick={() => navigate("/leaderboard")}>
             <MdLeaderboard className="icon" />
             <h2>Leaderboard</h2>
           </div>

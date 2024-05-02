@@ -95,9 +95,9 @@ const Teams = ({ setLoginUser, user }) => {
     });
   }, [myApprovals]); // This will run every time `myTeams` changes
 
-  useEffect(() => {
-    console.log(myApprovalsDetails);
-  }, [myApprovalsDetails]);
+  // useEffect(() => {
+  //   console.log(myApprovalsDetails);
+  // }, [myApprovalsDetails]);
 
   const handleJoinTeamChange = (e) => {
     const { name, value } = e.target;

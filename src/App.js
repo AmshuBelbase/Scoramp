@@ -10,6 +10,7 @@ import { useState } from "react";
 
 // import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LeaderBoard from "./Components/LeaderBoard/LeaderBoard";
 function App() {
   const [user, setLoginUser] = useState({
     username: "",
@@ -48,6 +49,18 @@ function App() {
             <>
               <NavBar setLoginUser={setLoginUser} user={user} />
               <SettingsPage setLoginUser={setLoginUser} user={user} />
+            </>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          exact
+          path="/leaderboard"
+          element={
+            <>
+              <NavBar setLoginUser={setLoginUser} user={user} />
+              <LeaderBoard setLoginUser={setLoginUser} user={user} />
             </>
           }
         />
