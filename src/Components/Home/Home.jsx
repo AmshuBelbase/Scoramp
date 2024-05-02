@@ -66,6 +66,81 @@ const Home = ({ setLoginUser, user }) => {
     });
   };
 
+  const [apTask, setApTask] = useState([]);
+  const handleApTaskChange = (e) => {
+    const { name, value } = e.target;
+    setApTask({
+      ...apTask,
+      [name]: value,
+    });
+  };
+
+  const declineTask = () => {
+    const { _id } = apTask;
+    if (_id) {
+      axios.post("http://localhost:9002/declineTask", apTask).then((res) => {
+        alert(res.data.message);
+        setNewTask({
+          ...newTask,
+          email: user.email,
+          task_title: "",
+          team_code: "",
+          full_marks: "",
+          deadline: "",
+          description: "",
+        });
+        setSubTask({
+          ...subTask,
+          email: user.email,
+          task_id: "",
+          team_code: "",
+          full_marks: "",
+          subDate: "",
+          submissionMessage: "",
+          fscore: -1,
+          tscore: -1,
+        });
+        setApTask([]);
+        toggleTaskApproveTabActiveClass();
+      });
+    } else {
+      alert("You entered something wrong ❌");
+    }
+  };
+
+  const acceptTask = () => {
+    const { _id, fscore } = apTask;
+    if (_id && fscore) {
+      axios.post("http://localhost:9002/acceptTask", apTask).then((res) => {
+        alert(res.data.message);
+        setNewTask({
+          ...newTask,
+          email: user.email,
+          task_title: "",
+          team_code: "",
+          full_marks: "",
+          deadline: "",
+          description: "",
+        });
+        setSubTask({
+          ...subTask,
+          email: user.email,
+          task_id: "",
+          team_code: "",
+          full_marks: "",
+          subDate: "",
+          submissionMessage: "",
+          fscore: -1,
+          tscore: -1,
+        });
+        setApTask([]);
+        toggleTaskApproveTabActiveClass();
+      });
+    } else {
+      alert("You entered something wrong ❌");
+    }
+  };
+
   const submitTask = () => {
     const {
       email,
@@ -160,8 +235,16 @@ const Home = ({ setLoginUser, user }) => {
       sub_id: sub_id,
       t_id: t_id,
     });
+    setApTask({
+      ...apTask,
+      _id: sub_id,
+    });
     toggleTaskApproveTabActiveClass();
   };
+
+  useEffect(() => {
+    console.log(apTask);
+  }, [apTask]);
 
   const [leftpull, setLeftPull] = useState(false);
   const leftPull = () => {
@@ -248,9 +331,6 @@ const Home = ({ setLoginUser, user }) => {
         console.log(err);
       });
   }, [user, myTeamsDetails, subTask]);
-  // useEffect(() => {
-  //   console.log(myTaskSubmissions);
-  // }, [myTaskSubmissions]);
 
   const [count, setCount] = useState({
     newCount: 0,
@@ -597,7 +677,8 @@ const Home = ({ setLoginUser, user }) => {
               {myTaskSubmissions.map((myApproval) => {
                 return (
                   Object.keys(myTaskSubmissions).length != 0 &&
-                  myApproval.email != user.email && (
+                  myApproval.email != user.email &&
+                  myApproval.fscore < 0 && (
                     <div className="bottom-right-up">
                       <div>
                         {myTaskApprovalsDetails[myApproval.email]?.full_name} -{" "}
@@ -688,18 +769,30 @@ const Home = ({ setLoginUser, user }) => {
                         />
                       </div>
                     </div>
+                    <div className="form_item">
+                      <input
+                        type="number"
+                        placeholder={
+                          "Enter Marks out of " + taskMain.full_marks + " ..."
+                        }
+                        name="fscore"
+                        onChange={handleApTaskChange}
+                        value={apTask.fscore}
+                      />
+                      <div className="error" id="phone"></div>
+                    </div>
                     <div className="btn approve">
                       <input
                         type="button"
                         value="Approve ✅"
-                        // onClick={acceptTask}
+                        onClick={acceptTask}
                       />
                     </div>
                     <div className="btn reject">
                       <input
                         type="button"
                         value="Reject ❌"
-                        // onClick={rejectTask}
+                        onClick={declineTask}
                       />
                     </div>
                   </div>
