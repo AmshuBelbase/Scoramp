@@ -78,6 +78,96 @@ const Home = ({ setLoginUser, user }) => {
       });
   }, [setLoginUser, user]);
 
+  const [myTeams, setMyTeams] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:9002/getMyTeams", user)
+      .then((teamFound) => {
+        setMyTeams(teamFound.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setLoginUser, user]);
+
+  const [myTeamsDetails, setMyTeamsDetails] = useState([]);
+  useEffect(() => {
+    myTeams.forEach((team) => {
+      axios
+        .post("http://localhost:9002/getTeamDetails", team)
+        .then((teamFound) => {
+          setMyTeamsDetails((prevDetails) => ({
+            ...prevDetails,
+            [team.team_code]: teamFound.data.team, // Assuming team_code is unique
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }, [myTeams]); // This will run every time `myTeams` changes
+
+  useEffect(() => {
+    console.log("All teams I am in: ");
+    Object.values(myTeamsDetails).forEach((each) => {
+      console.log(each.team_code);
+    });
+  }, [myTeamsDetails]);
+
+  const [myTasks, setMyTasks] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:9002/getMyTasks", myTeamsDetails)
+      .then((taskFound) => {
+        setMyTasks(taskFound.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setLoginUser, user, myTeamsDetails]);
+
+  const [count, setCount] = useState({
+    newCount: 0,
+    nearingCount: 0,
+    lastDayCount: 0,
+    completedCount: 0,
+  });
+  useEffect(() => {
+    let newCount = 0;
+    let nearingCount = 0;
+
+    myTasks.forEach((task) => {
+      if (task.email != user.email) {
+        newCount = newCount + 1;
+        const dateString = task.deadline;
+        const targetDate = new Date(dateString);
+        const currentDate = new Date();
+        const targetYear = targetDate.getFullYear();
+        const targetMonth = targetDate.getMonth();
+        const targetDay = targetDate.getDate();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth();
+        const currentDay = currentDate.getDate();
+
+        // Calculate the difference in days
+        const differenceInDays = Math.ceil(
+          (Date.UTC(targetYear, targetMonth, targetDay) -
+            Date.UTC(currentYear, currentMonth, currentDay)) /
+            (1000 * 60 * 60 * 24)
+        );
+        if (differenceInDays <= 5) {
+          nearingCount += 1;
+        }
+      }
+    });
+    // setCount(newCount);
+    setCount({
+      ...count,
+      newCount: newCount,
+      nearingCount: nearingCount,
+    });
+  }, [myTasks, user]);
+
   const assignTask = () => {
     const { email, task_title, team_code, full_marks, deadline, description } =
       newTask;
@@ -128,10 +218,6 @@ const Home = ({ setLoginUser, user }) => {
   //   });
   // }, [myOwnTeams]); // This will run every time `myTeams` changes
 
-  useEffect(() => {
-    console.log(newTask);
-  }, [newTask]);
-
   return (
     <div className="right-wrap">
       <div className={isActive ? "top-nav passive" : "top-nav"}>
@@ -170,24 +256,24 @@ const Home = ({ setLoginUser, user }) => {
                 <label>New</label>
                 <BiSolidNotification className="icon" />
               </div>
-              <div className="second">5</div>
-              <div className="third">+5 from yesterday</div>
+              <div className="second">{count.newCount}</div>
+              <div className="third">New tasks to be done</div>
             </div>
             <div className="task-status">
               <div className="first">
                 <label>Nearing Deadline</label>
                 <TbProgress className="icon" />
               </div>
-              <div className="second">5</div>
-              <div className="third">+5 from yesterday</div>
+              <div className="second">{count.nearingCount}</div>
+              <div className="third">Need to be completed in 5 days</div>
             </div>
             <div className="task-status">
               <div className="first">
                 <label>Completed</label>
                 <IoCheckmarkDoneCircle className="icon" />
               </div>
-              <div className="second">5</div>
-              <div className="third">+5 from yesterday</div>
+              <div className="second">{count.completedCount}</div>
+              <div className="third">Tasks Approved till now</div>
             </div>
           </div>
 
