@@ -257,7 +257,9 @@ const Home = ({ setLoginUser, user }) => {
                 <BiSolidNotification className="icon" />
               </div>
               <div className="second">{count.newCount}</div>
-              <div className="third">New tasks to be done</div>
+              <div className="third">
+                {count.newCount == 0 ? "No New Task" : "New tasks to be done"}
+              </div>
             </div>
             <div className="task-status">
               <div className="first">
@@ -265,7 +267,11 @@ const Home = ({ setLoginUser, user }) => {
                 <TbProgress className="icon" />
               </div>
               <div className="second">{count.nearingCount}</div>
-              <div className="third">Need to be completed in 5 days</div>
+              <div className="third">
+                {count.nearingCount == 0
+                  ? "No Nearing Deadline"
+                  : "Need to be completed in 5 days"}
+              </div>
             </div>
             <div className="task-status">
               <div className="first">
@@ -273,12 +279,16 @@ const Home = ({ setLoginUser, user }) => {
                 <IoCheckmarkDoneCircle className="icon" />
               </div>
               <div className="second">{count.completedCount}</div>
-              <div className="third">Tasks Approved till now</div>
+              <div className="third">
+                {count.nearingCount == 0
+                  ? "No Tasks Approved Yet"
+                  : "Tasks Approved Till Now"}
+              </div>
             </div>
           </div>
 
           <div className="table-top">
-            <div className="head">Tasks To Do</div>
+            <div className="head">Remaining Tasks</div>
             {/* <div className="taskstat-container">
               <div className="task-stat">New</div>
               <div className="task-stat">Nearing Deadline</div>
@@ -295,38 +305,39 @@ const Home = ({ setLoginUser, user }) => {
             </div> */}
           </div>
           <div className="task-table">
-            <div className="task-table-package">
-              <div className="task-table-icon">
-                <GiNotebook className="icon" />
-              </div>
-              <div className="task-table-list">
-                <div className="title">
-                  This is a title of Assignment Given by the Faculty to a
-                  specific section to complete within the deadline.
-                </div>
-                <div className="task-table-list-container">
-                  <div className="given-to">Given to</div>
-                  <div className="given-date">Given on - Deadline</div>
-                  <div className="complete-percent">{windowSize.width}px</div>
-                </div>
-              </div>
-            </div>
-            <div className="task-table-package">
-              <div className="task-table-icon">
-                <GiNotebook className="icon" />
-              </div>
-              <div className="task-table-list">
-                <div className="title">
-                  This is a title of Assignment Given by the Faculty to a
-                  specific section to complete in deadline within the deadline.
-                </div>
-                <div className="task-table-list-container">
-                  <div className="given-to">Given to</div>
-                  <div className="given-date">Given on - Deadline</div>
-                  <div className="complete-percent">{windowSize.height}px</div>
-                </div>
-              </div>
-            </div>
+            {myTasks.map((task) => {
+              if (task.email != user.email) {
+                console.log("Details");
+                console.log(myTeamsDetails);
+                return (
+                  <div className="task-table-package">
+                    <div className="task-table-icon">
+                      <GiNotebook className="icon" />
+                    </div>
+                    <div className="task-table-list">
+                      <div className="title">{task.task_title}</div>
+                      <div className="task-table-list-container">
+                        {task.description}
+                      </div>
+                      <div className="task-table-list-container">
+                        <div className="given-to">
+                          {myTeamsDetails[task.team_code].team_name}
+                        </div>
+                        <div className="given-date">
+                          Full Marks : {task.full_marks}
+                        </div>
+                        <div className="given-date">
+                          Given : {task.given_date} | Deadline: {task.deadline}
+                        </div>
+                        <div className="complete-percent">
+                          Given By: {task.email}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+            })}
           </div>
         </div>
         {(windowSize.width > 708 || leftpull) && (
