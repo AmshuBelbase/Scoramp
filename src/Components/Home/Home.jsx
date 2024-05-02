@@ -53,8 +53,8 @@ const Home = ({ setLoginUser, user }) => {
     full_marks: "",
     subDate: "",
     submissionMessage: "",
-    fscore: "no",
-    tscore: "no",
+    fscore: -1,
+    tscore: -1,
   });
   const handleSubTaskChange = (e) => {
     const { name, value } = e.target;
@@ -65,16 +65,48 @@ const Home = ({ setLoginUser, user }) => {
   };
 
   const submitTask = () => {
-    const { email, task_id, team_code, full_marks, submissionMessage, tscore } =
-      subTask;
+    const {
+      email,
+      task_id,
+      team_code,
+      full_marks,
+      submissionMessage,
+      fscore,
+      tscore,
+    } = subTask;
     if (
       email &&
       task_id &&
       team_code &&
       full_marks &&
       submissionMessage &&
-      tscore
+      tscore &&
+      fscore
     ) {
+      axios.post("http://localhost:9002/submitTask", subTask).then((res) => {
+        alert(res.data.message);
+        setNewTask({
+          ...newTask,
+          email: user.email,
+          task_title: "",
+          team_code: "",
+          full_marks: "",
+          deadline: "",
+          description: "",
+        });
+        setSubTask({
+          ...subTask,
+          email: user.email,
+          task_id: "",
+          team_code: "",
+          full_marks: "",
+          subDate: "",
+          submissionMessage: "",
+          fscore: -1,
+          tscore: -1,
+        });
+        toggleTaskTabActiveClass();
+      });
     } else {
       alert("You entered something wrong ❌");
     }
