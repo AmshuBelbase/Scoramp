@@ -104,9 +104,17 @@ const LeaderBoard = ({ setLoginUser, user }) => {
           console.log(myTaskSubmissions);
           console.log(myTaskApprovalsDetails);
 
+          //   myTaskApprovalsDetails.hasOwnProperty(subs.email) &&
+          //               myTaskApprovalsDetails[subs.email].hasOwnProperty(
+          //                 "full_name"
+          //               )
+
           return (
             Object.keys(myTaskSubmissions).length != 0 &&
-            Object.keys(myTaskApprovalsDetails).length != 0 && (
+            Object.keys(myTaskApprovalsDetails).length != 0 &&
+            team.approval == "yes" &&
+            myTeamsDetails.hasOwnProperty(team.team_code) &&
+            myTeamsDetails[team.team_code].hasOwnProperty("team_name") && (
               <div class="tablecontainer">
                 <h2>{myTeamsDetails[team.team_code]?.team_name} </h2>
                 <ul class="responsive-table">
@@ -117,14 +125,21 @@ const LeaderBoard = ({ setLoginUser, user }) => {
                     <div class="col col-4">Time Score</div>
                   </li>
                   {myTaskSubmissions.map((subs) => {
+                    const taskMain = myTasks.find(
+                      (taskM) => taskM._id === subs.task_id
+                    );
                     return (
-                      subs.team_code == team.team_code && (
+                      subs.team_code == team.team_code &&
+                      myTaskApprovalsDetails.hasOwnProperty(subs.email) &&
+                      myTaskApprovalsDetails[subs.email].hasOwnProperty(
+                        "full_name"
+                      ) && (
                         <li class="table-row">
                           <div class="col col-1" data-label="Job Id">
-                            {myTaskApprovalsDetails[subs.email].full_name}
+                            {myTaskApprovalsDetails[subs.email]?.full_name}
                           </div>
                           <div class="col col-2" data-label="Customer Name">
-                            {subs.task_id}
+                            {taskMain.task_title}
                           </div>
                           <div class="col col-3" data-label="Amount">
                             {subs.fscore}
