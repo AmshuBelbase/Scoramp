@@ -345,6 +345,9 @@ const Home = ({ setLoginUser, user }) => {
     let facultyCheckWaitCount = 0;
 
     myTasks.forEach((task) => {
+      console.log(myTaskSubmissions);
+      console.log(task);
+
       const taskIdExists = myTaskSubmissions.some(
         (sub_task) => sub_task.task_id === task._id
       );
@@ -387,7 +390,7 @@ const Home = ({ setLoginUser, user }) => {
       completedCount: completedCount,
       facultyCheckWaitCount: facultyCheckWaitCount,
     });
-  }, [myTasks, user]);
+  }, [myTasks, myTaskSubmissions, user]);
 
   const assignTask = () => {
     const { email, task_title, team_code, full_marks, deadline, description } =

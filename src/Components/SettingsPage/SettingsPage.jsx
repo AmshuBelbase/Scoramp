@@ -61,7 +61,14 @@ const Settings = ({ setLoginUser, user }) => {
     // console.log(updatedUser);
     const { id, full_name, reg_id, phone, field, address, email, password } =
       updatedUser;
-    if (full_name && phone && email && password) {
+    if (
+      full_name &&
+      phone &&
+      email &&
+      password &&
+      email.includes("gmail.com") &&
+      phone.toString().length == 10
+    ) {
       axios
         .post("http://localhost:9002/updateUser", updatedUser)
         .then((res) => {

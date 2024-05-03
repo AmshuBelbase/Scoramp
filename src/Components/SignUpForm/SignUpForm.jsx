@@ -37,7 +37,15 @@ const SignUpForm = ({ setLoginUser }) => {
       password,
       cpassword,
     } = userSign;
-    if (full_name && phone && email && password && password === cpassword) {
+    if (
+      full_name &&
+      phone &&
+      phone.toString().length == 10 &&
+      email &&
+      email.includes("gmail.com") &&
+      password &&
+      password === cpassword
+    ) {
       axios.post("http://localhost:9002/register", userSign).then((res) => {
         alert(res.data.message);
         navigate("/");
