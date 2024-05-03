@@ -133,7 +133,8 @@ const LeaderBoard = ({ setLoginUser, user }) => {
                       myTaskApprovalsDetails.hasOwnProperty(subs.email) &&
                       myTaskApprovalsDetails[subs.email].hasOwnProperty(
                         "full_name"
-                      ) && (
+                      ) &&
+                      subs.fscore != -1 && (
                         <li class="table-row">
                           <div class="col col-1" data-label="Job Id">
                             {myTaskApprovalsDetails[subs.email]?.full_name}

@@ -242,9 +242,9 @@ const Home = ({ setLoginUser, user }) => {
     toggleTaskApproveTabActiveClass();
   };
 
-  useEffect(() => {
-    console.log(apTask);
-  }, [apTask]);
+  // useEffect(() => {
+  //   console.log(apTask);
+  // }, [apTask]);
 
   const [leftpull, setLeftPull] = useState(false);
   const leftPull = () => {
@@ -337,6 +337,7 @@ const Home = ({ setLoginUser, user }) => {
     nearingCount: 0,
     lastDayCount: 0,
     completedCount: 0,
+    facultyCheckWaitCount: 0,
   });
   useEffect(() => {
     let newCount = 0;
@@ -344,45 +345,65 @@ const Home = ({ setLoginUser, user }) => {
     let completedCount = 0;
     let facultyCheckWaitCount = 0;
 
+    // console.log(myTasks);
+    // console.log(myTaskSubmissions);
+    // console.log(myTeams);
+    // console.log(myTeamsDetails);
+
     myTasks.forEach((task) => {
-      console.log(myTaskSubmissions);
-      console.log(task);
-
-      const taskIdExists = myTaskSubmissions.some(
-        (sub_task) => sub_task.task_id === task._id
+      // console.log("Bools");
+      const approvedIdExists = myTeams.some(
+        (sub_team) =>
+          sub_team.team_code === task.team_code && sub_team.approval == "yes"
       );
+      const isMySubmission = myTaskSubmissions.some(
+        (sub_task) =>
+          sub_task.task_id == task._id && sub_task.email === user.email
+      );
+      const givenByMe = !(task.email != user.email);
       const facultyChecked = myTaskSubmissions.some(
-        (sub_task) => sub_task.fscore === -1
+        (sub_task) => sub_task.task_id == task._id && sub_task.fscore != -1
       );
-      if (task.email != user.email && !taskIdExists) {
-        newCount = newCount + 1;
-        const dateString = task.deadline;
-        const targetDate = new Date(dateString);
-        const currentDate = new Date();
-        const targetYear = targetDate.getFullYear();
-        const targetMonth = targetDate.getMonth();
-        const targetDay = targetDate.getDate();
-        const currentYear = currentDate.getFullYear();
-        const currentMonth = currentDate.getMonth();
-        const currentDay = currentDate.getDate();
-
-        // Calculate the difference in days
-        const differenceInDays = Math.ceil(
-          (Date.UTC(targetYear, targetMonth, targetDay) -
-            Date.UTC(currentYear, currentMonth, currentDay)) /
-            (1000 * 60 * 60 * 24)
-        );
-        if (differenceInDays <= 2) {
-          nearingCount += 1;
-        }
-      } else if (task.email != user.email && taskIdExists) {
-        completedCount += 1;
-        if (facultyChecked) {
-          facultyCheckWaitCount += 1;
+      // console.log("I am on class : " + approvedIdExists);
+      if (approvedIdExists) {
+        // console.log("Given By Me : " + givenByMe);
+        if (!givenByMe) {
+          // console.log("Submitted By Me : " + isMySubmission);
+          if (isMySubmission) {
+            completedCount++;
+            // console.log("faculty Checked : " + facultyChecked);
+            if (!facultyChecked) {
+              facultyCheckWaitCount++;
+            }
+          } else {
+            newCount++;
+            const dateString = task.deadline;
+            const targetDate = new Date(dateString);
+            const currentDate = new Date();
+            const targetYear = targetDate.getFullYear();
+            const targetMonth = targetDate.getMonth();
+            const targetDay = targetDate.getDate();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth();
+            const currentDay = currentDate.getDate();
+            // Calculate the difference in days
+            const differenceInDays = Math.ceil(
+              (Date.UTC(targetYear, targetMonth, targetDay) -
+                Date.UTC(currentYear, currentMonth, currentDay)) /
+                (1000 * 60 * 60 * 24)
+            );
+            if (differenceInDays <= 2) {
+              nearingCount += 1;
+            }
+          }
         }
       }
     });
-    // setCount(newCount);
+    // console.log(newCount);
+    // console.log(nearingCount);
+    // console.log(completedCount);
+    // console.log(facultyCheckWaitCount);
+
     setCount({
       ...count,
       newCount: newCount,
@@ -561,10 +582,21 @@ const Home = ({ setLoginUser, user }) => {
           </div>
           <div className="task-table">
             {myTasks.map((task) => {
-              const taskIdExists = myTaskSubmissions.some(
-                (sub_task) => sub_task.task_id === task._id
+              const approvedIdExists = myTeams.some(
+                (sub_team) =>
+                  sub_team.team_code === task.team_code &&
+                  sub_team.approval == "yes"
               );
-              if (task.email != user.email && !taskIdExists) {
+              const isMySubmission = myTaskSubmissions.some(
+                (sub_task) =>
+                  sub_task.task_id == task._id && sub_task.email === user.email
+              );
+              const givenByMe = !(task.email != user.email);
+              const facultyChecked = myTaskSubmissions.some(
+                (sub_task) =>
+                  sub_task.task_id == task._id && sub_task.fscore != -1
+              );
+              if (approvedIdExists && !givenByMe && !isMySubmission) {
                 const currentDateTime = new Date();
                 const targetDateTime = new Date(task.deadline);
                 const obInMillis = targetDateTime - currentDateTime;
