@@ -296,7 +296,10 @@ const Teams = ({ setLoginUser, user }) => {
           <div className="taskstatus-container">
             {myTeams.map((team) => {
               return (
-                team.approval == "yes" && (
+                team.approval == "yes" &&
+                myTeamsDetails.hasOwnProperty(team.team_code) &&
+                myTeamsDetails[team.team_code].hasOwnProperty("email") &&
+                myTeamsDetails[team.team_code].hasOwnProperty("team_name") && (
                   <div className="task-status">
                     <div className="first">
                       <label>
@@ -330,7 +333,15 @@ const Teams = ({ setLoginUser, user }) => {
                   console.log(Object.keys(myApprovalsDetails).length);
                   return (
                     Object.keys(myApprovals).length != 0 &&
-                    Object.keys(myApprovalsDetails).length != 0 && (
+                    Object.keys(myApprovalsDetails).length != 0 &&
+                    myApprovalsDetails.hasOwnProperty(myApproval.email) &&
+                    myApprovalsDetails[myApproval.email].hasOwnProperty(
+                      "full_name"
+                    ) &&
+                    myTeamsDetails.hasOwnProperty(myApproval.team_code) &&
+                    myTeamsDetails[myApproval.team_code].hasOwnProperty(
+                      "team_name"
+                    ) && (
                       <div className="bottom-right-up">
                         <div>
                           {myApprovalsDetails[myApproval.email].full_name} -{" "}

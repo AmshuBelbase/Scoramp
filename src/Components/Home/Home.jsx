@@ -572,52 +572,57 @@ const Home = ({ setLoginUser, user }) => {
                 );
                 const remainingMinutes = obInMinutes % 60;
                 return (
-                  <div
-                    className="task-table-package"
-                    onClick={(e) => toggleTaskTab(task._id)}
-                  >
-                    <div className="task-table-icon">
-                      <GiNotebook className="icon" />
-                    </div>
-                    <div className="task-table-list">
-                      <div className="title">{task.task_title}</div>
-                      <div className="task-table-list-container">
-                        {task.description}
+                  myTeamsDetails.hasOwnProperty(task.team_code) &&
+                  myTeamsDetails[task.team_code].hasOwnProperty(
+                    "team_name"
+                  ) && (
+                    <div
+                      className="task-table-package"
+                      onClick={(e) => toggleTaskTab(task._id)}
+                    >
+                      <div className="task-table-icon">
+                        <GiNotebook className="icon" />
                       </div>
-                      <div className="task-table-list-container">
-                        <div className="given-to">
-                          {myTeamsDetails[task.team_code].team_name}
+                      <div className="task-table-list">
+                        <div className="title">{task.task_title}</div>
+                        <div className="task-table-list-container">
+                          {task.description}
                         </div>
-                        <div className="given-date">
-                          {task.full_marks} points
-                        </div>
-                        <div className="given-date">
-                          Given : {new Date(task.given_date).toLocaleString()}
-                        </div>
-                        <div className="given-date">
-                          Deadline: {new Date(task.deadline).toLocaleString()}
-                        </div>
-                        <div className="complete-percent">
-                          Remaining Time:{" "}
-                          {days == 0
-                            ? ""
-                            : days == 1
-                            ? days + " day "
-                            : days + " days "}
-                          {remainingHours == 0
-                            ? ""
-                            : remainingHours == 1
-                            ? remainingHours + " hr "
-                            : remainingHours + " hrs "}
-                          {remainingMinutes == 0
-                            ? ""
-                            : remainingMinutes == 1
-                            ? remainingMinutes + " min "
-                            : remainingMinutes + " mins "}
+                        <div className="task-table-list-container">
+                          <div className="given-to">
+                            {myTeamsDetails[task.team_code].team_name}
+                          </div>
+                          <div className="given-date">
+                            {task.full_marks} points
+                          </div>
+                          <div className="given-date">
+                            Given : {new Date(task.given_date).toLocaleString()}
+                          </div>
+                          <div className="given-date">
+                            Deadline: {new Date(task.deadline).toLocaleString()}
+                          </div>
+                          <div className="complete-percent">
+                            Remaining Time:{" "}
+                            {days == 0
+                              ? ""
+                              : days == 1
+                              ? days + " day "
+                              : days + " days "}
+                            {remainingHours == 0
+                              ? ""
+                              : remainingHours == 1
+                              ? remainingHours + " hr "
+                              : remainingHours + " hrs "}
+                            {remainingMinutes == 0
+                              ? ""
+                              : remainingMinutes == 1
+                              ? remainingMinutes + " min "
+                              : remainingMinutes + " mins "}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )
                 );
               }
             })}
@@ -678,7 +683,15 @@ const Home = ({ setLoginUser, user }) => {
                 return (
                   Object.keys(myTaskSubmissions).length != 0 &&
                   myApproval.email != user.email &&
-                  myApproval.fscore < 0 && (
+                  myApproval.fscore < 0 &&
+                  myTaskApprovalsDetails.hasOwnProperty(myApproval.email) &&
+                  myTaskApprovalsDetails[myApproval.email].hasOwnProperty(
+                    "full_name"
+                  ) &&
+                  myTeamsDetails.hasOwnProperty(myApproval.team_code) &&
+                  myTeamsDetails[myApproval.team_code].hasOwnProperty(
+                    "team_name"
+                  ) && (
                     <div className="bottom-right-up">
                       <div>
                         {myTaskApprovalsDetails[myApproval.email]?.full_name} -{" "}
@@ -712,92 +725,99 @@ const Home = ({ setLoginUser, user }) => {
               (taskM) => taskM._id === openSubTask.t_id
             );
             return (
-              <div className="popup-container">
-                <div className="head-wrap">
-                  <div className="head-title">{taskMain.task_title}</div>
-                  <div
-                    className="head-close"
-                    onClick={toggleTaskApproveTabActiveClass}
-                  >
-                    <IoIosCloseCircle />
+              myTeamsDetails.hasOwnProperty(taskMain.team_code) &&
+              myTeamsDetails[taskMain.team_code].hasOwnProperty(
+                "team_name"
+              ) && (
+                <div className="popup-container">
+                  <div className="head-wrap">
+                    <div className="head-title">{taskMain.task_title}</div>
+                    <div
+                      className="head-close"
+                      onClick={toggleTaskApproveTabActiveClass}
+                    >
+                      <IoIosCloseCircle />
+                    </div>
                   </div>
-                </div>
-                <div className="popup-body">
-                  <div className="form_container">
-                    <div className="form_wrap form_grp">
-                      <div className="form_item">
-                        <input
-                          type="text"
-                          placeholder={
-                            myTeamsDetails[taskMain.team_code].team_name
-                          }
-                          disabled
-                        />
+                  <div className="popup-body">
+                    <div className="form_container">
+                      <div className="form_wrap form_grp">
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            placeholder={
+                              myTeamsDetails[taskMain.team_code].team_name
+                            }
+                            disabled
+                          />
+                        </div>
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            placeholder={"Full Marks : " + taskMain.full_marks}
+                            disabled
+                          />
+                        </div>
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            name="tscore"
+                            id="tscore"
+                            placeholder={"Time Score : " + task.tscore}
+                            disabled
+                          />
+                        </div>
                       </div>
                       <div className="form_item">
                         <input
                           type="text"
-                          placeholder={"Full Marks : " + taskMain.full_marks}
+                          placeholder={task.submissionMessage}
                           disabled
                         />
                       </div>
-                      <div className="form_item">
-                        <input
-                          type="text"
-                          name="tscore"
-                          id="tscore"
-                          placeholder={"Time Score : " + task.tscore}
-                          disabled
-                        />
-                      </div>
-                    </div>
-                    <div className="form_item">
-                      <input
-                        type="text"
-                        placeholder={task.submissionMessage}
-                        disabled
-                      />
-                    </div>
 
-                    <div className="form_wrap form_grp">
-                      <div className="form_item">Submitted Date: </div>
+                      <div className="form_wrap form_grp">
+                        <div className="form_item">Submitted Date: </div>
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            placeholder={new Date(
+                              task.subDate
+                            ).toLocaleString()}
+                            disabled
+                          />
+                        </div>
+                      </div>
                       <div className="form_item">
                         <input
-                          type="text"
-                          placeholder={new Date(task.subDate).toLocaleString()}
-                          disabled
+                          type="number"
+                          placeholder={
+                            "Enter Marks out of " + taskMain.full_marks + " ..."
+                          }
+                          name="fscore"
+                          onChange={handleApTaskChange}
+                          value={apTask.fscore}
+                        />
+                        <div className="error" id="phone"></div>
+                      </div>
+                      <div className="btn approve">
+                        <input
+                          type="button"
+                          value="Approve ✅"
+                          onClick={acceptTask}
+                        />
+                      </div>
+                      <div className="btn reject">
+                        <input
+                          type="button"
+                          value="Reject ❌"
+                          onClick={declineTask}
                         />
                       </div>
                     </div>
-                    <div className="form_item">
-                      <input
-                        type="number"
-                        placeholder={
-                          "Enter Marks out of " + taskMain.full_marks + " ..."
-                        }
-                        name="fscore"
-                        onChange={handleApTaskChange}
-                        value={apTask.fscore}
-                      />
-                      <div className="error" id="phone"></div>
-                    </div>
-                    <div className="btn approve">
-                      <input
-                        type="button"
-                        value="Approve ✅"
-                        onClick={acceptTask}
-                      />
-                    </div>
-                    <div className="btn reject">
-                      <input
-                        type="button"
-                        value="Reject ❌"
-                        onClick={declineTask}
-                      />
-                    </div>
                   </div>
                 </div>
-              </div>
+              )
             );
           }
         })}
@@ -806,95 +826,104 @@ const Home = ({ setLoginUser, user }) => {
         myTasks.map((task) => {
           if (task._id == openTask) {
             return (
-              <div className="popup-container">
-                <div className="head-wrap">
-                  <div className="head-title">{task.task_title}</div>
-                  <div
-                    className="head-close"
-                    onClick={toggleTaskTabActiveClass}
-                  >
-                    <IoIosCloseCircle />
+              myTeamsDetails.hasOwnProperty(task.team_code) &&
+              myTeamsDetails[task.team_code].hasOwnProperty("team_name") && (
+                <div className="popup-container">
+                  <div className="head-wrap">
+                    <div className="head-title">{task.task_title}</div>
+                    <div
+                      className="head-close"
+                      onClick={toggleTaskTabActiveClass}
+                    >
+                      <IoIosCloseCircle />
+                    </div>
                   </div>
-                </div>
-                <div className="popup-body">
-                  <div className="form_container">
-                    <div className="form_wrap form_grp">
-                      <div className="form_item">
-                        <input
-                          type="text"
-                          placeholder={myTeamsDetails[task.team_code].team_name}
-                          disabled
-                        />
+                  <div className="popup-body">
+                    <div className="form_container">
+                      <div className="form_wrap form_grp">
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            placeholder={
+                              myTeamsDetails[task.team_code].team_name
+                            }
+                            disabled
+                          />
+                        </div>
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            placeholder={"Full Marks : " + task.full_marks}
+                            disabled
+                          />
+                        </div>
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            name="tscore"
+                            id="tscore"
+                            placeholder={
+                              "Current Time Score : " + subTask.tscore
+                            }
+                            disabled
+                          />
+                        </div>
                       </div>
                       <div className="form_item">
                         <input
                           type="text"
-                          placeholder={"Full Marks : " + task.full_marks}
+                          placeholder={task.description}
                           disabled
                         />
                       </div>
-                      <div className="form_item">
-                        <input
-                          type="text"
-                          name="tscore"
-                          id="tscore"
-                          placeholder={"Current Time Score : " + subTask.tscore}
-                          disabled
-                        />
-                      </div>
-                    </div>
-                    <div className="form_item">
-                      <input
-                        type="text"
-                        placeholder={task.description}
-                        disabled
-                      />
-                    </div>
 
-                    <div className="form_wrap form_grp">
-                      <div className="form_item">Given Date: </div>
-                      <div className="form_item">
-                        <input
-                          type="text"
-                          placeholder={new Date(
-                            task.given_date
-                          ).toLocaleString()}
-                          disabled
-                        />
+                      <div className="form_wrap form_grp">
+                        <div className="form_item">Given Date: </div>
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            placeholder={new Date(
+                              task.given_date
+                            ).toLocaleString()}
+                            disabled
+                          />
+                        </div>
+                        <div className="form_item">Last Date : </div>
+                        <div className="form_item">
+                          <input
+                            type="text"
+                            placeholder={new Date(
+                              task.deadline
+                            ).toLocaleString()}
+                            disabled
+                          />
+                        </div>
                       </div>
-                      <div className="form_item">Last Date : </div>
                       <div className="form_item">
-                        <input
-                          type="text"
-                          placeholder={new Date(task.deadline).toLocaleString()}
-                          disabled
-                        />
+                        <textarea
+                          className="adjustable-textbox"
+                          name="submissionMessage"
+                          placeholder={"Enter any Submission Details"}
+                          value={subTask.submissionMessage}
+                          onChange={handleSubTaskChange}
+                        ></textarea>
+                        <div className="error" id="phone"></div>
                       </div>
-                    </div>
-                    <div className="form_item">
-                      <textarea
-                        className="adjustable-textbox"
-                        name="submissionMessage"
-                        placeholder={"Enter any Submission Details"}
-                        value={subTask.submissionMessage}
-                        onChange={handleSubTaskChange}
-                      ></textarea>
-                      <div className="error" id="phone"></div>
-                    </div>
-                    {/* <div className="form_item">
+                      {/* <div className="form_item">
                   <input type="file" />
                   <div className="error" id="phone"></div>
                 </div> */}
-                    <div className="btn">
-                      <input
-                        type="button"
-                        value="Submit Task"
-                        onClick={submitTask}
-                      />
+                      <div className="btn">
+                        <input
+                          type="button"
+                          value="Submit Task"
+                          onClick={submitTask}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )
             );
           }
         })}
