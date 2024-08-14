@@ -525,6 +525,6 @@ app.post("/getApproveRequests", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.listen(9002, () => {
+app.listen(3001, () => {
   console.log("Be started at port 9002");
 });
