@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["https://deploy-mern-frontend.vercel.app"],
+    origin: ["https://scoramp.vercel.app/"],
     methods: ["POST", "GET"],
     credentials: true,
   })
