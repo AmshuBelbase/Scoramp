@@ -98,17 +98,6 @@ const LeaderBoard = ({ setLoginUser, user }) => {
     <div class="allTables">
       {myTeams.map((team) => {
         {
-          console.log(team);
-          console.log(myTeamsDetails);
-          console.log(myTasks);
-          console.log(myTaskSubmissions);
-          console.log(myTaskApprovalsDetails);
-
-          //   myTaskApprovalsDetails.hasOwnProperty(subs.email) &&
-          //               myTaskApprovalsDetails[subs.email].hasOwnProperty(
-          //                 "full_name"
-          //               )
-
           return (
             Object.keys(myTaskSubmissions).length != 0 &&
             Object.keys(myTaskApprovalsDetails).length != 0 &&
