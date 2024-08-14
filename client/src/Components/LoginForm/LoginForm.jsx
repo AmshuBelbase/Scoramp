@@ -24,16 +24,18 @@ const LoginForm = ({ setLoginUser }) => {
   const login = () => {
     const { email, password } = userLog;
     if (email && password && email.includes("gmail.com")) {
-      axios.post("http://localhost:9002/login", userLog).then((res) => {
-        alert(res.data.message);
-        if (typeof res.data.user === "object") {
-          // console.log(res.data.user);
-          setLoginUser(res.data.user);
-          navigate("/tracking");
-        } else {
-          console.log("No Values");
-        }
-      });
+      axios
+        .post("https://scoramp-api.vercel.app/login", userLog)
+        .then((res) => {
+          alert(res.data.message);
+          if (typeof res.data.user === "object") {
+            // console.log(res.data.user);
+            setLoginUser(res.data.user);
+            navigate("/tracking");
+          } else {
+            console.log("No Values");
+          }
+        });
     } else {
       alert("You Entered Something Wrong ❌");
     }

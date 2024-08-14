@@ -25,7 +25,7 @@ const Settings = ({ setLoginUser, user }) => {
   }, [user]);
   useEffect(() => {
     axios
-      .post("http://localhost:9002/getUser", updatedUser)
+      .post("https://scoramp-api.vercel.app/getUser", updatedUser)
       .then((userFound) => {
         if (typeof userFound.data.user === "object") {
           // console.log(userFound.data.user);
@@ -70,7 +70,7 @@ const Settings = ({ setLoginUser, user }) => {
       phone.toString().length == 10
     ) {
       axios
-        .post("http://localhost:9002/updateUser", updatedUser)
+        .post("https://scoramp-api.vercel.app/updateUser", updatedUser)
         .then((res) => {
           alert(res.data.message);
           setLoginUser(res.data.userUpdated);

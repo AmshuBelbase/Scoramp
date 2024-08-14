@@ -15,7 +15,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   const [myTeams, setMyTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("http://localhost:9002/getMyTeams", user)
+      .post("https://scoramp-api.vercel.app/getMyTeams", user)
       .then((teamFound) => {
         setMyTeams(teamFound.data);
       })
@@ -28,7 +28,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   useEffect(() => {
     myTeams.forEach((team) => {
       axios
-        .post("http://localhost:9002/getTeamDetails", team)
+        .post("https://scoramp-api.vercel.app/getTeamDetails", team)
         .then((teamFound) => {
           setMyTeamsDetails((prevDetails) => ({
             ...prevDetails,
@@ -44,7 +44,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   const [myOwnTeams, setMyOwnTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("http://localhost:9002/getMyOwnTeams", user)
+      .post("https://scoramp-api.vercel.app/getMyOwnTeams", user)
       .then((teamFound) => {
         setMyOwnTeams(teamFound.data);
       })
@@ -56,7 +56,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   const [myTasks, setMyTasks] = useState([]);
   useEffect(() => {
     axios
-      .post("http://localhost:9002/getMyTasks", myTeamsDetails)
+      .post("https://scoramp-api.vercel.app/getMyTasks", myTeamsDetails)
       .then((taskFound) => {
         setMyTasks(taskFound.data);
       })
@@ -68,7 +68,10 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   const [myTaskSubmissions, setMyTaskSubmissions] = useState([]);
   useEffect(() => {
     axios
-      .post("http://localhost:9002/getMyTaskSubmissions", myTeamsDetails)
+      .post(
+        "https://scoramp-api.vercel.app/getMyTaskSubmissions",
+        myTeamsDetails
+      )
       .then((taskFound) => {
         setMyTaskSubmissions(taskFound.data);
       })
@@ -81,7 +84,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   useEffect(() => {
     myTaskSubmissions.forEach((my_approval) => {
       axios
-        .post("http://localhost:9002/getUserDetails", my_approval)
+        .post("https://scoramp-api.vercel.app/getUserDetails", my_approval)
         .then((userFound) => {
           setMyTaskApprovalsDetails((prevDetails) => ({
             ...prevDetails,
