@@ -5,17 +5,34 @@ import mongoose from "mongoose";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://deploy-mern-frontend.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
-const corsOption = {
-  origin: ["http://localhost:3000"],
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-};
-app.use(cors(corsOption));
+// const corsOption = {
+//   origin: ["http://localhost:3000"],
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+// };
+// app.use(cors(corsOption));
+
+// mongoose
+//   .connect("mongodb://localhost:27017/Scoramp")
+//   .then(() => {
+//     console.log("Connected to MongoDB");
+//   })
+//   .catch((err) => {
+//     console.error("Error connecting to MongoDB:", err);
+//   });
 
 mongoose
-  .connect("mongodb://localhost:27017/Scoramp")
+  .connect(
+    "mongodb+srv://ab0667:m3dbYVKnF5ICvgf7@scoramp.7zvnt.mongodb.net/Scoramp?retryWrites=true&w=majority&appName=Scoramp"
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -73,6 +90,10 @@ const taskSubmissionSchema = new mongoose.Schema({
   tscore: Number,
 });
 const subTask = new mongoose.model("SubTask", taskSubmissionSchema);
+
+app.get("/", (req, res) => {
+  res.json("Hello");
+});
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
