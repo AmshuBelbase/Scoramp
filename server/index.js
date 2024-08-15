@@ -37,7 +37,7 @@ app.use(
 
 mongoose
   .connect(
-    "mongodb+srv://ab0667:m3dbYVKnF5ICvgf7@scoramp.7zvnt.mongodb.net/Scoramp?retryWrites=true&w=majority&appName=Scoramp"
+    "mongodb+srv://ab0667:m3dbYVKnF5ICvgf7@scoramp.7zvnt.mongodb.net/Scoramp?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("Connected to MongoDB");
