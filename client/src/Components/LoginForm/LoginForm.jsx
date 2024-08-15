@@ -25,7 +25,7 @@ const LoginForm = ({ setLoginUser }) => {
     const { email, password } = userLog;
     if (email && password && email.includes("gmail.com")) {
       axios
-        .post("https://scoramp-api.vercel.app/login", userLog)
+        .post("https://scoramp-server.vercel.app/login", userLog)
         .then((res) => {
           alert(res.data.message);
           if (typeof res.data.user === "object") {

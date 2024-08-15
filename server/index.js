@@ -5,13 +5,18 @@ import mongoose from "mongoose";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: ["https://scoramp.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  })
-);
+
+app.use(cors());
+
+// app.use(
+//   cors({
+//     origin: ["https://scoramp.vercel.app"],
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     credentials: true,
+//   })
+// );
+
+// app.use(cors());
 
 // app.use(
 //   cors({
@@ -37,7 +42,7 @@ app.use(
 
 mongoose
   .connect(
-    "mongodb+srv://ab0667:m3dbYVKnF5ICvgf7@scoramp.7zvnt.mongodb.net/Scoramp?retryWrites=true&w=majority"
+    "mongodb+srv://ab0667:rzo3m7wTThzggISc@scoramp.eytcg.mongodb.net/Scoramp?retryWrites=true&w=majority&appName=Scoramp"
   )
   .then(() => {
     console.log("Connected to MongoDB");
@@ -536,6 +541,6 @@ app.post("/getApproveRequests", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.listen(3001, () => {
-  console.log("Be started at port 3001");
+app.listen(9002, () => {
+  console.log("Be started at port 9002");
 });

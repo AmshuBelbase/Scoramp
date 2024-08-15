@@ -27,7 +27,7 @@ const Teams = ({ setLoginUser, user }) => {
   const [myTeams, setMyTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-api.vercel.app/getMyTeams", user)
+      .post("https://scoramp-server.vercel.app/getMyTeams", user)
       .then((teamFound) => {
         setMyTeams(teamFound.data);
       })
@@ -41,7 +41,7 @@ const Teams = ({ setLoginUser, user }) => {
     console.log(myTeams);
     myTeams.forEach((team) => {
       axios
-        .post("https://scoramp-api.vercel.app/getTeamDetails", team)
+        .post("https://scoramp-server.vercel.app/getTeamDetails", team)
         .then((teamFound) => {
           console.log("This Team Detail : ");
           console.log(teamFound.data);
@@ -64,7 +64,7 @@ const Teams = ({ setLoginUser, user }) => {
   const [myApprovals, setMyApprovals] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-api.vercel.app/getApproveRequests", user)
+      .post("https://scoramp-server.vercel.app/getApproveRequests", user)
       .then((res) => {
         console.log(res.data.message);
         setMyApprovals(res.data.approvals);
@@ -80,7 +80,7 @@ const Teams = ({ setLoginUser, user }) => {
     console.log(myApprovals);
     myApprovals.forEach((my_approval) => {
       axios
-        .post("https://scoramp-api.vercel.app/getUserDetails", my_approval)
+        .post("https://scoramp-server.vercel.app/getUserDetails", my_approval)
         .then((userFound) => {
           console.log("This User Detail : ");
           console.log(userFound.data.user);
@@ -138,7 +138,7 @@ const Teams = ({ setLoginUser, user }) => {
     const data_code = e.target.getAttribute("data_code");
     if (data_name && data_code) {
       axios
-        .post("https://scoramp-api.vercel.app/approveBtn", {
+        .post("https://scoramp-server.vercel.app/approveBtn", {
           data_name: data_name,
           data_code: data_code,
         })
@@ -164,7 +164,7 @@ const Teams = ({ setLoginUser, user }) => {
     const data_code = e.target.getAttribute("data_code");
     if (data_name && data_code) {
       axios
-        .post("https://scoramp-api.vercel.app/declineBtn", {
+        .post("https://scoramp-server.vercel.app/declineBtn", {
           data_name: data_name,
           data_code: data_code,
         })
@@ -189,7 +189,7 @@ const Teams = ({ setLoginUser, user }) => {
     const { email, team_name, description, type, team_code } = newTeam;
     if (team_name && description && email && type && team_code) {
       axios
-        .post("https://scoramp-api.vercel.app/createTeam", newTeam)
+        .post("https://scoramp-server.vercel.app/createTeam", newTeam)
         .then((res) => {
           alert(res.data.message);
           setNewTeam({
@@ -213,7 +213,7 @@ const Teams = ({ setLoginUser, user }) => {
     const { email, team_code } = joinTeam;
     if (email && team_code) {
       axios
-        .post("https://scoramp-api.vercel.app/joinNewTeam", joinTeam)
+        .post("https://scoramp-server.vercel.app/joinNewTeam", joinTeam)
         .then((res) => {
           alert(res.data.message);
           setJoinTeam({

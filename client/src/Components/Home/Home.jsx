@@ -81,7 +81,7 @@ const Home = ({ setLoginUser, user }) => {
     const { _id } = apTask;
     if (_id) {
       axios
-        .post("https://scoramp-api.vercel.app/declineTask", apTask)
+        .post("https://scoramp-server.vercel.app/declineTask", apTask)
         .then((res) => {
           alert(res.data.message);
           setNewTask({
@@ -116,7 +116,7 @@ const Home = ({ setLoginUser, user }) => {
     const { _id, fscore } = apTask;
     if (_id && fscore) {
       axios
-        .post("https://scoramp-api.vercel.app/acceptTask", apTask)
+        .post("https://scoramp-server.vercel.app/acceptTask", apTask)
         .then((res) => {
           alert(res.data.message);
           setNewTask({
@@ -167,7 +167,7 @@ const Home = ({ setLoginUser, user }) => {
       fscore
     ) {
       axios
-        .post("https://scoramp-api.vercel.app/submitTask", subTask)
+        .post("https://scoramp-server.vercel.app/submitTask", subTask)
         .then((res) => {
           alert(res.data.message);
           setNewTask({
@@ -278,7 +278,7 @@ const Home = ({ setLoginUser, user }) => {
   const [myOwnTeams, setMyOwnTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-api.vercel.app/getMyOwnTeams", user)
+      .post("https://scoramp-server.vercel.app/getMyOwnTeams", user)
       .then((teamFound) => {
         setMyOwnTeams(teamFound.data);
       })
@@ -290,7 +290,7 @@ const Home = ({ setLoginUser, user }) => {
   const [myTeams, setMyTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-api.vercel.app/getMyTeams", user)
+      .post("https://scoramp-server.vercel.app/getMyTeams", user)
       .then((teamFound) => {
         setMyTeams(teamFound.data);
       })
@@ -303,7 +303,7 @@ const Home = ({ setLoginUser, user }) => {
   useEffect(() => {
     myTeams.forEach((team) => {
       axios
-        .post("https://scoramp-api.vercel.app/getTeamDetails", team)
+        .post("https://scoramp-server.vercel.app/getTeamDetails", team)
         .then((teamFound) => {
           setMyTeamsDetails((prevDetails) => ({
             ...prevDetails,
@@ -319,7 +319,7 @@ const Home = ({ setLoginUser, user }) => {
   const [myTasks, setMyTasks] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-api.vercel.app/getMyTasks", myTeamsDetails)
+      .post("https://scoramp-server.vercel.app/getMyTasks", myTeamsDetails)
       .then((taskFound) => {
         setMyTasks(taskFound.data);
       })
@@ -332,7 +332,7 @@ const Home = ({ setLoginUser, user }) => {
   useEffect(() => {
     axios
       .post(
-        "https://scoramp-api.vercel.app/getMyTaskSubmissions",
+        "https://scoramp-server.vercel.app/getMyTaskSubmissions",
         myTeamsDetails
       )
       .then((taskFound) => {
@@ -436,7 +436,7 @@ const Home = ({ setLoginUser, user }) => {
       deadline
     ) {
       axios
-        .post("https://scoramp-api.vercel.app/assignTask", newTask)
+        .post("https://scoramp-server.vercel.app/assignTask", newTask)
         .then((res) => {
           alert(res.data.message);
           setNewTask({
@@ -461,7 +461,7 @@ const Home = ({ setLoginUser, user }) => {
   useEffect(() => {
     myTaskSubmissions.forEach((my_approval) => {
       axios
-        .post("https://scoramp-api.vercel.app/getUserDetails", my_approval)
+        .post("https://scoramp-server.vercel.app/getUserDetails", my_approval)
         .then((userFound) => {
           setMyTaskApprovalsDetails((prevDetails) => ({
             ...prevDetails,
@@ -478,7 +478,7 @@ const Home = ({ setLoginUser, user }) => {
   // useEffect(() => {
   //   myOwnTeams.forEach((team) => {
   //     axios
-  //       .post("https://scoramp-api.vercel.app/getTeamDetails", team)
+  //       .post("https://scoramp-server.vercel.app/getTeamDetails", team)
   //       .then((teamFound) => {
   //         // console.log("This Team Detail : ");
   //         // console.log(teamFound.data);

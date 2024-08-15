@@ -47,7 +47,7 @@ const SignUpForm = ({ setLoginUser }) => {
       password === cpassword
     ) {
       axios
-        .post("https://scoramp-api.vercel.app/register", userSign)
+        .post("https://scoramp-server.vercel.app/register", userSign)
         .then((res) => {
           alert(res.data.message);
           navigate("/");
