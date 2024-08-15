@@ -4,20 +4,12 @@
       { "src": "*.js", "use": "@vercel/node" }
     ],
     "routes": [
-        {
-          "src": "/(.*)",
-          "dest": "/"
+      {
+        "src": "/(.*)",
+        "dest": "/",
+        "headers": {
+          "access-control-allow-origin": "*"
         }
-    ], 
-    "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "access-control-allow-origin",
-          "value": "*"
-        }
-      ]
-    }
-  ]
+      }
+    ] 
   }
