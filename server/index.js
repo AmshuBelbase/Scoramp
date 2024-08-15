@@ -103,7 +103,7 @@ app.get("/", (req, res) => {
 
 app.get("/getlogin", (req, res) => {
   const { email, password } = req.body;
-  res.json({ email: email });
+  res.json("Hello from log");
 });
 
 app.post("/login", (req, res) => {
