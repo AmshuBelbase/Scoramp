@@ -103,21 +103,7 @@ app.get("/", (req, res) => {
 
 app.get("/getlogin", (req, res) => {
   const { email, password } = req.body;
-  User.findOne({ email: email })
-    .then((user) => {
-      if (user) {
-        if (password === user.password) {
-          res.send({ message: "Login Successful ✅", user: user });
-        } else {
-          res.send({ message: "Email & Password didn't match ❌" });
-        }
-      } else {
-        res.send({ message: "User not Found ❌" });
-      }
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+  res.json({ email, password });
 });
 
 app.post("/login", (req, res) => {
