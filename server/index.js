@@ -5,19 +5,19 @@ import mongoose from "mongoose";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(
-//   cors({
-//     origin: ["https://scoramp.vercel.app"],
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     credentials: true,
-//   })
-// );
-
 app.use(
   cors({
-    origin: "*",
+    origin: ["https://scoramp.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
   })
 );
+
+// app.use(
+//   cors({
+//     origin: "*",
+//   })
+// );
 
 // const corsOption = {
 //   origin: ["http://localhost:3000"],
@@ -532,5 +532,5 @@ app.post("/getApproveRequests", (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.log("Be started at port 9002");
+  console.log("Be started at port 3001");
 });
