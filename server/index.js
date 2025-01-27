@@ -42,7 +42,7 @@ app.use(cors());
 
 mongoose
   .connect(
-    "mongodb+srv://ab0667:rzo3m7wTThzggISc@scoramp.eytcg.mongodb.net/Scoramp?retryWrites=true&w=majority&appName=Scoramp"
+    "mongodb+srv://uname:code@scoramp.eytcg.mongodb.net/Scoramp?retryWrites=true&w=majority&appName=Scoramp"
   )
   .then(() => {
     console.log("Connected to MongoDB");
