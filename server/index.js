@@ -306,42 +306,103 @@ app.post("/assignTask", (req, res) => {
     });
 });
 
-app.post("/register", (req, res) => {
-  let { full_name, reg_id, phone, field, address, email, password, cpassword } =
-    req.body;
+app.post('/register', async (req, res) => {
+  try {
+    let { full_name, reg_id, phone, field, address, email, password, cpassword } = req.body;
 
-  reg_id = reg_id == "" ? "-" : reg_id;
-  field = field == "" ? "-" : field;
-  address = address == "" ? "-" : address;
+    reg_id = reg_id === '' ? '-' : reg_id;
+    field = field === '' ? '-' : field;
+    address = address === '' ? '-' : address;
 
-  User.findOne({ email: email })
-    .then((user) => {
-      if (user) {
-        res.send({ message: "User Already Registered ❌" });
-      } else {
-        const user = new User({
-          full_name,
-          reg_id,
-          phone,
-          field,
-          address,
-          email,
-          password,
-        });
-        user
-          .save()
-          .then(() => {
-            res.send({ message: "Registration Successful ✅" });
-          })
-          .catch((err) => {
-            res.send(err);
-          });
-      }
-    })
-    .catch((err) => {
-      console.error("Error connecting to MongoDB:", err);
-    });
+    if (!email || !password || password !== cpassword) {
+      return res.status(400).json({ success: false, message: 'Invalid registration data' });
+    }
+
+    if (phone && !/^\d+$/.test(phone)) {
+      return res.status(400).json({ success: false, message: "Phone must be numeric" });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ success: false, message: 'User Already Registered ❌' });
+    }
+
+    const user = new User({ full_name, reg_id, phone, field, address, email, password });
+    await user.save();
+
+    return res.status(201).json({ success: true, message: 'Registration Successful ✅', user });
+
+  } catch (err) {
+    console.error('Error registering user:', err);
+
+    if (err.name == 'ValidationError') {
+      return res.status(400).json({ success: false, message: err.message });
+    }
+
+    return res.status(500).json({ success: false, message: 'Server error' });
+  }
 });
+
+
+// app.post("/register", async (req, res) => {
+//   try{
+//   let { full_name, reg_id, phone, field, address, email, password, cpassword } =
+//     req.body;
+
+//   reg_id = reg_id == "" ? "-" : reg_id;
+//   field = field == "" ? "-" : field;
+//   address = address == "" ? "-" : address;
+
+//   if (!email || !password || password !== cpassword) {
+//     return res.status(400).json({ success: false, message: "Invalid registration data" });
+//   }
+
+//   // Validate phone is numeric if phone is provided
+//   if (phone && isNaN(Number(phone))) {
+//     return res.status(400).json({ success: false, message: "Phone must be numeric" });
+//   }
+
+//   // Check if user with email already exists
+//   const existingUser = await User.findOne({ email });
+//   if (existingUser) {
+//     return res.status(400).json({ success: false, message: "User Already Registered ❌" });
+//   }
+
+//   const user = new User({ full_name, reg_id, phone, field, address, email, password });
+//   await user.save();
+//   return res.status(201).json({ success: true, message: "Registration Successful ✅", user });
+//   } catch (err) {
+//     console.error("Error registering user:", err);
+//     return res.status(400).json({ success: false, message: "Server error" });
+//   }
+//   // User.findOne({ email: email })
+//   //   .then((user) => {
+//   //     if (user) {
+//   //       res.send({ message: "User Already Registered ❌" });
+//   //     } else {
+//   //       const user = new User({
+//   //         full_name,
+//   //         reg_id,
+//   //         phone,
+//   //         field,
+//   //         address,
+//   //         email,
+//   //         password,
+//   //       });
+//   //       user
+//   //         .save()
+//   //         .then(() => {
+//   //           res.send({ message: "Registration Successful ✅" });
+//   //         })
+//   //         .catch((err) => {
+//   //           res.send(err);
+//   //         });
+//   //     }
+//   //   })
+//   //   .catch((err) => {
+//   //     console.error("Error connecting to MongoDB:", err);
+//   //   });
+// });
 
 app.post("/updateUser", (req, res) => {
   let { id, full_name, reg_id, phone, field, address, email, password } =
