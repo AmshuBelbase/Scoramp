@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
+// app.use(cors());
 
 // app.use(
 //   cors({
@@ -24,32 +24,32 @@ app.use(cors());
 //   })
 // );
 
-// const corsOption = {
-//   origin: ["http://localhost:3000"],
-//   credentials: true,
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-// };
-// app.use(cors(corsOption));
-
-// mongoose
-//   .connect("mongodb://localhost:27017/Scoramp")
-//   .then(() => {
-//     console.log("Connected to MongoDB");
-//   })
-//   .catch((err) => {
-//     console.error("Error connecting to MongoDB:", err);
-//   });
+const corsOption = {
+  origin: ["http://localhost:3000"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+};
+app.use(cors(corsOption));
 
 mongoose
-  .connect(
-    "mongodb+srv://ab0667:rzo3m7wTThzggISc@scoramp.eytcg.mongodb.net/Scoramp?retryWrites=true&w=majority&appName=Scoramp"
-  )
+  .connect("mongodb://localhost:27017/Scoramp")
   .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
   });
+
+// mongoose
+//   .connect(
+//     "mongodb+srv://ab0667:rzo3m7wTThzggISc@scoramp.eytcg.mongodb.net/Scoramp?retryWrites=true&w=majority&appName=Scoramp"
+//   )
+//   .then(() => {
+//     console.log("Connected to MongoDB");
+//   })
+//   .catch((err) => {
+//     console.error("Error connecting to MongoDB:", err);
+//   });
 
 const userSchema = new mongoose.Schema({
   full_name: String,
@@ -504,6 +504,7 @@ app.post("/approveBtn", (req, res) => {
     })
     .catch((err) => res.json(err));
 });
+
 app.post("/declineBtn", (req, res) => {
   let { data_name, data_code } = req.body;
   TeamMembers.findOneAndDelete({ email: data_name, team_code: data_code })

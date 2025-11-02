@@ -1,3 +1,5 @@
+import React from 'react';
+
 import "./LeaderBoard.css";
 import { useState, useEffect } from "react";
 import avatar from "../Assets/icon.png";
@@ -15,7 +17,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   const [myTeams, setMyTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-server.vercel.app/getMyTeams", user)
+      .post("http://localhost:9002/getMyTeams", user)
       .then((teamFound) => {
         setMyTeams(teamFound.data);
       })
@@ -28,7 +30,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   useEffect(() => {
     myTeams.forEach((team) => {
       axios
-        .post("https://scoramp-server.vercel.app/getTeamDetails", team)
+        .post("http://localhost:9002/getTeamDetails", team)
         .then((teamFound) => {
           setMyTeamsDetails((prevDetails) => ({
             ...prevDetails,
@@ -44,7 +46,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   const [myOwnTeams, setMyOwnTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-server.vercel.app/getMyOwnTeams", user)
+      .post("http://localhost:9002/getMyOwnTeams", user)
       .then((teamFound) => {
         setMyOwnTeams(teamFound.data);
       })
@@ -56,7 +58,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   const [myTasks, setMyTasks] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-server.vercel.app/getMyTasks", myTeamsDetails)
+      .post("http://localhost:9002/getMyTasks", myTeamsDetails)
       .then((taskFound) => {
         setMyTasks(taskFound.data);
       })
@@ -68,10 +70,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   const [myTaskSubmissions, setMyTaskSubmissions] = useState([]);
   useEffect(() => {
     axios
-      .post(
-        "https://scoramp-server.vercel.app/getMyTaskSubmissions",
-        myTeamsDetails
-      )
+      .post("http://localhost:9002/getMyTaskSubmissions", myTeamsDetails)
       .then((taskFound) => {
         setMyTaskSubmissions(taskFound.data);
       })
@@ -84,7 +83,7 @@ const LeaderBoard = ({ setLoginUser, user }) => {
   useEffect(() => {
     myTaskSubmissions.forEach((my_approval) => {
       axios
-        .post("https://scoramp-server.vercel.app/getUserDetails", my_approval)
+        .post("http://localhost:9002/getUserDetails", my_approval)
         .then((userFound) => {
           setMyTaskApprovalsDetails((prevDetails) => ({
             ...prevDetails,

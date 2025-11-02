@@ -1,4 +1,5 @@
 import "./Teams.css";
+import React from 'react';
 import { useState, useEffect } from "react";
 import { MdGroups } from "react-icons/md";
 import { MdConnectWithoutContact } from "react-icons/md";
@@ -27,9 +28,11 @@ const Teams = ({ setLoginUser, user }) => {
   const [myTeams, setMyTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-server.vercel.app/getMyTeams", user)
+      .post("http://localhost:9002/getMyTeams", user)
       .then((teamFound) => {
-        setMyTeams(teamFound.data);
+        // setMyTeams(teamFound.data);
+        const data = teamFound.data;
+        setMyTeams(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
         console.log(err);
@@ -37,14 +40,15 @@ const Teams = ({ setLoginUser, user }) => {
   }, [user, newTeam]);
   const [myTeamsDetails, setMyTeamsDetails] = useState([]);
   useEffect(() => {
-    console.log("All teams : ");
-    console.log(myTeams);
+    // console.log("All teams : ");
+    // console.log(myTeams);
+    if (Array.isArray(myTeams)) {
     myTeams.forEach((team) => {
       axios
-        .post("https://scoramp-server.vercel.app/getTeamDetails", team)
+        .post("http://localhost:9002/getTeamDetails", team)
         .then((teamFound) => {
-          console.log("This Team Detail : ");
-          console.log(teamFound.data);
+          // console.log("This Team Detail : ");
+          // console.log(teamFound.data);
           setMyTeamsDetails((prevDetails) => ({
             ...prevDetails,
             [team.team_code]: teamFound.data.team, // Assuming team_code is unique
@@ -53,7 +57,7 @@ const Teams = ({ setLoginUser, user }) => {
         .catch((err) => {
           console.log(err);
         });
-    });
+    });}
   }, [myTeams]); // This will run every time `myTeams` changes
 
   //   useEffect(() => {
@@ -64,9 +68,9 @@ const Teams = ({ setLoginUser, user }) => {
   const [myApprovals, setMyApprovals] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-server.vercel.app/getApproveRequests", user)
+      .post("http://localhost:9002/getApproveRequests", user)
       .then((res) => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         setMyApprovals(res.data.approvals);
       })
       .catch((err) => {
@@ -76,14 +80,14 @@ const Teams = ({ setLoginUser, user }) => {
 
   const [myApprovalsDetails, setMyApprovalsDetails] = useState([]);
   useEffect(() => {
-    console.log("All approvals : ");
-    console.log(myApprovals);
-    myApprovals.forEach((my_approval) => {
+    // console.log("All approvals : ");
+    // console.log(myApprovals);
+    myApprovals && myApprovals.forEach((my_approval) => {
       axios
-        .post("https://scoramp-server.vercel.app/getUserDetails", my_approval)
+        .post("http://localhost:9002/getUserDetails", my_approval)
         .then((userFound) => {
-          console.log("This User Detail : ");
-          console.log(userFound.data.user);
+          // console.log("This User Detail : ");
+          // console.log(userFound.data.user);
           setMyApprovalsDetails((prevDetails) => ({
             ...prevDetails,
             [my_approval.email]: userFound.data.user, // Assuming team_code is unique
@@ -113,7 +117,7 @@ const Teams = ({ setLoginUser, user }) => {
       let timestamp = Date.now().toString(36); // Convert timestamp to base 36 string
       let randomString = Math.random().toString(36).substring(2, 5); // Generate random string
       let code = timestamp + randomString;
-      console.log(code);
+      // console.log(code);
       setNewTeam({
         ...newTeam,
         team_code: code,
@@ -138,7 +142,7 @@ const Teams = ({ setLoginUser, user }) => {
     const data_code = e.target.getAttribute("data_code");
     if (data_name && data_code) {
       axios
-        .post("https://scoramp-server.vercel.app/approveBtn", {
+        .post("http://localhost:9002/approveBtn", {
           data_name: data_name,
           data_code: data_code,
         })
@@ -157,14 +161,14 @@ const Teams = ({ setLoginUser, user }) => {
           console.log(err);
         });
     }
-    console.log(data_name);
+    // console.log(data_name);
   };
   const declineBtn = (e) => {
     const data_name = e.target.getAttribute("data_name");
     const data_code = e.target.getAttribute("data_code");
     if (data_name && data_code) {
       axios
-        .post("https://scoramp-server.vercel.app/declineBtn", {
+        .post("http://localhost:9002/declineBtn", {
           data_name: data_name,
           data_code: data_code,
         })
@@ -188,22 +192,20 @@ const Teams = ({ setLoginUser, user }) => {
   const createTeam = () => {
     const { email, team_name, description, type, team_code } = newTeam;
     if (team_name && description && email && type && team_code) {
-      axios
-        .post("https://scoramp-server.vercel.app/createTeam", newTeam)
-        .then((res) => {
-          alert(res.data.message);
-          setNewTeam({
-            ...newTeam,
-            email: user.email,
-            team_name: "",
-            description: "",
-            type: "",
-            team_code: "",
-          });
-          if (res.data.stat == "true") {
-            toggleClass();
-          }
+      axios.post("http://localhost:9002/createTeam", newTeam).then((res) => {
+        alert(res.data.message);
+        setNewTeam({
+          ...newTeam,
+          email: user.email,
+          team_name: "",
+          description: "",
+          type: "",
+          team_code: "",
         });
+        if (res.data.stat == "true") {
+          toggleClass();
+        }
+      });
     } else {
       alert("You Entered Something Wrong ❌");
     }
@@ -212,19 +214,17 @@ const Teams = ({ setLoginUser, user }) => {
   const joinNewTeam = () => {
     const { email, team_code } = joinTeam;
     if (email && team_code) {
-      axios
-        .post("https://scoramp-server.vercel.app/joinNewTeam", joinTeam)
-        .then((res) => {
-          alert(res.data.message);
-          setJoinTeam({
-            ...joinTeam,
-            email: user.email,
-            team_code: "",
-          });
-          if (res.data.stat == "true") {
-            toggleJoinClass();
-          }
+      axios.post("http://localhost:9002/joinNewTeam", joinTeam).then((res) => {
+        alert(res.data.message);
+        setJoinTeam({
+          ...joinTeam,
+          email: user.email,
+          team_code: "",
         });
+        if (res.data.stat == "true") {
+          toggleJoinClass();
+        }
+      });
     } else {
       alert("You Entered Something Wrong ❌");
     }
@@ -298,7 +298,7 @@ const Teams = ({ setLoginUser, user }) => {
           }
         >
           <div className="taskstatus-container">
-            {myTeams.map((team) => {
+            {Array.isArray(myTeams) && myTeams.map((team) => {
               return (
                 team.approval == "yes" &&
                 myTeamsDetails.hasOwnProperty(team.team_code) &&
@@ -322,7 +322,9 @@ const Teams = ({ setLoginUser, user }) => {
           </div>
         </div>
         {(windowSize.width > 708 || leftpull) &&
+          myApprovals &&
           Object.keys(myApprovals).length != 0 &&
+          myApprovalsDetails &&
           Object.keys(myApprovalsDetails).length != 0 && (
             <div
               className={
@@ -333,8 +335,8 @@ const Teams = ({ setLoginUser, user }) => {
             >
               <div className="bottom-rgt">
                 {myApprovals.map((myApproval) => {
-                  console.log("approval length");
-                  console.log(Object.keys(myApprovalsDetails).length);
+                  // console.log("approval length");
+                  // console.log(Object.keys(myApprovalsDetails).length);
                   return (
                     Object.keys(myApprovals).length != 0 &&
                     Object.keys(myApprovalsDetails).length != 0 &&
@@ -420,7 +422,7 @@ const Teams = ({ setLoginUser, user }) => {
                     value={newTeam.type}
                     onChange={handlenewTeamChange}
                   >
-                    <option value=""> -- Class Type --</option>
+                    <option value="">-- Class Type --</option>
                     <option value="public">Public</option>
                     <option value="private">Private</option>
                   </select>

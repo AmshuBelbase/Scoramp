@@ -46,12 +46,10 @@ const SignUpForm = ({ setLoginUser }) => {
       password &&
       password === cpassword
     ) {
-      axios
-        .post("https://scoramp-server.vercel.app/register", userSign)
-        .then((res) => {
-          alert(res.data.message);
-          navigate("/");
-        });
+      axios.post("http://localhost:9002/register", userSign).then((res) => {
+        alert(res.data.message);
+        navigate("/");
+      });
     } else {
       alert("You Entered Something Wrong ❌");
     }

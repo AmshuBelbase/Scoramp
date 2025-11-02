@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from "react";
 import "./NavBar.css";
 import picture from "../Assets/5.png";

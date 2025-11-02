@@ -1,3 +1,5 @@
+import React from 'react';
+
 import "./Home.css";
 import { useState, useEffect } from "react";
 import avatar from "../Assets/icon.png";
@@ -80,33 +82,31 @@ const Home = ({ setLoginUser, user }) => {
   const declineTask = () => {
     const { _id } = apTask;
     if (_id) {
-      axios
-        .post("https://scoramp-server.vercel.app/declineTask", apTask)
-        .then((res) => {
-          alert(res.data.message);
-          setNewTask({
-            ...newTask,
-            email: user.email,
-            task_title: "",
-            team_code: "",
-            full_marks: "",
-            deadline: "",
-            description: "",
-          });
-          setSubTask({
-            ...subTask,
-            email: user.email,
-            task_id: "",
-            team_code: "",
-            full_marks: "",
-            subDate: "",
-            submissionMessage: "",
-            fscore: -1,
-            tscore: -1,
-          });
-          setApTask([]);
-          toggleTaskApproveTabActiveClass();
+      axios.post("http://localhost:9002/declineTask", apTask).then((res) => {
+        alert(res.data.message);
+        setNewTask({
+          ...newTask,
+          email: user.email,
+          task_title: "",
+          team_code: "",
+          full_marks: "",
+          deadline: "",
+          description: "",
         });
+        setSubTask({
+          ...subTask,
+          email: user.email,
+          task_id: "",
+          team_code: "",
+          full_marks: "",
+          subDate: "",
+          submissionMessage: "",
+          fscore: -1,
+          tscore: -1,
+        });
+        setApTask([]);
+        toggleTaskApproveTabActiveClass();
+      });
     } else {
       alert("You entered something wrong ❌");
     }
@@ -115,33 +115,31 @@ const Home = ({ setLoginUser, user }) => {
   const acceptTask = () => {
     const { _id, fscore } = apTask;
     if (_id && fscore) {
-      axios
-        .post("https://scoramp-server.vercel.app/acceptTask", apTask)
-        .then((res) => {
-          alert(res.data.message);
-          setNewTask({
-            ...newTask,
-            email: user.email,
-            task_title: "",
-            team_code: "",
-            full_marks: "",
-            deadline: "",
-            description: "",
-          });
-          setSubTask({
-            ...subTask,
-            email: user.email,
-            task_id: "",
-            team_code: "",
-            full_marks: "",
-            subDate: "",
-            submissionMessage: "",
-            fscore: -1,
-            tscore: -1,
-          });
-          setApTask([]);
-          toggleTaskApproveTabActiveClass();
+      axios.post("http://localhost:9002/acceptTask", apTask).then((res) => {
+        alert(res.data.message);
+        setNewTask({
+          ...newTask,
+          email: user.email,
+          task_title: "",
+          team_code: "",
+          full_marks: "",
+          deadline: "",
+          description: "",
         });
+        setSubTask({
+          ...subTask,
+          email: user.email,
+          task_id: "",
+          team_code: "",
+          full_marks: "",
+          subDate: "",
+          submissionMessage: "",
+          fscore: -1,
+          tscore: -1,
+        });
+        setApTask([]);
+        toggleTaskApproveTabActiveClass();
+      });
     } else {
       alert("You entered something wrong ❌");
     }
@@ -166,32 +164,30 @@ const Home = ({ setLoginUser, user }) => {
       tscore &&
       fscore
     ) {
-      axios
-        .post("https://scoramp-server.vercel.app/submitTask", subTask)
-        .then((res) => {
-          alert(res.data.message);
-          setNewTask({
-            ...newTask,
-            email: user.email,
-            task_title: "",
-            team_code: "",
-            full_marks: "",
-            deadline: "",
-            description: "",
-          });
-          setSubTask({
-            ...subTask,
-            email: user.email,
-            task_id: "",
-            team_code: "",
-            full_marks: "",
-            subDate: "",
-            submissionMessage: "",
-            fscore: -1,
-            tscore: -1,
-          });
-          toggleTaskTabActiveClass();
+      axios.post("http://localhost:9002/submitTask", subTask).then((res) => {
+        alert(res.data.message);
+        setNewTask({
+          ...newTask,
+          email: user.email,
+          task_title: "",
+          team_code: "",
+          full_marks: "",
+          deadline: "",
+          description: "",
         });
+        setSubTask({
+          ...subTask,
+          email: user.email,
+          task_id: "",
+          team_code: "",
+          full_marks: "",
+          subDate: "",
+          submissionMessage: "",
+          fscore: -1,
+          tscore: -1,
+        });
+        toggleTaskTabActiveClass();
+      });
     } else {
       alert("You entered something wrong ❌");
     }
@@ -278,7 +274,7 @@ const Home = ({ setLoginUser, user }) => {
   const [myOwnTeams, setMyOwnTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-server.vercel.app/getMyOwnTeams", user)
+      .post("http://localhost:9002/getMyOwnTeams", user)
       .then((teamFound) => {
         setMyOwnTeams(teamFound.data);
       })
@@ -290,7 +286,7 @@ const Home = ({ setLoginUser, user }) => {
   const [myTeams, setMyTeams] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-server.vercel.app/getMyTeams", user)
+      .post("http://localhost:9002/getMyTeams", user)
       .then((teamFound) => {
         setMyTeams(teamFound.data);
       })
@@ -303,7 +299,7 @@ const Home = ({ setLoginUser, user }) => {
   useEffect(() => {
     myTeams.forEach((team) => {
       axios
-        .post("https://scoramp-server.vercel.app/getTeamDetails", team)
+        .post("http://localhost:9002/getTeamDetails", team)
         .then((teamFound) => {
           setMyTeamsDetails((prevDetails) => ({
             ...prevDetails,
@@ -319,7 +315,7 @@ const Home = ({ setLoginUser, user }) => {
   const [myTasks, setMyTasks] = useState([]);
   useEffect(() => {
     axios
-      .post("https://scoramp-server.vercel.app/getMyTasks", myTeamsDetails)
+      .post("http://localhost:9002/getMyTasks", myTeamsDetails)
       .then((taskFound) => {
         setMyTasks(taskFound.data);
       })
@@ -331,10 +327,7 @@ const Home = ({ setLoginUser, user }) => {
   const [myTaskSubmissions, setMyTaskSubmissions] = useState([]);
   useEffect(() => {
     axios
-      .post(
-        "https://scoramp-server.vercel.app/getMyTaskSubmissions",
-        myTeamsDetails
-      )
+      .post("http://localhost:9002/getMyTaskSubmissions", myTeamsDetails)
       .then((taskFound) => {
         setMyTaskSubmissions(taskFound.data);
       })
@@ -435,23 +428,21 @@ const Home = ({ setLoginUser, user }) => {
       full_marks &&
       deadline
     ) {
-      axios
-        .post("https://scoramp-server.vercel.app/assignTask", newTask)
-        .then((res) => {
-          alert(res.data.message);
-          setNewTask({
-            ...newTask,
-            email: user.email,
-            task_title: "",
-            team_code: "",
-            full_marks: "",
-            deadline: "",
-            description: "",
-          });
-          if (res.data.stat == "true") {
-            toggleClass();
-          }
+      axios.post("http://localhost:9002/assignTask", newTask).then((res) => {
+        alert(res.data.message);
+        setNewTask({
+          ...newTask,
+          email: user.email,
+          task_title: "",
+          team_code: "",
+          full_marks: "",
+          deadline: "",
+          description: "",
         });
+        if (res.data.stat == "true") {
+          toggleClass();
+        }
+      });
     } else {
       alert("You Entered Something Wrong ❌");
     }
@@ -461,7 +452,7 @@ const Home = ({ setLoginUser, user }) => {
   useEffect(() => {
     myTaskSubmissions.forEach((my_approval) => {
       axios
-        .post("https://scoramp-server.vercel.app/getUserDetails", my_approval)
+        .post("http://localhost:9002/getUserDetails", my_approval)
         .then((userFound) => {
           setMyTaskApprovalsDetails((prevDetails) => ({
             ...prevDetails,
